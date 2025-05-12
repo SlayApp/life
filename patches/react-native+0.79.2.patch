@@ -1,0 +1,51 @@
+diff --git a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.h b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.h
+index 927fbc4..ff562b5 100644
+--- a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.h
++++ b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.h
+@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
+  * UIView class for <TextInput> component.
+  */
+ @interface RCTTextInputComponentView : RCTViewComponentView
+-
++- (void)applyAutoCorrectionWithCallback:(void (^)(NSString *))callback;
+ @end
+ 
+ NS_ASSUME_NONNULL_END
+diff --git a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm
+index e1cad8a..0a9d56c 100644
+--- a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm
++++ b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm
+@@ -523,6 +523,33 @@ - (void)blur
+   [_backedTextInputView resignFirstResponder];
+ }
+ 
++- (void)applyAutoCorrectionWithCallback:(void (^)(NSString *correctedText))callback
++{
++  // 1. Ask UIKit to run its autocorrection pipeline again
++  [_backedTextInputView.inputDelegate selectionWillChange:_backedTextInputView];
++  [_backedTextInputView.inputDelegate selectionDidChange:_backedTextInputView];
++
++  __weak __typeof(self) weakSelf = self;
++
++  dispatch_async(dispatch_get_main_queue(), ^{
++      __strong __typeof(self) self = weakSelf;
++      if (!self) { return; }
++
++    // 2. Send the corrected text back to the caller
++    NSString *corrected = self->_backedTextInputView.attributedText.string;
++    if (callback) {
++      callback(corrected);
++    }
++
++    // 3. Clear the field and update Fabric state (as the old method did)
++    NSAttributedString *empty =
++        [[NSAttributedString alloc] initWithString:@""
++                                        attributes:self->_backedTextInputView.defaultTextAttributes];
++    [self _setAttributedString:empty];
++    [self _updateState];
++  });
++}
++
+ - (void)setTextAndSelection:(NSInteger)eventCount
+                       value:(NSString *__nullable)value
+                       start:(NSInteger)start

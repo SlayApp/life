@@ -4,10 +4,21 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "npx react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
+    "start": "npx react-native start",
+    "test": "jest",
+    "postinstall": "npx patch-package"
+  },
+  "codegenConfig": {
+    "name": "NativeTextInputHelpers",
+    "type": "modules",
+    "jsSrcsDir": "specs",
+    "ios": {
+      "modulesProvider": {
+        "NativeTextInputHelpers": "RCTNativeTextInputHelpers"
+      }
+    }
   },
   "dependencies": {
     "react": "19.0.0",
