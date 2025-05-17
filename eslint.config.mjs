@@ -3,10 +3,12 @@ import {fixupPluginRules} from '@eslint/compat';
 import eslint from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
+import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
 import hooksPlugin from 'eslint-plugin-react-hooks';
-import tseslint from 'typescript-eslint';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import unusedImports from 'eslint-plugin-unused-imports';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -38,6 +40,8 @@ export default tseslint.config(
   {
     plugins: {
       ['unused-imports']: fixupPluginRules(unusedImports),
+      ['simple-import-sort']: fixupPluginRules(simpleImportSort),
+      ['import']: fixupPluginRules(importPlugin),
     },
     rules: {
       '@typescript-eslint/no-unused-vars': 'off',
@@ -53,6 +57,11 @@ export default tseslint.config(
           caughtErrors: 'none',
         },
       ],
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'import/first': 'error',
+      'import/newline-after-import': 'error',
+      'import/no-duplicates': 'error',
     },
   },
   {

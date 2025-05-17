@@ -1,64 +1,34 @@
-import {useCallback, useRef, useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {Input, IInput} from './src/components/Input';
+import 'react-native-url-polyfill/auto';
 
-const styles = StyleSheet.create({
-  flex1: {
-    flex: 1,
-    bottom: 400,
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  textInputAbsolute: {
-    position: 'absolute',
-    bottom: 100,
-    left: 0,
-    right: 0,
-    height: 32,
-    width: 32,
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  textInputContainer: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    marginHorizontal: 20,
-    borderWidth: 1,
-    borderColor: 'red',
-  },
-  button: {
-    height: 32,
-    width: 32,
-    backgroundColor: 'red',
-  },
-});
+import {NavigationContainer} from '@react-navigation/native';
+import {QueryClientProvider} from '@tanstack/react-query';
+import React from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {KeyboardProvider} from 'react-native-keyboard-controller';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {StyleSheet} from 'react-native-unistyles';
+
+import {RessourceLoader} from '~/components/RessourceLoader';
+import {RootStack} from '~/navigation/RootStack';
+import {queryClient} from '~/utils/cache/queryClient';
+
+StyleSheet.configure({});
 
 function App(): React.JSX.Element {
-  const [text, setText] = useState('');
-  const textInputRef = useRef<IInput>(null);
-
-  const handlePress = useCallback(async () => {
-    const value = await textInputRef.current?.clearText();
-    if (value) {
-      setText(value);
-    }
-  }, []);
-
   return (
-    <View style={styles.flex1}>
-      <View style={styles.flex1} />
-      <Text style={{fontSize: 24, fontWeight: '600', alignSelf: 'center'}}>
-        {text}
-      </Text>
-      <View style={styles.textInputContainer}>
-        <Input style={styles.textInput} ref={textInputRef} />
-
-        <Pressable style={styles.button} onPress={handlePress} />
-      </View>
-    </View>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <RessourceLoader>
+                <RootStack />
+              </RessourceLoader>
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </QueryClientProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 

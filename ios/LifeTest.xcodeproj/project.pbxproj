@@ -10,12 +10,16 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		7D38AFBE2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7D38AFBD2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm */; };
+		7D8FACD52DD4D31100D81250 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D8FACD42DD4D31100D81250 /* Colors.xcassets */; };
+		7D8FACD72DD4D31900D81250 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D8FACD62DD4D31900D81250 /* BootSplash.storyboard */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		91C0DED571ADB720D1A8BE51 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		E6241C623D84BB9FA68D6943 /* libPods-LifeTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C84AB4F30F4F0F90192805 /* libPods-LifeTest.a */; };
+		EBEA81ED4A31BA4446BE1E0F /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3EE4EE5AE117ECF5ACF232 /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D3EE4EE5AE117ECF5ACF232 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-LifeTest/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* LifeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LifeTest/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LifeTest/Info.plist; sourceTree = "<group>"; };
@@ -26,6 +30,8 @@
 		7D38AFBC2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTNativeTextInputHelpers.h; sourceTree = "<group>"; };
 		7D38AFBD2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCTNativeTextInputHelpers.mm; sourceTree = "<group>"; };
 		7D8034FD5FB160DBA7F4EB84 /* Pods-LifeTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeTest.debug.xcconfig"; path = "Target Support Files/Pods-LifeTest/Pods-LifeTest.debug.xcconfig"; sourceTree = "<group>"; };
+		7D8FACD42DD4D31100D81250 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		7D8FACD62DD4D31900D81250 /* BootSplash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BootSplash.storyboard; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LifeTest/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1C84AB4F30F4F0F90192805 /* libPods-LifeTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LifeTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -46,8 +52,10 @@
 		13B07FAE1A68108700A75B9A /* LifeTest */ = {
 			isa = PBXGroup;
 			children = (
+				7D8FACD42DD4D31100D81250 /* Colors.xcassets */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
+				7D8FACD62DD4D31900D81250 /* BootSplash.storyboard */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
@@ -62,6 +70,14 @@
 				E1C84AB4F30F4F0F90192805 /* libPods-LifeTest.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		78DA3E5653BDE9AF9021D8AB /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				D1A1E64578C4BB9C01B7D80A /* LifeTest */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		7D38AFBA2DD1DCD400D34A96 /* NativeTextInputHelpers */ = {
@@ -90,6 +106,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				78DA3E5653BDE9AF9021D8AB /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -113,6 +130,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D1A1E64578C4BB9C01B7D80A /* LifeTest */ = {
+			isa = PBXGroup;
+			children = (
+				0D3EE4EE5AE117ECF5ACF232 /* ExpoModulesProvider.swift */,
+			);
+			name = LifeTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +146,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "LifeTest" */;
 			buildPhases = (
 				889C8342DF4EF00663CA8562 /* [CP] Check Pods Manifest.lock */,
+				A4844DEC08AE86811219F22A /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -173,7 +199,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D8FACD72DD4D31900D81250 /* BootSplash.storyboard in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				7D8FACD52DD4D31100D81250 /* Colors.xcassets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				91C0DED571ADB720D1A8BE51 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -237,6 +265,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A4844DEC08AE86811219F22A /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-LifeTest/expo-configure-project.sh\"\n";
+		};
 		E4800B77E66185B0C48E1CBE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -263,6 +310,7 @@
 			files = (
 				7D38AFBE2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm in Sources */,
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				EBEA81ED4A31BA4446BE1E0F /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +338,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LifeTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "NativeTextInputHelpers/LifeTest-Bridging-Header.h";
@@ -319,6 +368,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = LifeTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "NativeTextInputHelpers/LifeTest-Bridging-Header.h";
@@ -403,6 +453,7 @@
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -474,6 +525,7 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};

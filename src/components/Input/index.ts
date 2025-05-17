@@ -1,2 +1,2 @@
-export {Input} from './Input';
 export type {IInput} from './Input';
+export {Input} from './Input';

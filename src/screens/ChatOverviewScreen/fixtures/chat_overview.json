@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Alice",
+    "lastMessage": "See you soon!",
+    "dateOfLastMessage": "2025-05-13T18:00:00+02:00"
+  },
+  {
+    "name": "Bob",
+    "lastMessage": "Got the files.",
+    "dateOfLastMessage": "2025-05-14T09:00:00+02:00"
+  },
+  {
+    "name": "Charlie",
+    "lastMessage": "Let's catch up tomorrow.",
+    "dateOfLastMessage": "2025-05-12T15:00:00+02:00"
+  },
+  {
+    "name": "Dana",
+    "lastMessage": "Happy birthday!",
+    "dateOfLastMessage": "2025-05-11T20:00:00+02:00"
+  },
+  {
+    "name": "Eve",
+    "lastMessage": "Meeting moved to Friday.",
+    "dateOfLastMessage": "2025-05-10T11:00:00+02:00"
+  }
+]

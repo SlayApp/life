@@ -1,13 +1,13 @@
 import {
-  memo,
   forwardRef,
+  memo,
+  useCallback,
+  useImperativeHandle,
   useRef,
   useState,
-  useImperativeHandle,
-  useCallback,
 } from 'react';
-import {TextInputProps, TextInput, findNodeHandle} from 'react-native';
-import NativeTextInputHelpers from '../../../specs/NativeTextInputHelpers';
+import {findNodeHandle, TextInput, TextInputProps} from 'react-native';
+import NativeTextInputHelpers from 'specs/NativeTextInputHelpers';
 
 export interface IInput {
   clearText: () => Promise<string | null>;
