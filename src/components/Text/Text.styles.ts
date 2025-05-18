@@ -1,44 +1,27 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const typographyStyles = StyleSheet.create({
+export const typographyStyles = StyleSheet.create(theme => ({
   text: {
-    fontFamily: 'OpenRunde-Regular',
-    color: '#000',
+    fontFamily: theme.fonts.regular,
+    color: theme.colors.primary,
     fontSize: 16,
     letterSpacing: -0.2,
 
     variants: {
-      variant: {
-        body: {
-          fontSize: 16,
-          letterSpacing: -0.2,
-          fontFamily: 'OpenRunde-Regular',
-        },
-        title: {
-          fontSize: 18,
-          letterSpacing: -0.2,
-          fontFamily: 'OpenRunde-Bold',
-        },
-        headline: {
-          fontSize: 24,
-          letterSpacing: -0.5,
-          fontFamily: 'OpenRunde-Bold',
-        },
-      },
+      variant: theme.fonts.variant,
 
       weight: {
-        regular: {fontFamily: 'OpenRunde-Regular'},
-        medium: {fontFamily: 'OpenRunde-Medium'},
-        bold: {fontFamily: 'OpenRunde-Bold'},
-        semibold: {fontFamily: 'OpenRunde-Semibold'},
+        regular: {fontFamily: theme.fonts.regular},
+        medium: {fontFamily: theme.fonts.medium},
+        bold: {fontFamily: theme.fonts.bold},
+        semibold: {fontFamily: theme.fonts.semibold},
       },
 
       color: {
-        primary: {color: '#000'},
-        secondary: {color: '#000'},
-        link: {color: '#000'},
-        inverted: {color: '#fff'},
+        primary: {color: theme.colors.primary},
+        secondary: {color: theme.colors.subdued60},
+        inverted: {color: theme.colors.inverted},
       },
     },
   },
-});
+}));

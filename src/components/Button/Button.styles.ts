@@ -1,12 +1,10 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
-  buttonContainer: (disabled: boolean) => ({
-    backgroundColor: 'black',
+export const styles = StyleSheet.create(theme => ({
+  buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 999,
-    height: 52,
-    opacity: disabled ? 0.5 : 1,
-  }),
-});
+    height: theme.layout.buttonHeight,
+  },
+}));

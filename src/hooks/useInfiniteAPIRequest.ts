@@ -19,7 +19,7 @@ type TOptions<T> = Omit<
   'queryKey' | 'queryFn'
 >;
 
-export const useInfiniteAPIRequestV2 = <
+export const useInfiniteAPIRequest = <
   T extends TExtendedMethod,
   Response extends ReturnType<T>,
 >(

@@ -6,7 +6,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {ESubscriptionEvents} from '~/enums/ESubscriptionEvents';
-import {useInfiniteAPIRequestV2} from '~/hooks/useInfiniteAPIRequest';
+import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
@@ -26,7 +26,7 @@ export const useChat = () => {
   const listRef = useRef<FlashList<MessageResponseDto>>(null);
   const optimisticPrepend = useOptimisticPrepend(characterId);
 
-  const {data, fetchNextPage, isFetching} = useInfiniteAPIRequestV2(
+  const {data, fetchNextPage, isFetching} = useInfiniteAPIRequest(
     messagesApi.getConversation,
     {
       initialPageParam: 0,
@@ -57,9 +57,9 @@ export const useChat = () => {
         id,
       });
       Socket.emit(ESubscriptionEvents.CHARACTER_MESSAGE, {
-        characterId: characterId.toString(),
+        characterId,
         message,
-        userId: user.id.toString(),
+        userId: user.id,
       });
     },
     [characterId, optimisticPrepend, user.id],

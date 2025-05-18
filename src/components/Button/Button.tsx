@@ -1,26 +1,27 @@
 import {memo} from 'react';
-import {View} from 'react-native';
+import {Pressable} from 'react-native';
+import Animated from 'react-native-reanimated';
 
-import {PressableScale} from '../PressableScale/PressableScale';
 import {Text} from '../Text';
+import {useButton} from './Button.hook';
 import {styles} from './Button.styles';
+import {IButtonProps} from './Button.types';
 
-interface IProps {
-  onPress: () => void;
-  disabled?: boolean;
-  label: string;
-}
+export const Button: React.FC<IButtonProps> = memo(props => {
+  const {onPressIn, onPressOut, animatedStyles, onPressHandler} =
+    useButton(props);
 
-export const Button: React.FC<IProps> = memo(
-  ({onPress, disabled = false, label}) => {
-    return (
-      <PressableScale disabled={disabled} onPress={onPress}>
-        <View style={styles.buttonContainer(disabled)}>
-          <Text variant="title" color="inverted">
-            {label}
-          </Text>
-        </View>
-      </PressableScale>
-    );
-  },
-);
+  return (
+    <Pressable
+      disabled={props.disabled}
+      onPress={onPressHandler}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}>
+      <Animated.View style={[animatedStyles, styles.buttonContainer]}>
+        <Text variant="title" color="inverted">
+          {props.label}
+        </Text>
+      </Animated.View>
+    </Pressable>
+  );
+});

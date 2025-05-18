@@ -1,5 +1,8 @@
 import {Image} from 'expo-image';
-import {Pressable, Text, View} from 'react-native';
+import {View} from 'react-native';
+
+import {PressableScale} from '~/components/PressableScale/PressableScale';
+import {Text} from '~/components/Text';
 
 import {useItem} from './Item.hook';
 import {styles} from './Item.styles';
@@ -10,7 +13,7 @@ export const Item: React.FC<IItemProps> = props => {
   const {onPressHandler} = useItem(props);
 
   return (
-    <Pressable onPress={onPressHandler}>
+    <PressableScale onPress={onPressHandler}>
       <View style={styles.container}>
         <View style={styles.avatar}>
           {profilePictureUri ? (
@@ -21,14 +24,14 @@ export const Item: React.FC<IItemProps> = props => {
           ) : null}
         </View>
         <View style={styles.content}>
-          <Text numberOfLines={1} style={styles.name}>
+          <Text numberOfLines={1} variant="label">
             {name}
           </Text>
-          <Text numberOfLines={2} style={styles.message}>
+          <Text numberOfLines={2} variant="body">
             {lastMessage}
           </Text>
         </View>
       </View>
-    </Pressable>
+    </PressableScale>
   );
 };

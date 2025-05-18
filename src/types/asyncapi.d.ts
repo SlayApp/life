@@ -8,7 +8,108 @@ export type paths = Record<string, never>;
 export type webhooks = Record<string, never>;
 
 export interface components {
-  schemas: never;
+  schemas: {
+    TopicDto: {
+      /**
+       * @description The topic name to subscribe/unsubscribe from
+       * @example character-updates
+       */
+      topic: string;
+    };
+    PublishDto: {
+      /**
+       * @description The topic name to subscribe/unsubscribe from
+       * @example character-updates
+       */
+      topic: string;
+      /**
+       * @description The data to publish to the topic
+       * @example {
+       *   "message": "Hello World"
+       * }
+       */
+      data: Record<string, never>;
+    };
+    CharacterMessageDto: {
+      /**
+       * @description The ID of the character
+       * @example 1
+       */
+      characterId: number;
+      /**
+       * @description The ID of the user
+       * @example 1
+       */
+      userId: number;
+      /**
+       * @description The message content
+       * @example Hello, how are you?
+       */
+      message: string;
+      /**
+       * @description Optional session ID for message tracking
+       * @example sess_123456
+       */
+      sessionId?: string;
+    };
+    CharacterResponseDto: {
+      /**
+       * @description The ID of the character
+       * @example 1
+       */
+      characterId: number;
+      /**
+       * @description The ID of the user
+       * @example 1
+       */
+      userId: string;
+      /**
+       * @description The response message from the character
+       * @example I am doing well, thank you for asking!
+       */
+      response: string;
+      /**
+       * @description Whether this is part of a multi-part response
+       * @example true
+       */
+      isMultiPart?: boolean;
+      /**
+       * @description Index of this message in a multi-part response
+       * @example 1
+       */
+      messageIndex?: number;
+      /**
+       * @description Total number of messages in a multi-part response
+       * @example 3
+       */
+      totalMessages?: number;
+      /**
+       * @description Session ID for message tracking
+       * @example sess_123456
+       */
+      sessionId?: string;
+      /**
+       * @description ID of a character that was introduced in this response
+       * @example 2
+       */
+      introducedCharacterId?: number;
+      /**
+       * @description Whether this is an introduction message
+       * @example true
+       */
+      isIntroductionMessage?: boolean;
+      /**
+       * @description Whether the character will message the user later
+       * @example true
+       */
+      willMessageUser?: boolean;
+      /**
+       * @description Delay before the next message in milliseconds
+       * @example 5000
+       */
+      messageDelay?: number;
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;

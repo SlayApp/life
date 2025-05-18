@@ -20,14 +20,7 @@ export const styles = StyleSheet.create({
     marginLeft: 12,
     gap: 2,
   },
-  name: {
-    fontSize: 17,
-    fontFamily: 'SF-Pro-Rounded-Bold',
-  },
-  message: {
-    fontSize: 16,
-    fontFamily: 'SF-Pro-Rounded-Regular',
-  },
+
   avatarImage: {
     width: '100%',
     height: '100%',

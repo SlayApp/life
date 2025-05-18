@@ -9,9 +9,9 @@ import {useCallback, useMemo, useState} from 'react';
 
 import {TExtendedMethod} from '~/types/TExtendedMethod';
 import {filterNil} from '~/utils/filterNil';
+import {getQueryKey} from '~/utils/getQueryKey';
 import {log} from '~/utils/log.util';
 
-import {getQueryKey} from './useAPIRequest';
 import {onApiError} from './useOnApiError';
 
 /**
