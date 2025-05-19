@@ -1,0 +1,313 @@
+diff --git a/node_modules/react-native-screens/ios/RNSConvert.mm b/node_modules/react-native-screens/ios/RNSConvert.mm
+index c8ba0d1..1aa8d71 100644
+--- a/node_modules/react-native-screens/ios/RNSConvert.mm
++++ b/node_modules/react-native-screens/ios/RNSConvert.mm
+@@ -83,6 +83,10 @@ + (RNSScreenStackAnimation)RNSScreenStackAnimationFromCppEquivalent:(react::RNSS
+       return RNSScreenStackAnimationSlideFromBottom;
+     case Fade_from_bottom:
+       return RNSScreenStackAnimationFadeFromBottom;
++    case Slide_and_push:
++      return RNSScreenStackAnimationSlideAndPush;
++    case Slide_and_push_fade:
++      return RNSScreenStackAnimationSlideAndPushFade;
+   }
+ }
+ 
+diff --git a/node_modules/react-native-screens/ios/RNSEnums.h b/node_modules/react-native-screens/ios/RNSEnums.h
+index 2d05610..e5f7883 100644
+--- a/node_modules/react-native-screens/ios/RNSEnums.h
++++ b/node_modules/react-native-screens/ios/RNSEnums.h
+@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, RNSScreenStackAnimation) {
+   RNSScreenStackAnimationSlideFromBottom,
+   RNSScreenStackAnimationSimplePush,
+   RNSScreenStackAnimationSlideFromLeft,
++  RNSScreenStackAnimationSlideAndPush,
++  RNSScreenStackAnimationSlideAndPushFade,
+ };
+ 
+ typedef NS_ENUM(NSInteger, RNSScreenReplaceAnimation) {
+diff --git a/node_modules/react-native-screens/ios/RNSScreen.mm b/node_modules/react-native-screens/ios/RNSScreen.mm
+index 8481d21..9feb7e1 100644
+--- a/node_modules/react-native-screens/ios/RNSScreen.mm
++++ b/node_modules/react-native-screens/ios/RNSScreen.mm
+@@ -2057,6 +2057,8 @@ @implementation RCTConvert (RNSScreen)
+       @"slide_from_left" : @(RNSScreenStackAnimationSlideFromLeft),
+       @"ios_from_right" : @(RNSScreenStackAnimationDefault),
+       @"ios_from_left" : @(RNSScreenStackAnimationSlideFromLeft),
++      @"slide_and_push" : @(RNSScreenStackAnimationSlideAndPush),
++      @"slide_and_push_fade" : @(RNSScreenStackAnimationSlideAndPushFade),
+     }),
+     RNSScreenStackAnimationDefault,
+     integerValue)
+diff --git a/node_modules/react-native-screens/ios/RNSScreenStackAnimator.mm b/node_modules/react-native-screens/ios/RNSScreenStackAnimator.mm
+index 89caf8d..3630708 100644
+--- a/node_modules/react-native-screens/ios/RNSScreenStackAnimator.mm
++++ b/node_modules/react-native-screens/ios/RNSScreenStackAnimator.mm
+@@ -459,6 +459,146 @@ - (void)animateFadeFromBottomWithTransitionContext:(id<UIViewControllerContextTr
+   }
+ }
+ 
++- (void)animateSlideAndPushFadeTransitionWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext
++                                                     toVC:(UIViewController *)toViewController
++                                                   fromVC:(UIViewController *)fromViewController
++{
++    // Container width for slide movement
++    CGFloat containerWidth = transitionContext.containerView.bounds.size.width;
++
++    // Slide-in/out transforms
++    CGAffineTransform rightTransform = CGAffineTransformMakeTranslation(containerWidth, 0);
++    CGAffineTransform leftTransform  = CGAffineTransformMakeTranslation(-containerWidth, 0);
++
++    // Flip transforms if the nav-stack is RTL
++    if (toViewController.navigationController.view.semanticContentAttribute ==
++        UISemanticContentAttributeForceRightToLeft) {
++        rightTransform = CGAffineTransformMakeTranslation(-containerWidth, 0);
++        leftTransform  = CGAffineTransformMakeTranslation(containerWidth, 0);
++    }
++
++    CGFloat duration         = [self transitionDuration:transitionContext];
++    CGFloat damping          = 1.0;   // tweak to taste
++    CGFloat initialVelocity  = 0.25;  // tweak to taste
++
++    if (_operation == UINavigationControllerOperationPush) {
++        // Starting positions
++        toViewController.view.transform = rightTransform;
++        toViewController.view.alpha     = 0.0;                    // fade-in
++        fromViewController.view.alpha   = 1.0;                    // fade-out
++
++        [transitionContext.containerView addSubview:toViewController.view];
++
++        [UIView animateWithDuration:duration
++                              delay:0
++             usingSpringWithDamping:damping
++              initialSpringVelocity:initialVelocity
++                            options:UIViewAnimationOptionCurveEaseInOut
++                         animations:^{
++            fromViewController.view.transform = leftTransform;
++            fromViewController.view.alpha     = 0.0;
++            toViewController.view.transform   = CGAffineTransformIdentity;
++            toViewController.view.alpha       = 1.0;
++        } completion:^(BOOL finished) {
++            // Clean-up so views look normal if reused
++            fromViewController.view.transform = CGAffineTransformIdentity;
++            fromViewController.view.alpha     = 1.0;
++            toViewController.view.alpha       = 1.0;
++            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
++        }];
++    }
++    else if (_operation == UINavigationControllerOperationPop) {
++        // Starting positions
++        toViewController.view.transform = leftTransform;
++        toViewController.view.alpha     = 0.0;
++        fromViewController.view.alpha   = 1.0;
++
++        [transitionContext.containerView insertSubview:toViewController.view
++                                         belowSubview:fromViewController.view];
++
++        [UIView animateWithDuration:duration
++                              delay:0
++             usingSpringWithDamping:damping
++              initialSpringVelocity:initialVelocity
++                            options:UIViewAnimationOptionCurveEaseInOut
++                         animations:^{
++            fromViewController.view.transform = rightTransform;
++            fromViewController.view.alpha     = 0.0;
++            toViewController.view.transform   = CGAffineTransformIdentity;
++            toViewController.view.alpha       = 1.0;
++        } completion:^(BOOL finished) {
++            fromViewController.view.transform = CGAffineTransformIdentity;
++            fromViewController.view.alpha     = 1.0;
++            toViewController.view.alpha       = 1.0;
++            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
++        }];
++    }
++}
++
++
++
++- (void)animateSlideAndPushTransitionWithTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext
++                                                      toVC:(UIViewController *)toViewController
++                                                    fromVC:(UIViewController *)fromViewController
++{
++    // Get the container's width for the transformation
++    float containerWidth = transitionContext.containerView.bounds.size.width;
++    
++    // Define the transformation for the incoming and outgoing views
++    CGAffineTransform rightTransform = CGAffineTransformMakeTranslation(containerWidth, 0);
++    CGAffineTransform leftTransform = CGAffineTransformMakeTranslation(-containerWidth, 0);
++    
++    // Adjust transformations for right-to-left languages if necessary
++    if (toViewController.navigationController.view.semanticContentAttribute ==
++        UISemanticContentAttributeForceRightToLeft) {
++        rightTransform = CGAffineTransformMakeTranslation(-containerWidth, 0);
++        leftTransform = CGAffineTransformMakeTranslation(containerWidth, 0);
++    }
++    
++    CGFloat duration = [self transitionDuration:transitionContext];
++    CGFloat damping = 1; // Adjust this value as needed
++    CGFloat initialVelocity = 0.25; // Adjust this value as needed
++    
++    // Handling Push Operation
++    if (_operation == UINavigationControllerOperationPush) {
++        toViewController.view.transform = rightTransform;
++        [[transitionContext containerView] addSubview:toViewController.view];
++
++        [UIView animateWithDuration:duration
++                              delay:0.0
++             usingSpringWithDamping:damping
++              initialSpringVelocity:initialVelocity
++                            options:UIViewAnimationOptionCurveEaseInOut
++                         animations:^{
++            fromViewController.view.transform = leftTransform;
++            toViewController.view.transform = CGAffineTransformIdentity;
++        }
++                         completion:^(BOOL finished) {
++            fromViewController.view.transform = CGAffineTransformIdentity;
++            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
++        }];
++    }
++    // Handling Pop Operation
++    else if (_operation == UINavigationControllerOperationPop) {
++        toViewController.view.transform = leftTransform;
++        [[transitionContext containerView] insertSubview:toViewController.view belowSubview:fromViewController.view];
++        
++        [UIView animateWithDuration:duration
++                              delay:0.0
++             usingSpringWithDamping:damping
++              initialSpringVelocity:initialVelocity
++                            options:UIViewAnimationOptionCurveEaseInOut
++                         animations:^{
++            fromViewController.view.transform = rightTransform;
++            toViewController.view.transform = CGAffineTransformIdentity;
++        }
++                         completion:^(BOOL finished) {
++            fromViewController.view.transform = CGAffineTransformIdentity;
++            [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
++        }];
++    }
++}
++
+ - (void)animateWithNoAnimation:(id<UIViewControllerContextTransitioning>)transitionContext
+                           toVC:(UIViewController *)toViewController
+                         fromVC:(UIViewController *)fromViewController
+@@ -557,6 +697,12 @@ - (void)animateTransitionWithStackAnimation:(RNSScreenStackAnimation)animation
+     case RNSScreenStackAnimationNone:
+       [self animateNoneWithTransitionContext:transitionContext toVC:toVC fromVC:fromVC];
+       return;
++    case RNSScreenStackAnimationSlideAndPush:
++      [self animateSlideAndPushTransitionWithTransitionContext:transitionContext toVC:toVC fromVC:fromVC];
++      return;
++    case RNSScreenStackAnimationSlideAndPushFade:
++      [self animateSlideAndPushFadeTransitionWithTransitionContext:transitionContext toVC:toVC fromVC:fromVC];
++      return;
+     default:
+       // simple_push is the default custom animation
+       [self animateSimplePushWithShadowEnabled:shadowEnabled
+diff --git a/node_modules/react-native-screens/lib/typescript/fabric/ModalScreenNativeComponent.d.ts b/node_modules/react-native-screens/lib/typescript/fabric/ModalScreenNativeComponent.d.ts
+index ffed502..e3a98b8 100644
+--- a/node_modules/react-native-screens/lib/typescript/fabric/ModalScreenNativeComponent.d.ts
++++ b/node_modules/react-native-screens/lib/typescript/fabric/ModalScreenNativeComponent.d.ts
+@@ -24,7 +24,7 @@ type GestureResponseDistanceType = Readonly<{
+     bottom: Float;
+ }>;
+ type StackPresentation = 'push' | 'modal' | 'transparentModal' | 'fullScreenModal' | 'formSheet' | 'containedModal' | 'containedTransparentModal';
+-type StackAnimation = 'default' | 'flip' | 'simple_push' | 'none' | 'fade' | 'slide_from_right' | 'slide_from_left' | 'slide_from_bottom' | 'fade_from_bottom' | 'ios_from_right' | 'ios_from_left';
++type StackAnimation = 'default' | 'flip' | 'simple_push' | 'none' | 'fade' | 'slide_from_right' | 'slide_from_left' | 'slide_from_bottom' | 'fade_from_bottom' | 'ios_from_right' | 'ios_from_left'  | 'slide_and_push' | 'slide_and_push_fade';
+ type SwipeDirection = 'vertical' | 'horizontal';
+ type ReplaceAnimation = 'pop' | 'push';
+ export interface NativeProps extends ViewProps {
+diff --git a/node_modules/react-native-screens/lib/typescript/fabric/ScreenNativeComponent.d.ts b/node_modules/react-native-screens/lib/typescript/fabric/ScreenNativeComponent.d.ts
+index 34013f9..69b46c9 100644
+--- a/node_modules/react-native-screens/lib/typescript/fabric/ScreenNativeComponent.d.ts
++++ b/node_modules/react-native-screens/lib/typescript/fabric/ScreenNativeComponent.d.ts
+@@ -24,7 +24,7 @@ type GestureResponseDistanceType = Readonly<{
+     bottom: Float;
+ }>;
+ type StackPresentation = 'push' | 'modal' | 'transparentModal' | 'fullScreenModal' | 'formSheet' | 'containedModal' | 'containedTransparentModal';
+-type StackAnimation = 'default' | 'flip' | 'simple_push' | 'none' | 'fade' | 'slide_from_right' | 'slide_from_left' | 'slide_from_bottom' | 'fade_from_bottom' | 'ios_from_right' | 'ios_from_left';
++type StackAnimation = 'default' | 'flip' | 'simple_push' | 'none' | 'fade' | 'slide_from_right' | 'slide_from_left' | 'slide_from_bottom' | 'fade_from_bottom' | 'ios_from_right' | 'ios_from_left'  | 'slide_and_push' | 'slide_and_push_fade';
+ type SwipeDirection = 'vertical' | 'horizontal';
+ type ReplaceAnimation = 'pop' | 'push';
+ export interface NativeProps extends ViewProps {
+diff --git a/node_modules/react-native-screens/lib/typescript/types.d.ts b/node_modules/react-native-screens/lib/typescript/types.d.ts
+index 4bc388e..95ebda5 100644
+--- a/node_modules/react-native-screens/lib/typescript/types.d.ts
++++ b/node_modules/react-native-screens/lib/typescript/types.d.ts
+@@ -11,7 +11,7 @@ export type SearchBarCommands = {
+ };
+ export type BackButtonDisplayMode = 'default' | 'generic' | 'minimal';
+ export type StackPresentationTypes = 'push' | 'modal' | 'transparentModal' | 'containedModal' | 'containedTransparentModal' | 'fullScreenModal' | 'formSheet';
+-export type StackAnimationTypes = 'default' | 'fade' | 'fade_from_bottom' | 'flip' | 'none' | 'simple_push' | 'slide_from_bottom' | 'slide_from_right' | 'slide_from_left' | 'ios_from_right' | 'ios_from_left';
++export type StackAnimationTypes = 'default' | 'fade' | 'fade_from_bottom' | 'flip' | 'none' | 'simple_push' | 'slide_from_bottom' | 'slide_from_right' | 'slide_from_left' | 'ios_from_right' | 'ios_from_left' | 'slide_and_push' | 'slide_and_push_fade';
+ export type BlurEffectTypes = 'none' | 'extraLight' | 'light' | 'dark' | 'regular' | 'prominent' | 'systemUltraThinMaterial' | 'systemThinMaterial' | 'systemMaterial' | 'systemThickMaterial' | 'systemChromeMaterial' | 'systemUltraThinMaterialLight' | 'systemThinMaterialLight' | 'systemMaterialLight' | 'systemThickMaterialLight' | 'systemChromeMaterialLight' | 'systemUltraThinMaterialDark' | 'systemThinMaterialDark' | 'systemMaterialDark' | 'systemThickMaterialDark' | 'systemChromeMaterialDark';
+ export type ScreenReplaceTypes = 'push' | 'pop';
+ export type SwipeDirectionTypes = 'vertical' | 'horizontal';
+diff --git a/node_modules/react-native-screens/src/fabric/ModalScreenNativeComponent.ts b/node_modules/react-native-screens/src/fabric/ModalScreenNativeComponent.ts
+index 8fcdefa..e48d4ae 100644
+--- a/node_modules/react-native-screens/src/fabric/ModalScreenNativeComponent.ts
++++ b/node_modules/react-native-screens/src/fabric/ModalScreenNativeComponent.ts
+@@ -59,7 +59,9 @@ type StackAnimation =
+   | 'slide_from_bottom'
+   | 'fade_from_bottom'
+   | 'ios_from_right'
+-  | 'ios_from_left';
++  | 'ios_from_left' 
++  | 'slide_and_push' 
++  | 'slide_and_push_fade';
+ 
+ type SwipeDirection = 'vertical' | 'horizontal';
+ 
+diff --git a/node_modules/react-native-screens/src/fabric/ScreenNativeComponent.ts b/node_modules/react-native-screens/src/fabric/ScreenNativeComponent.ts
+index 37dbf94..09b72fa 100644
+--- a/node_modules/react-native-screens/src/fabric/ScreenNativeComponent.ts
++++ b/node_modules/react-native-screens/src/fabric/ScreenNativeComponent.ts
+@@ -1,7 +1,7 @@
+ 'use client';
+ 
+ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+-import type { ViewProps, ColorValue } from 'react-native';
++import type {ViewProps, ColorValue} from 'react-native';
+ import type {
+   DirectEventHandler,
+   WithDefault,
+@@ -59,7 +59,9 @@ type StackAnimation =
+   | 'slide_from_bottom'
+   | 'fade_from_bottom'
+   | 'ios_from_right'
+-  | 'ios_from_left';
++  | 'ios_from_left'
++  | 'slide_and_push'
++  | 'slide_and_push_fade';
+ 
+ type SwipeDirection = 'vertical' | 'horizontal';
+ 
+diff --git a/node_modules/react-native-screens/src/types.tsx b/node_modules/react-native-screens/src/types.tsx
+index 0f4ddda..2158eb3 100644
+--- a/node_modules/react-native-screens/src/types.tsx
++++ b/node_modules/react-native-screens/src/types.tsx
+@@ -39,7 +39,9 @@ export type StackAnimationTypes =
+   | 'slide_from_right'
+   | 'slide_from_left'
+   | 'ios_from_right'
+-  | 'ios_from_left';
++  | 'ios_from_left' 
++  | 'slide_and_push' 
++  | 'slide_and_push_fade';
+ export type BlurEffectTypes =
+   | 'none'
+   | 'extraLight'
+diff --git a/node_modules/react-native-screens/windows/RNScreens/Screen.h b/node_modules/react-native-screens/windows/RNScreens/Screen.h
+index 7abf426..52524e6 100644
+--- a/node_modules/react-native-screens/windows/RNScreens/Screen.h
++++ b/node_modules/react-native-screens/windows/RNScreens/Screen.h
+@@ -12,7 +12,9 @@ enum class StackAnimation {
+   SLIDE_FROM_RIGHT,
+   SLIDE_FROM_LEFT,
+   IOS_FROM_RIGHT,
+-  IOS_FROM_LEFT
++  IOS_FROM_LEFT,
++  SLIDE_AND_PUSH,
++  SLIDE_AND_PUSH_FADE,
+ };
+ 
+ enum class ReplaceAnimation { PUSH, POP };

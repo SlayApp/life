@@ -1,12 +1,16 @@
+import {EdgeInsets} from 'react-native-safe-area-context';
 import {StyleSheet} from 'react-native-unistyles';
 
 import {getHeight, getWidth} from './theme.utils';
 
 export const theme = {
   colors: {
+    background: '#FFFFFF',
     primary: '#111111',
     inverted: '#FFFFFF',
     subdued98: '#F9F9F9',
+    subdued97: '#F7F7F7',
+    subdued96: '#F5F5F5',
     subdued95: '#F2F2F2',
     subdued94: '#F0F0F0',
     subdued89: '#E2E2E2',
@@ -42,6 +46,11 @@ export const theme = {
     medium: 'OpenRunde-Medium',
 
     variant: {
+      small: {
+        fontSize: 14,
+        letterSpacing: -0.1,
+        fontFamily: 'OpenRunde-Regular',
+      },
       body: {
         fontSize: 16,
         letterSpacing: -0.2,
@@ -61,7 +70,12 @@ export const theme = {
       },
       h2: {
         fontSize: 21,
-        letterSpacing: -0.4,
+        letterSpacing: -0.5,
+        fontFamily: 'OpenRunde-Bold',
+      },
+      h3: {
+        fontSize: 20,
+        letterSpacing: -0.5,
         fontFamily: 'OpenRunde-Bold',
       },
       headline: {
@@ -87,13 +101,14 @@ export const theme = {
     screenMarginHorizontal: 16,
     headerHeight: 48,
     buttonHeight: 52,
+    buttonKeyboardOffset: 16,
   } as const,
   insets: {
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-  } as const,
+  } as EdgeInsets,
 } as const;
 
 StyleSheet.configure({themes: {main: theme}});

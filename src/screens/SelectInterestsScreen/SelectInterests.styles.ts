@@ -1,45 +1,26 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   flex1: {
     flex: 1,
   },
   container: {
     flex: 1,
-    paddingHorizontal: 32,
-    gap: 32,
-    marginTop: 40,
+    paddingHorizontal: theme.layout.onboardingScreenMarginHorizontal,
+    gap: theme.spacing['24'],
+    marginTop: theme.spacing['40'],
   },
   titleContainer: {
-    flexDirection: 'column',
-    gap: 8,
-  },
-  title: {
-    fontSize: 26,
-    fontFamily: 'SF-Pro-Rounded-Bold',
-  },
-  subtitle: {
-    fontSize: 17,
-    fontFamily: 'SF-Pro-Rounded-Medium',
-    color: '#9B9B9B',
-  },
-  input: {
-    fontSize: 20,
-    fontFamily: 'SF-Pro-Rounded-Bold',
-  },
-  button: {
-    height: 52,
-    backgroundColor: '#000',
-    borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column',
+    gap: theme.spacing['4'],
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 20,
-    fontFamily: 'SF-Pro-Rounded-Bold',
+  inputContainer: {
+    marginHorizontal: theme.spacing['16'],
+    backgroundColor: theme.colors.subdued95,
+    paddingVertical: theme.spacing['12'],
+    paddingHorizontal: theme.spacing['16'],
+    borderRadius: 12,
+    borderCurve: 'continuous',
   },
-  buttonContainer: {
-    marginHorizontal: 32,
-  },
-});
+}));

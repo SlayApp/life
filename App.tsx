@@ -7,10 +7,13 @@ import React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {enableFreeze} from 'react-native-screens';
 
 import {RessourceLoader} from '~/components/RessourceLoader';
 import {RootStack} from '~/navigation/RootStack';
 import {queryClient} from '~/utils/cache/queryClient';
+
+enableFreeze(true);
 
 function App(): React.JSX.Element {
   return (

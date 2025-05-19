@@ -8,14 +8,17 @@ type VariantProps = UnistylesVariants<typeof typographyStyles>;
 type Props = VariantProps & {
   children: React.ReactNode;
   style?: StyleProp<TextStyle>;
+  align?: TextStyle['textAlign'];
 } & Omit<TextProps, 'style'>;
 
 export const Text: React.FC<Props> = memo(
-  ({variant, weight, color, style, children, ...rest}) => {
+  ({variant, weight, color, style, children, align, ...rest}) => {
     typographyStyles.useVariants({variant, weight, color});
 
     return (
-      <RNText style={[typographyStyles.text, style]} {...rest}>
+      <RNText
+        style={[typographyStyles.text, style, {textAlign: align}]}
+        {...rest}>
         {children}
       </RNText>
     );

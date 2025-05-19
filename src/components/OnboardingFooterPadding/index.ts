@@ -1,0 +1,1 @@
+export {OnboardingFooterPadding} from './OnboardingFooterPadding';

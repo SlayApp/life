@@ -1,0 +1,1 @@
+export {FluidOnboardingTemplate} from './FluidOnboardingTemplate';

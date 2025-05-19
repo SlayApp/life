@@ -1,6 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 
+import {Insets} from '~/components/Insets/Insets';
 import {ERootStack} from '~/enums/ERootStack';
 import {TRootParamList} from '~/types/navigation';
 
@@ -44,6 +45,7 @@ const RootStackInner: React.FC = () => {
 export const RootStack: React.FC = () => {
   return (
     <RootStackProvider>
+      <Insets />
       <RootStackInner />
     </RootStackProvider>
   );
