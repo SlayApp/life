@@ -17,7 +17,7 @@ export const ResendCode: React.FC<IProps> = memo(({loading, onPress}) => {
   const {secondsLeft, animatedTextStyles, disabled} = useResendCode(loading);
 
   return (
-    <PressableScale onPress={onPress}>
+    <PressableScale disabled={disabled} onPress={onPress}>
       <Animated.View>
         <AnimatedText
           align="center"

@@ -13,9 +13,9 @@ const timingConfig = {
   easing: inOutQuad,
 };
 
-export const useCodeItem = (value?: string) => {
+export const useCodeItem = (focused: boolean) => {
   const derivedValue = useDerivedValue(() =>
-    withTiming(typeof value === 'undefined' ? 0 : 1, timingConfig),
+    withTiming(focused ? 1 : 0, timingConfig),
   );
 
   const animatedStyles = useAnimatedStyle(() => {

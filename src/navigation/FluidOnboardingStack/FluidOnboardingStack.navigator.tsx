@@ -5,8 +5,10 @@ import {
 import {memo} from 'react';
 
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
+import {EnterAgeScreen} from '~/screens/EnterAgeScreen';
 import {EnterNameScreen} from '~/screens/EnterNameScreen/EnterName.screen';
 import {EnterPhoneNumberScreen} from '~/screens/EnterPhoneNumberScreen';
+import {SelectGenderScreen} from '~/screens/SelectGenderScreen';
 import {SelectInterestsScreen} from '~/screens/SelectInterestsScreen';
 import {VerifyPhoneNumberScreen} from '~/screens/VerifyPhoneNumberScreen';
 
@@ -43,6 +45,14 @@ export const FluidOnboardingStackNavigator: React.FC = memo(() => {
       <Stack.Screen
         name={EFluidOnboardingStack.SelectInterests}
         component={SelectInterestsScreen}
+      />
+      <Stack.Screen
+        name={EFluidOnboardingStack.EnterAge}
+        component={EnterAgeScreen}
+      />
+      <Stack.Screen
+        name={EFluidOnboardingStack.SelectGender}
+        component={SelectGenderScreen}
       />
     </Stack.Navigator>
   );

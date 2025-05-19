@@ -36,7 +36,7 @@ export const useEnterNameScreen = () => {
   }, [createUser, name, updateUser]);
 
   const onPressTest = useCallback(async () => {
-    navigate(EFluidOnboardingStack.SelectInterests);
+    navigate(EFluidOnboardingStack.EnterAge);
   }, [navigate]);
 
   useSetFluidOnboardingStackProps({

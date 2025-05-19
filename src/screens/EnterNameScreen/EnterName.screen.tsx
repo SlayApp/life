@@ -12,8 +12,8 @@ export const EnterNameScreen: React.FC = () => {
   return (
     <FluidOnboardingWrapper>
       <FluidOnboardingTemplate
-        title="Name your character"
-        subtitle="Choose a name for your character">
+        title="What's your name?"
+        subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr">
         <OnboardingTextInput
           ref={ref}
           autoFocus

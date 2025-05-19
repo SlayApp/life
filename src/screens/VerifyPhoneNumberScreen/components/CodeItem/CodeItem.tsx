@@ -7,10 +7,11 @@ import {useCodeItem} from './CodeItem.hook';
 import {styles} from './CodeItem.styles';
 
 interface IProps {
-  value?: string;
+  focused: boolean;
+  value?: string | boolean;
 }
-export const CodeItem: React.FC<IProps> = ({value}) => {
-  const {animatedStyles} = useCodeItem(value);
+export const CodeItem: React.FC<IProps> = ({value, focused}) => {
+  const {animatedStyles} = useCodeItem(focused);
 
   return (
     <Animated.View
