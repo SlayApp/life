@@ -20,6 +20,7 @@ export const theme = {
     subdued84: '#D7D7D7',
     subdued80: '#CCCCCC',
     subdued60: '#999999',
+    subdued40: '#666666',
     accent: '#111111',
   } as const,
   spacing: {
@@ -111,6 +112,35 @@ export const theme = {
     left: 0,
     right: 0,
   } as EdgeInsets,
+  shadows: {
+    whiteOnWhite: [
+      {
+        offsetX: 0,
+        offsetY: 8,
+        blurRadius: 48,
+        color: 'rgba(238,238,238,1)',
+      },
+      {
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 8,
+        color: 'rgba(66,71,76,0.06)',
+      },
+      {
+        offsetX: 0,
+        offsetY: 0,
+        blurRadius: 1.5,
+        color: 'rgba(66,71,76,0.32)',
+      },
+      {
+        offsetX: 0,
+        offsetY: 2,
+        blurRadius: 1,
+        inset: true,
+        color: 'rgba(255,255,255,1)',
+      },
+    ] as const,
+  },
 } as const;
 
 StyleSheet.configure({themes: {main: theme}});

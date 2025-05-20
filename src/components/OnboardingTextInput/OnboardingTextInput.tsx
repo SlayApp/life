@@ -1,19 +1,21 @@
-import {forwardRef} from 'react';
-import {TextInput, TextInputProps, View} from 'react-native';
+import {forwardRef, memo} from 'react';
 
+import {IInput, Input} from '../Input';
+import {TInputProps} from '../Input/Input';
+import {WhiteOnWhiteShadow} from '../WhiteOnWhiteShadow/WhiteOnWhiteShadow';
 import {styles} from './OnboardingTextInput.styles';
 
-export const OnboardingTextInput = forwardRef<TextInput, TextInputProps>(
-  (props, ref) => {
+export const OnboardingTextInput = memo(
+  forwardRef<IInput, TInputProps>((props, ref) => {
     return (
-      <View style={styles.container}>
-        <TextInput
+      <WhiteOnWhiteShadow style={styles.container}>
+        <Input
           {...props}
           numberOfLines={1}
           ref={ref}
           style={[props.style, styles.input]}
         />
-      </View>
+      </WhiteOnWhiteShadow>
     );
-  },
+  }),
 );

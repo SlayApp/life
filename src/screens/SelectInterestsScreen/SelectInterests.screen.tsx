@@ -7,6 +7,7 @@ import {OnboardingTextInput} from '~/components/OnboardingTextInput';
 import {AddButton} from './components';
 import {InterestList} from './components/InterestList/InterestList';
 import {useSelectInterestsScreen} from './SelectInterests.hook';
+import {styles} from './SelectInterests.styles';
 
 export const SelectInterestsScreen: React.FC = () => {
   const {
@@ -15,7 +16,6 @@ export const SelectInterestsScreen: React.FC = () => {
     onAddInterestPress,
     interests,
     setInterest,
-    interest,
     validInterest,
     onRemoveInterestPress,
   } = useSelectInterestsScreen();
@@ -25,17 +25,16 @@ export const SelectInterestsScreen: React.FC = () => {
       <FluidOnboardingTemplate
         title="Add your interest"
         subtitle="Enter at least 3 interests">
-        <View style={{justifyContent: 'center'}}>
+        <View style={styles.innerContainer}>
           <OnboardingTextInput
             ref={ref}
             placeholder="Taylor Swift"
             textAlign="center"
-            value={interest}
             onChangeText={setInterest}
             placeholderTextColor={theme.colors.subdued80}
           />
           {validInterest ? (
-            <View style={{position: 'absolute', zIndex: 99, right: 8}}>
+            <View style={styles.buttonContainer}>
               <AddButton onPress={onAddInterestPress} />
             </View>
           ) : null}

@@ -1,13 +1,13 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
-    backgroundColor: 'black',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    backgroundColor: theme.colors.primary,
+    paddingHorizontal: theme.spacing['8'],
+    paddingVertical: theme.spacing['4'],
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: theme.spacing['4'],
   },
-});
+}));

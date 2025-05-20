@@ -5,10 +5,10 @@ export const styles = StyleSheet.create(theme => ({
     ...theme.fonts.variant.h3,
   },
   container: {
-    backgroundColor: theme.colors.subdued95,
+    backgroundColor: theme.colors.subdued98,
     paddingVertical: theme.spacing['12'],
     paddingHorizontal: theme.spacing['16'],
-    borderRadius: 12,
+    borderRadius: 16,
     borderCurve: 'continuous',
   },
 }));

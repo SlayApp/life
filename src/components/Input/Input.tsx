@@ -15,12 +15,14 @@ export interface IInput {
   blur: TextInput['blur'];
 }
 
-type TProps = TextInputProps;
+export type TInputProps = Omit<TextInputProps, 'value'> & {
+  initialValue?: string;
+};
 
 export const Input = memo(
-  forwardRef<IInput, TProps>((props, ref) => {
+  forwardRef<IInput, TInputProps>((props, ref) => {
     const inputRef = useRef<TextInput>(null);
-    const [_, setText] = useState('');
+    const [text, setText] = useState(props.initialValue ?? '');
     const {onChangeText} = props;
 
     const handleChangeText = useCallback(
@@ -54,7 +56,12 @@ export const Input = memo(
     );
 
     return (
-      <TextInput {...props} onChangeText={handleChangeText} ref={inputRef} />
+      <TextInput
+        {...props}
+        value={text}
+        onChangeText={handleChangeText}
+        ref={inputRef}
+      />
     );
   }),
 );

@@ -16,13 +16,14 @@ export const VerifyPhoneNumberScreen: React.FC = () => {
     onChangeText,
     loading,
     onResendCodePress,
+    phoneNumber,
   } = useVerifyPhoneNumberScreen();
 
   return (
     <FluidOnboardingWrapper>
       <FluidOnboardingTemplate
         title="Confirm your phone number"
-        subtitle={'Please enter the code we sent\nto +1 123 456'}>
+        subtitle={`Please enter the code we sent\nto ${phoneNumber}`}>
         <View>
           <Pressable style={styles.container} onPress={onCodeInputPress}>
             <CodeField code={code} />

@@ -3,14 +3,19 @@ import {useCallback, useState} from 'react';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
+import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
 
 export const useEnterPhoneNumberScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const {goBack, navigate} = useFluidOnboardingNavigation();
 
-  const onPress = useCallback(() => {
+  const {setPhoneNumber: setUnauthorizedStackPhoneNumber} =
+    useUnauthorizedStack();
+
+  const onPress = useCallback(async () => {
+    setUnauthorizedStackPhoneNumber(`+1 ${phoneNumber}`);
     navigate(EFluidOnboardingStack.VerifyPhoneNumber);
-  }, [navigate]);
+  }, [navigate, phoneNumber, setUnauthorizedStackPhoneNumber]);
 
   useSetFluidOnboardingStackProps({
     onPress,
@@ -18,5 +23,5 @@ export const useEnterPhoneNumberScreen = () => {
     disabled: !phoneNumber.trim(),
   });
 
-  return {phoneNumber, setPhoneNumber, onPress};
+  return {onPress, setPhoneNumber};
 };

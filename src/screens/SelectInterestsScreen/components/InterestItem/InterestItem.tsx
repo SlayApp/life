@@ -17,7 +17,7 @@ export const InterestItem: React.FC<IInterestItemProps> = memo(props => {
     <PressableScale onPress={onPress}>
       <View style={styles.container}>
         <Text color="inverted" weight="bold" variant="body">
-          {interest}
+          {interest.name}
         </Text>
         <SymbolView name="xmark" size={12} weight="bold" tintColor="white" />
       </View>

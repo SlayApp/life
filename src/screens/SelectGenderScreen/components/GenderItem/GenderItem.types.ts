@@ -1,6 +1,8 @@
+import {EUserGender} from '~/enums/EUserGender';
+
 export interface IGenderItemProps {
+  id: EUserGender;
   title: string;
-  onPress: (index: number) => void;
-  index: number;
+  onPress: (id: EUserGender) => void;
   selected: boolean;
 }

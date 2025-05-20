@@ -25,17 +25,17 @@ export const SpringOriginXYAnimation: LayoutAnimationFunction = values => {
   return {
     animations: {
       originX: spring(values.targetOriginX, {
-        response: 0.6,
-        dampingFraction: 0.6,
+        response: 0.4,
+        dampingFraction: 0.925,
       }),
       originY: spring(values.targetOriginY, {
-        response: 0.6,
-        dampingFraction: 0.6,
+        response: 0.4,
+        dampingFraction: 0.925,
       }),
     },
 
     initialValues: {
-      originX: values.currentOriginY,
+      originX: values.currentOriginX,
       originY: values.currentOriginY,
     },
   };

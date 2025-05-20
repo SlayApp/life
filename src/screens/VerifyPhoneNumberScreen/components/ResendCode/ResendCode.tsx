@@ -21,7 +21,7 @@ export const ResendCode: React.FC<IProps> = memo(({loading, onPress}) => {
       <Animated.View>
         <AnimatedText
           align="center"
-          variant="small"
+          variant="body"
           weight="medium"
           color="secondary"
           style={animatedTextStyles}>

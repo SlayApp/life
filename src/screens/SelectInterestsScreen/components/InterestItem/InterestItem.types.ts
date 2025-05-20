@@ -1,5 +1,6 @@
+import {TInterest} from '../../SelectInterests.types';
+
 export interface IInterestItemProps {
-  interest: string;
-  index: number;
-  onRemoveInterestPress: (index: number) => void;
+  interest: TInterest;
+  onRemoveInterestPress: (id: string) => void;
 }

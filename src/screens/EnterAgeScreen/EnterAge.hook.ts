@@ -4,9 +4,11 @@ import {useCallback, useMemo, useState} from 'react';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
+import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
 
 export const useEnterAgeScreen = () => {
-  const [date, setDate] = useState(new Date());
+  const {setBirthday, birthday} = useUnauthorizedStack();
+  const [date, setDate] = useState(birthday.current ?? new Date());
   const {goBack, navigate} = useFluidOnboardingNavigation();
 
   const isDateValid = useMemo(() => {
@@ -14,8 +16,10 @@ export const useEnterAgeScreen = () => {
   }, [date]);
 
   const onPress = useCallback(() => {
+    // const ageInYears = differenceInYears(new Date(), date);
+    setBirthday(date);
     navigate(EFluidOnboardingStack.SelectGender);
-  }, [navigate]);
+  }, [date, navigate, setBirthday]);
 
   useSetFluidOnboardingStackProps({
     onPress,

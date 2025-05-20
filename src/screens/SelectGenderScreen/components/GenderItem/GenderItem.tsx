@@ -9,12 +9,16 @@ import {styles} from './GenderItem.styles';
 import {IGenderItemProps} from './GenderItem.types';
 
 export const GenderItem: React.FC<IGenderItemProps> = props => {
-  const {onPressHandler, animatedBorderStyle, animatedCheckmarkStyle, theme} =
-    useGenderItem(props);
+  const {
+    onPressHandler,
+    animatedContainerStyles,
+    animatedCheckmarkStyle,
+    theme,
+  } = useGenderItem(props);
 
   return (
     <PressableScale haptics activeScale={0.98} onPress={onPressHandler}>
-      <Animated.View style={[styles.itemContainer, animatedBorderStyle]}>
+      <Animated.View style={[styles.itemContainer, animatedContainerStyles]}>
         <Text variant="title">{props.title}</Text>
         <Animated.View style={animatedCheckmarkStyle}>
           <SymbolView

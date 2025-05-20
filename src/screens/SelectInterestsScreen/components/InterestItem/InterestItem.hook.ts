@@ -3,12 +3,12 @@ import {useCallback} from 'react';
 import {IInterestItemProps} from './InterestItem.types';
 
 export const useInterestItem = ({
-  index,
+  interest,
   onRemoveInterestPress,
 }: IInterestItemProps) => {
   const onPress = useCallback(
-    () => onRemoveInterestPress(index),
-    [index, onRemoveInterestPress],
+    () => onRemoveInterestPress(interest.id),
+    [interest.id, onRemoveInterestPress],
   );
 
   return {onPress};

@@ -10,20 +10,20 @@ import {useSelectGender} from './SelectGender.hook';
 import {styles} from './SelectGender.styles';
 
 export const SelectGenderScreen: React.FC = () => {
-  const {selectedGenderIndex, setSelectedGenderIndex} = useSelectGender();
+  const {selectedGender, setSelectedGender} = useSelectGender();
 
   const itemsMarkup = useMemo(
     () =>
-      GENDER_ITEMS.map((item, index) => (
+      GENDER_ITEMS.map(item => (
         <GenderItem
-          selected={selectedGenderIndex === index}
+          id={item}
+          selected={selectedGender === item}
           key={item}
           title={item}
-          onPress={setSelectedGenderIndex}
-          index={index}
+          onPress={setSelectedGender}
         />
       )),
-    [selectedGenderIndex, setSelectedGenderIndex],
+    [selectedGender, setSelectedGender],
   );
 
   return (

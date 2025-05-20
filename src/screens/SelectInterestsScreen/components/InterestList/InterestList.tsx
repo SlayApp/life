@@ -1,25 +1,27 @@
 import {memo} from 'react';
-import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
+import {SpringOriginXYAnimation} from '~/motion/layoutTransitions';
+
+import {TInterest} from '../../SelectInterests.types';
 import {InterestItem} from '../InterestItem';
 import {styles} from './InterestList.styles';
 
 interface IProps {
-  interests: string[];
-  onRemoveInterestPress: (index: number) => void;
+  interests: TInterest[];
+  onRemoveInterestPress: (id: string) => void;
 }
 
 export const InterestList: React.FC<IProps> = memo(
   ({interests, onRemoveInterestPress}) => {
     return (
       <Animated.View style={styles.container}>
-        {interests.map((interest, index) => (
+        {interests.map(interest => (
           <Animated.View
-            key={`${index}-${interest}`}
+            key={interest.id}
             entering={FadeIn.duration(100)}
-            exiting={FadeOut.duration(100)}>
+            layout={SpringOriginXYAnimation}>
             <InterestItem
-              index={index}
               interest={interest}
               onRemoveInterestPress={onRemoveInterestPress}
             />

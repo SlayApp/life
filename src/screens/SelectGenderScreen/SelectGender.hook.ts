@@ -1,34 +1,46 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
+import {EUserGender} from '~/enums/EUserGender';
+import {useAfterFirstRenderEffect} from '~/hooks/useAfterFirstRenderEffect';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
+import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
 
 export const useSelectGender = () => {
   const {goBack, navigate} = useFluidOnboardingNavigation();
-  const [selectedGenderIndex, setSelectedGenderIndex] = useState<number | null>(
-    null,
+  const {setGender: setUnauthorizedStackGender, gender} =
+    useUnauthorizedStack();
+  const [selectedGender, setSelectedGender] = useState<EUserGender | null>(
+    gender.current ?? null,
   );
 
   const onPress = useCallback(() => {
-    navigate(EFluidOnboardingStack.SelectInterests);
-  }, [navigate]);
-
-  useEffect(() => {
-    if (selectedGenderIndex !== null) {
-      onPress();
+    if (!selectedGender) {
+      return;
     }
-  }, [selectedGenderIndex, onPress]);
+
+    setUnauthorizedStackGender(selectedGender);
+    navigate(EFluidOnboardingStack.SelectInterests);
+  }, [navigate, selectedGender, setUnauthorizedStackGender]);
+
+  useAfterFirstRenderEffect(
+    useCallback(() => {
+      if (selectedGender !== null) {
+        onPress();
+      }
+    }, [selectedGender, onPress]),
+  );
 
   useSetFluidOnboardingStackProps({
-    disabled: selectedGenderIndex === null,
+    disabled: !selectedGender,
     onBackPress: goBack,
     onPress,
   });
 
   return {
     onPress,
-    selectedGenderIndex,
-    setSelectedGenderIndex,
+    selectedGender,
+    setSelectedGender,
   };
 };

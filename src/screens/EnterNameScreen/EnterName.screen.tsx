@@ -17,7 +17,7 @@ export const EnterNameScreen: React.FC = () => {
         <OnboardingTextInput
           ref={ref}
           autoFocus
-          value={name}
+          initialValue={name}
           onChangeText={setName}
           placeholder="Name"
           textAlign="center"
