@@ -10,15 +10,15 @@ export const useSelectGender = () => {
     null,
   );
 
+  const onPress = useCallback(() => {
+    navigate(EFluidOnboardingStack.SelectInterests);
+  }, [navigate]);
+
   useEffect(() => {
     if (selectedGenderIndex !== null) {
-      navigate(EFluidOnboardingStack.SelectInterests);
+      onPress();
     }
-  }, [selectedGenderIndex, navigate]);
-
-  const onPress = useCallback(() => {
-    navigate(EFluidOnboardingStack.SelectGender);
-  }, [navigate]);
+  }, [selectedGenderIndex, onPress]);
 
   useSetFluidOnboardingStackProps({
     disabled: selectedGenderIndex === null,

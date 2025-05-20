@@ -18,3 +18,25 @@ export const SpringOriginXAnimation: LayoutAnimationFunction = values => {
     },
   };
 };
+
+export const SpringOriginXYAnimation: LayoutAnimationFunction = values => {
+  'worklet';
+
+  return {
+    animations: {
+      originX: spring(values.targetOriginX, {
+        response: 0.6,
+        dampingFraction: 0.6,
+      }),
+      originY: spring(values.targetOriginY, {
+        response: 0.6,
+        dampingFraction: 0.6,
+      }),
+    },
+
+    initialValues: {
+      originX: values.currentOriginY,
+      originY: values.currentOriginY,
+    },
+  };
+};

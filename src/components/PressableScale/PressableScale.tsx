@@ -61,7 +61,6 @@ export function PressableScale({
   return (
     <Pressable
       {...rest}
-      hitSlop={20}
       onPress={onPressHandler}
       onPressIn={onPressInHandler}
       onPressOut={onPressOutHandler}>
