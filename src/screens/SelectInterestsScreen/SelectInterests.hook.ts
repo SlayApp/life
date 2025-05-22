@@ -1,22 +1,28 @@
-import {useNavigation} from '@react-navigation/native';
 import {randomUUID} from 'expo-crypto';
 import {useCallback, useRef, useState} from 'react';
 import {useUnistyles} from 'react-native-unistyles';
 
+import {interestApi} from '~/api/api';
 import {IInput} from '~/components/Input';
-import {EUnauthorizedStack} from '~/enums/EUnauthorizedStack';
+import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
+import {useAPIMutation} from '~/hooks/useAPIMutation';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
+import {log} from '~/utils/log.util';
+import {resetToAuthorizedStack} from '~/utils/resetToAuthorizedStack';
 
 import {TInterest} from './SelectInterests.types';
 
 export const useSelectInterestsScreen = () => {
+  const user = useGetCachedUser();
   const ref = useRef<IInput>(null);
   const {theme} = useUnistyles();
   const [interest, setInterest] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [interests, setInterests] = useState<TInterest[]>([]);
-  const {goBack} = useFluidOnboardingNavigation();
-  const {navigate} = useNavigation();
+  const {goBack, popTo} = useFluidOnboardingNavigation();
+  const [addInterest] = useAPIMutation(interestApi.addUserInterest);
 
   const validInterest = !!interest.trim();
 
@@ -32,16 +38,33 @@ export const useSelectInterestsScreen = () => {
     setInterest('');
   }, []);
 
-  const onPress = useCallback(() => {
-    navigate(EUnauthorizedStack.Loading);
-  }, [navigate]);
+  const onPress = useCallback(async () => {
+    if (!user?.id) {
+      popTo(EFluidOnboardingStack.EnterPhoneNumber);
+
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await addInterest(user.id, {
+        interests: interests.map(interest => interest.name),
+      });
+      resetToAuthorizedStack();
+    } catch (error) {
+      log.error('Error in SelectInterestsScreen', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id, popTo, addInterest, interests]);
 
   const onRemoveInterestPress = useCallback((id: string) => {
     setInterests(prev => prev.filter(interest => interest.id !== id));
   }, []);
 
   useSetFluidOnboardingStackProps({
-    disabled: interests.length < 3,
+    loading,
+    disabled: interests.length < 3 || loading,
     onBackPress: goBack,
     onPress,
   });

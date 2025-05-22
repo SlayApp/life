@@ -1,28 +1,36 @@
+import {UpdateUserDtoGenderEnum} from 'api-client/api';
 import {useCallback, useState} from 'react';
 
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
-import {EUserGender} from '~/enums/EUserGender';
 import {useAfterFirstRenderEffect} from '~/hooks/useAfterFirstRenderEffect';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
-import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
+import {useUpdateUser} from '~/hooks/useUpdateUser';
 
 export const useSelectGender = () => {
-  const {goBack, navigate} = useFluidOnboardingNavigation();
-  const {setGender: setUnauthorizedStackGender, gender} =
-    useUnauthorizedStack();
-  const [selectedGender, setSelectedGender] = useState<EUserGender | null>(
-    gender.current ?? null,
-  );
+  const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
+  const user = useGetCachedUser();
+  const updateUser = useUpdateUser();
+  const [selectedGender, setSelectedGender] =
+    useState<UpdateUserDtoGenderEnum | null>(null);
 
   const onPress = useCallback(() => {
     if (!selectedGender) {
       return;
     }
 
-    setUnauthorizedStackGender(selectedGender);
+    if (!user?.id) {
+      popTo(EFluidOnboardingStack.EnterPhoneNumber);
+
+      return;
+    }
+
+    updateUser(user.id, {gender: selectedGender}).catch(() => {
+      popTo(EFluidOnboardingStack.SelectGender);
+    });
     navigate(EFluidOnboardingStack.SelectInterests);
-  }, [navigate, selectedGender, setUnauthorizedStackGender]);
+  }, [navigate, popTo, selectedGender, updateUser, user?.id]);
 
   useAfterFirstRenderEffect(
     useCallback(() => {

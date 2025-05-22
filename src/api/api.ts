@@ -1,4 +1,10 @@
-import {Configuration, MessagesApi, UsersApi} from 'api-client';
+import {
+  AuthApi,
+  Configuration,
+  InterestMatchingApi,
+  MessagesApi,
+  UsersApi,
+} from 'api-client';
 
 import {Environment} from '~/service/Environment';
 import {TExtendAll} from '~/types/TExtendAll';
@@ -26,4 +32,6 @@ function create<T extends Record<string, any>>(instance: T) {
 }
 
 export const usersApi = create(new UsersApi(configuration));
+export const authApi = create(new AuthApi(configuration));
+export const interestApi = create(new InterestMatchingApi(configuration));
 export const messagesApi = create(new MessagesApi(configuration));

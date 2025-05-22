@@ -1,32 +1,24 @@
-import {useEffect, useState} from 'react';
+import axios from 'axios';
+import {useEffect} from 'react';
 
-import {usersApi} from '~/api/api';
-import {useAPIMutation} from '~/hooks/useAPIMutation';
+import {ERootStack} from '~/enums/ERootStack';
+import {useFindUser} from '~/hooks/useFindUser';
+import {Environment} from '~/service/Environment';
 import {LifetimeStorage} from '~/service/LifetimeStorage';
 
-import {useRootStackContainer} from './RootStack.provider';
-
 export const useRootStack = () => {
-  const [loading, setLoading] = useState(true);
-  const {setUser, user} = useRootStackContainer();
-  const [findUser] = useAPIMutation(usersApi.findOne);
-
   useEffect(() => {
-    const id = LifetimeStorage.getString('id');
-    if (!id) {
-      setLoading(false);
+    const token = LifetimeStorage.getString('authToken');
 
-      return;
-    }
+    axios.defaults.baseURL = Environment.API_BASE_URL;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  }, []);
 
-    const doIt = async () => {
-      const user = await findUser(Number(id));
-      setUser(user);
-      setLoading(false);
-    };
+  const {user, isLoading} = useFindUser();
 
-    doIt();
-  }, [findUser, setUser]);
+  const initialRouteName = user
+    ? ERootStack.Authorized
+    : ERootStack.Unauthorized;
 
-  return {loading, user};
+  return {loading: isLoading, user, initialRouteName};
 };

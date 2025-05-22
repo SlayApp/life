@@ -19,7 +19,6 @@ export const SelectGenderScreen: React.FC = () => {
           id={item}
           selected={selectedGender === item}
           key={item}
-          title={item}
           onPress={setSelectedGender}
         />
       )),

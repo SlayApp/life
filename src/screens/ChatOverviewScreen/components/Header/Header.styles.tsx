@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native-unistyles';
 
 import {CHAT_HEADER_HEIGHT} from '~/screens/ChatScreen/Chat.constants';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     position: 'absolute',
     top: 0,
@@ -16,18 +16,22 @@ export const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: theme.layout.screenMarginHorizontal,
     justifyContent: 'space-between',
   },
   backButton: {
-    height: 20,
+    height: theme.spacing[20],
     width: 20,
   },
-  title: {
-    fontSize: 24,
-    fontFamily: 'SF-Pro-Rounded-Bold',
+  nameContainer: {
+    width: 28,
+    height: 28,
+    backgroundColor: '#000',
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   placeholderButton: {
     opacity: 0,
   },
-});
+}));

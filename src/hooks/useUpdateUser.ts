@@ -1,7 +1,15 @@
-import {useRootStackContainer} from '~/navigation/RootStack/RootStack.provider';
+import {usersApi} from '~/api/api';
+import {queryClient} from '~/utils/cache/queryClient';
+import {userQueryKey} from '~/utils/userQueryKey';
+
+import {useAPIMutation} from './useAPIMutation';
 
 export const useUpdateUser = () => {
-  const {setUser} = useRootStackContainer();
+  const [updateUser] = useAPIMutation(usersApi.update, {
+    onSuccess: data => {
+      queryClient.setQueryData(userQueryKey, data);
+    },
+  });
 
-  return setUser;
+  return updateUser;
 };

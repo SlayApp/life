@@ -2,6 +2,7 @@
   "name": "LifeTest",
   "displayName": "LifeTest",
   "plugins": [
-    "expo-font"
+    "expo-font",
+    "expo-localization"
   ]
 }

@@ -1,11 +1,12 @@
 import io, {Socket as SocketIO} from 'socket.io-client';
 
-import {ESubscriptionEvents} from '~/enums/ESubscriptionEvents';
+import {ESocketSubEvents} from '~/enums/ESubscriptionEvents';
 import {log} from '~/utils/log.util';
 
 import {Environment} from '../Environment';
-import {TEmitEvents} from './Socket.interface';
-import {SocketSubscriptions} from './Socket.subscriptions';
+import {LifetimeStorage} from '../LifetimeStorage';
+import {TSocketPubEvents} from './Socket.interface';
+import {TSocketEventsForced} from './Socket.subscriptions';
 
 export class Socket {
   private static instance: Socket | null = null;
@@ -27,12 +28,12 @@ export class Socket {
       // if the server takes to long, it will retry causing issues (like in the diary)
       ackTimeout: 15 * 1000,
       query: {
-        // token,
+        token: LifetimeStorage.getString('authToken'),
       },
     });
   }
 
-  public static init() {
+  public static init(socketSubscriptions: TSocketEventsForced) {
     const instance = Socket.getInstance();
     if (instance.initialized) return;
     instance.initialized = true;
@@ -45,12 +46,12 @@ export class Socket {
     instance.onDisconnect();
     instance.connect();
 
-    const keys = Object.values(ESubscriptionEvents);
+    const keys = Object.values(ESocketSubEvents);
     for (const key of keys) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       instance.on(key, (args: any) => {
         try {
-          SocketSubscriptions[key](args);
+          socketSubscriptions[key](args);
         } catch (error) {
           log.error(`[Socket] 🔴 Error handling event ${key}:`, error);
         }
@@ -63,9 +64,9 @@ export class Socket {
     this.socket.on(event, callback);
   }
 
-  public static emit<T extends keyof TEmitEvents>(
+  public static emit<T extends keyof TSocketPubEvents>(
     event: T,
-    ...args: Parameters<TEmitEvents[T]>
+    ...args: Parameters<TSocketPubEvents[T]>
   ): void {
     const instance = Socket.getInstance();
 
@@ -78,6 +79,7 @@ export class Socket {
     instance.socket.disconnect();
     instance.socket.removeAllListeners();
     instance.manualRetryCount = 0;
+    Socket.instance = null;
   }
 
   private static getInstance(): Socket {

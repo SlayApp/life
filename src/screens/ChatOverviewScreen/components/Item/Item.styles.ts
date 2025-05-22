@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -18,11 +18,12 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     marginLeft: 12,
-    gap: 2,
   },
-
+  lastMessage: {
+    // height: theme.fonts.variant.body.lineHeight * 2,
+  },
   avatarImage: {
     width: '100%',
     height: '100%',
   },
-});
+}));

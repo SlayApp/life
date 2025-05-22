@@ -12,4 +12,7 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  countryCodeWrapperOverride: {
+    paddingHorizontal: theme.spacing['12'],
+  },
 }));

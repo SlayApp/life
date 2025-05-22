@@ -1,28 +1,46 @@
+import {UserResponseDto} from 'api-client/api';
 import {useCallback, useRef, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {IInput} from '~/components/Input';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
-import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
+import {useUpdateUser} from '~/hooks/useUpdateUser';
+import {log} from '~/utils/log.util';
 
 export const useEnterNameScreen = () => {
-  const {setName: setUnauthorizedStackName, name: unauthorizedStackName} =
-    useUnauthorizedStack();
+  const user = useGetCachedUser();
+  const updateUser = useUpdateUser();
 
   const ref = useRef<IInput>(null);
   const insets = useSafeAreaInsets();
-  const [name, setName] = useState(unauthorizedStackName.current ?? '');
   const keyboardVerticalOffset = -insets.bottom + 16;
+  const [name, setName] = useState(user?.firstName ?? '');
+  const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
 
-  const {goBack, navigate} = useFluidOnboardingNavigation();
+  const onPress = useCallback(async () => {
+    if (!user?.id) {
+      popTo(EFluidOnboardingStack.EnterPhoneNumber);
 
-  const onPress = useCallback(() => {
-    const trimmedName = name.trim();
-    setUnauthorizedStackName(trimmedName);
-    navigate(EFluidOnboardingStack.EnterAge);
-  }, [navigate, name, setUnauthorizedStackName]);
+      return;
+    }
+
+    try {
+      const trimmedName = name.trim();
+      const updateUserPayload: Partial<UserResponseDto> = {
+        firstName: trimmedName,
+      };
+
+      updateUser(user.id, updateUserPayload).catch(() => {
+        popTo(EFluidOnboardingStack.EnterName);
+      });
+      navigate(EFluidOnboardingStack.EnterAge);
+    } catch (error) {
+      log.error('Error updating name', error);
+    }
+  }, [user?.id, popTo, name, updateUser, navigate]);
 
   useSetFluidOnboardingStackProps({
     onBackPress: goBack,

@@ -40,7 +40,7 @@ export const useChatOverview = () => {
         lastMessage={item.lastMessage.content}
         lastMessageCreatedAt={item.lastMessage.createdAt}
         profilePictureUri={item.character.profilePicture}
-        isLastMessageFromUser={item.isLastMessageFromUser}
+        isLastMessageFromUser={item.lastMessage.isFromUser}
       />
     ),
     [onPressHandler],

@@ -5,11 +5,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
-import {ESubscriptionEvents} from '~/enums/ESubscriptionEvents';
 import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
-import {Socket} from '~/service/socket/Socket.class';
 
 import {LIMIT} from './Chat.constants';
 import {IChatInputRef} from './components';
@@ -56,13 +54,13 @@ export const useChat = () => {
         isFromUser: true,
         id,
       });
-      Socket.emit(ESubscriptionEvents.CHARACTER_MESSAGE, {
-        characterId,
-        message,
-        userId: user.id,
-      });
+      // Socket.emit(ESubscriptionEvents.CHARACTER_MESSAGE, {
+      //   characterId,
+      //   message,
+      //   userId: user.id,
+      // });
     },
-    [characterId, optimisticPrepend, user.id],
+    [optimisticPrepend],
   );
 
   const onEndReached = useCallback(() => {

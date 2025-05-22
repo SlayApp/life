@@ -1,7 +1,7 @@
-import {EUserGender} from '~/enums/EUserGender';
+import {UpdateUserDtoGenderEnum} from 'api-client/api';
 
 export const GENDER_ITEMS = [
-  EUserGender.MALE,
-  EUserGender.FEMALE,
-  EUserGender.NON_BINARY,
+  UpdateUserDtoGenderEnum.Male,
+  UpdateUserDtoGenderEnum.Female,
+  UpdateUserDtoGenderEnum.NonBinary,
 ] as const;

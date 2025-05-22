@@ -6,4 +6,5 @@ export type TAuthorizedStackParamList = {
   [EAuthorizedStack.Chat]: {
     id: number;
   };
+  [EAuthorizedStack.Loading]: undefined;
 };

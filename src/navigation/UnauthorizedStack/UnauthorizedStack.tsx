@@ -24,7 +24,7 @@ export const UnauthorizedStack: React.FC = () => {
   return (
     <UnauthorizedStackProvider>
       <Stack.Navigator
-        initialRouteName={EUnauthorizedStack.Loading}
+        initialRouteName={EUnauthorizedStack.Landing}
         screenOptions={screenOptions}>
         <Stack.Screen
           name={EUnauthorizedStack.Landing}
@@ -32,6 +32,7 @@ export const UnauthorizedStack: React.FC = () => {
         />
         <Stack.Screen
           name={EUnauthorizedStack.FluidOnboarding}
+          options={{gestureEnabled: false}}
           component={FluidOnboardingStack}
         />
         <Stack.Screen

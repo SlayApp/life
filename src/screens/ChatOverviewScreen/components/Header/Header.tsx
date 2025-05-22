@@ -20,30 +20,14 @@ export const Header: React.FC = () => {
       <SafeAreaWrapper edges="top" />
       <View style={styles.headerContent}>
         <Pressable onPress={onPress}>
-          <View
-            style={{
-              width: 24,
-              height: 24,
-              backgroundColor: '#000',
-              borderRadius: 12,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text color="inverted" variant="label">
-              {user.username.slice(0, 1)}
+          <View style={styles.nameContainer}>
+            <Text color="inverted" variant="small" weight="bold">
+              {user.firstName.slice(0, 1)}
             </Text>
           </View>
         </Pressable>
-        <Text style={styles.title}>Chats</Text>
-        <View
-          style={{
-            opacity: 0,
-            width: 20,
-            height: 20,
-            backgroundColor: '#000',
-            borderRadius: 10,
-          }}
-        />
+        <Text variant="headline">Chats</Text>
+        <View style={[styles.nameContainer, styles.placeholderButton]} />
       </View>
     </View>
   );

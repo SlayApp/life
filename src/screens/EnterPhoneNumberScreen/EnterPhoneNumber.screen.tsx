@@ -11,7 +11,7 @@ import {useEnterPhoneNumberScreen} from './EnterPhoneNumber.hook';
 import {styles} from './EnterPhoneNumber.styles';
 
 export const EnterPhoneNumberScreen: React.FC = () => {
-  const {setPhoneNumber} = useEnterPhoneNumberScreen();
+  const {setPhoneNumber, countryCode} = useEnterPhoneNumberScreen();
 
   return (
     <FluidOnboardingWrapper>
@@ -19,10 +19,14 @@ export const EnterPhoneNumberScreen: React.FC = () => {
         title="Enter your phone number"
         subtitle={"We'll send a verification code\nto this phone number"}>
         <View style={styles.container}>
-          <WhiteOnWhiteShadow style={onboardingTextInputStyles.container}>
+          <WhiteOnWhiteShadow
+            style={[
+              onboardingTextInputStyles.container,
+              styles.countryCodeWrapperOverride,
+            ]}>
             <View style={styles.countryCodeContainer}>
-              <RNText>🇺🇸</RNText>
-              <Text variant="h3">+1</Text>
+              <RNText>{countryCode.flag}</RNText>
+              <Text variant="h3">{countryCode.dial_code}</Text>
             </View>
           </WhiteOnWhiteShadow>
           <View style={styles.inputContainer}>

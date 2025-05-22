@@ -61,6 +61,7 @@ export function PressableScale({
   return (
     <Pressable
       {...rest}
+      accessibilityLabel="noop"
       onPress={onPressHandler}
       onPressIn={onPressInHandler}
       onPressOut={onPressOutHandler}>

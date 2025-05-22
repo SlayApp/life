@@ -20,6 +20,7 @@ export const typographyStyles = StyleSheet.create(theme => ({
       color: {
         primary: {color: theme.colors.primary},
         secondary: {color: theme.colors.subdued60},
+        tertiary: {color: theme.colors.subdued40},
         inverted: {color: theme.colors.inverted},
       },
     },

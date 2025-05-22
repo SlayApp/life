@@ -1,4 +1,7 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import React from 'react';
 
 import {Insets} from '~/components/Insets/Insets';
@@ -8,15 +11,16 @@ import {TRootParamList} from '~/types/navigation';
 import {AuthorizedStack} from '../AuthorizedStack';
 import {UnauthorizedStack} from '../UnauthorizedStack/UnauthorizedStack';
 import {useRootStack} from './RootStack.hook';
-import {RootStackProvider} from './RootStack.provider';
 
 export const Stack = createNativeStackNavigator<TRootParamList>();
 
+const screenOptions: NativeStackNavigationOptions = {
+  headerShown: false,
+  animation: 'slide_and_push',
+};
+
 const RootStackInner: React.FC = () => {
-  const {user, loading} = useRootStack();
-  const initialRouteName = user
-    ? ERootStack.Authorized
-    : ERootStack.Unauthorized;
+  const {user, loading, initialRouteName} = useRootStack();
 
   if (loading) {
     return null;
@@ -25,28 +29,27 @@ const RootStackInner: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
-      screenOptions={{headerShown: false}}>
+      screenOptions={screenOptions}>
       {user ? (
         <Stack.Screen
           initialParams={{user}}
           name={ERootStack.Authorized}
           component={AuthorizedStack}
         />
-      ) : (
-        <Stack.Screen
-          name={ERootStack.Unauthorized}
-          component={UnauthorizedStack}
-        />
-      )}
+      ) : null}
+      <Stack.Screen
+        name={ERootStack.Unauthorized}
+        component={UnauthorizedStack}
+      />
     </Stack.Navigator>
   );
 };
 
 export const RootStack: React.FC = () => {
   return (
-    <RootStackProvider>
+    <>
       <Insets />
       <RootStackInner />
-    </RootStackProvider>
+    </>
   );
 };

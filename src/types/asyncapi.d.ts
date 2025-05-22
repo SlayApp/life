@@ -31,6 +31,8 @@ export interface components {
       data: Record<string, never>;
     };
     CharacterMessageDto: {
+      /** @description Message Deduplication ID, coming from the clientside */
+      deduplicationId: string;
       /**
        * @description The ID of the character
        * @example 1
@@ -108,6 +110,13 @@ export interface components {
        * @example 5000
        */
       messageDelay?: number;
+    };
+    InitializeInterestBasedConversationDto: {
+      /**
+       * @description The ID of the user
+       * @example 1
+       */
+      userId: number;
     };
   };
   responses: never;

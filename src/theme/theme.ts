@@ -101,7 +101,7 @@ export const theme = {
   } as const,
   layout: {
     onboardingScreenMarginHorizontal: 32,
-    screenMarginHorizontal: 16,
+    screenMarginHorizontal: 20,
     headerHeight: 48,
     buttonHeight: 52,
     buttonKeyboardOffset: 16,

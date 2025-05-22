@@ -1,6 +1,10 @@
-export enum ESubscriptionEvents {
+export enum ESocketSubEvents {
   CONNECT = 'connect',
+  DISCONNECT = 'disconnect',
   CHARACTER_RESPONSE = 'character-response',
+}
+
+export enum ESocketPubEvents {
   CHARACTER_MESSAGE = 'character-message',
-  // CHARACTER_MESSAGE_SENT = 'character-message-sent',
+  INITIALIZE_INTEREST_BASED_CONVERSATION = 'initialize-interest-based-conversation',
 }

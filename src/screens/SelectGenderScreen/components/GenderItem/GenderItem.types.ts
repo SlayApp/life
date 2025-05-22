@@ -1,8 +1,7 @@
-import {EUserGender} from '~/enums/EUserGender';
+import {UpdateUserDtoGenderEnum} from 'api-client/api';
 
 export interface IGenderItemProps {
-  id: EUserGender;
-  title: string;
-  onPress: (id: EUserGender) => void;
+  id: UpdateUserDtoGenderEnum;
+  onPress: (id: UpdateUserDtoGenderEnum) => void;
   selected: boolean;
 }

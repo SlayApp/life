@@ -2,16 +2,16 @@ import {StyleSheet} from 'react-native-unistyles';
 
 import {CHAT_HEADER_HEIGHT} from '../ChatScreen/Chat.constants';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.background,
   },
   contentContainerStyle: {
-    paddingTop: CHAT_HEADER_HEIGHT + 16,
-    paddingHorizontal: 20,
+    paddingTop: CHAT_HEADER_HEIGHT + theme.spacing[16],
+    paddingHorizontal: theme.layout.screenMarginHorizontal,
   },
   separator: {
-    height: 20,
+    height: theme.spacing[28],
   },
-});
+}));

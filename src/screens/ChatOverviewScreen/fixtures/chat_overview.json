@@ -1,27 +1,70 @@
 [
   {
-    "name": "Alice",
-    "lastMessage": "See you soon!",
-    "dateOfLastMessage": "2025-05-13T18:00:00+02:00"
+    "character": {
+      "id": 101,
+      "name": "Alice",
+      "profilePicture": "https://example.com/profiles/alice.png"
+    },
+    "lastMessage": {
+      "deduplicationId": "chat-101-1001",
+      "id": 1001,
+      "content": "Hey there! How are you doing today?",
+      "isFromUser": false,
+      "createdAt": "2025-05-21T09:15:00Z"
+    }
   },
   {
-    "name": "Bob",
-    "lastMessage": "Got the files.",
-    "dateOfLastMessage": "2025-05-14T09:00:00+02:00"
+    "character": {
+      "id": 102,
+      "name": "Bruno",
+      "profilePicture": "https://example.com/profiles/bruno.jpg"
+    },
+    "lastMessage": {
+      "deduplicationId": "chat-102-2003",
+      "id": 2003,
+      "content": "Just sent the files you asked for ✅",
+      "isFromUser": true,
+      "createdAt": "2025-05-20T18:47:23Z"
+    }
   },
   {
-    "name": "Charlie",
-    "lastMessage": "Let's catch up tomorrow.",
-    "dateOfLastMessage": "2025-05-12T15:00:00+02:00"
+    "character": {
+      "id": 103,
+      "name": "Clara",
+      "profilePicture": "https://example.com/profiles/clara.webp"
+    },
+    "lastMessage": {
+      "id": 3007,
+      "content": "Let’s meet at the café in 30 minutes.",
+      "isFromUser": false,
+      "createdAt": "2025-05-19T14:02:11Z"
+    }
   },
   {
-    "name": "Dana",
-    "lastMessage": "Happy birthday!",
-    "dateOfLastMessage": "2025-05-11T20:00:00+02:00"
+    "character": {
+      "id": 104,
+      "name": "Diego",
+      "profilePicture": "https://example.com/profiles/diego.png"
+    },
+    "lastMessage": {
+      "deduplicationId": "chat-104-4012",
+      "id": 4012,
+      "content": "Sounds good—see you tomorrow morning!",
+      "isFromUser": true,
+      "createdAt": "2025-05-18T22:55:40Z"
+    }
   },
   {
-    "name": "Eve",
-    "lastMessage": "Meeting moved to Friday.",
-    "dateOfLastMessage": "2025-05-10T11:00:00+02:00"
+    "character": {
+      "id": 105,
+      "name": "Eva",
+      "profilePicture": "https://example.com/profiles/eva.jpg"
+    },
+    "lastMessage": {
+      "id": 5005,
+      "content": "Here’s the draft proposal. Let me know your thoughts.",
+      "isFromUser": false,
+      "createdAt": "2025-05-17T12:31:08Z"
+    }
   }
 ]

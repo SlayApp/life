@@ -12,13 +12,14 @@ import {enableFreeze} from 'react-native-screens';
 import {RessourceLoader} from '~/components/RessourceLoader';
 import {RootStack} from '~/navigation/RootStack';
 import {queryClient} from '~/utils/cache/queryClient';
+import {navigationRef} from '~/utils/navigationRef';
 
 enableFreeze(true);
 
 function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <QueryClientProvider client={queryClient}>
           <SafeAreaProvider>
             <KeyboardProvider>

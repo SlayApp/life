@@ -11,4 +11,8 @@ export const styles = StyleSheet.create(theme => ({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  symbolView: {
+    height: 24,
+    width: 24,
+  },
 }));

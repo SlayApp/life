@@ -1,10 +1,14 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {TextInput} from 'react-native';
 
+import {authApi} from '~/api/api';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
+import {useAPIMutation} from '~/hooks/useAPIMutation';
+import {useCreateUser} from '~/hooks/useCreateUser';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
+import {log} from '~/utils/log.util';
 
 import {CODE_LENGTH} from './VerifyPhoneNumber.constants';
 
@@ -14,7 +18,9 @@ export const useVerifyPhoneNumberScreen = () => {
   const ref = useRef<TextInput>(null);
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
-  const {goBack, navigate} = useFluidOnboardingNavigation();
+  const createUser = useCreateUser();
+  const [resendOtp] = useAPIMutation(authApi.sendOtp);
+  const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
 
   const onCodeInputPress = useCallback(() => {
     ref.current?.focus();
@@ -27,15 +33,46 @@ export const useVerifyPhoneNumberScreen = () => {
     setCode(text);
   }, []);
 
-  const onNextPress = useCallback(() => {
+  const onNextPress = useCallback(async () => {
     if (code.length !== CODE_LENGTH) {
       return;
     }
 
-    navigate(EFluidOnboardingStack.EnterName);
-  }, [code, navigate]);
+    if (!phoneNumber.current) {
+      popTo(EFluidOnboardingStack.EnterPhoneNumber);
 
-  const onResendCodePress = useCallback(() => {}, []);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await createUser({
+        phoneNumber: phoneNumber.current,
+        otp: code,
+      });
+      navigate(EFluidOnboardingStack.EnterName);
+    } catch (error) {
+      log.error('Error verifying OTP', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [code, createUser, navigate, phoneNumber, popTo]);
+
+  const onResendCodePress = useCallback(async () => {
+    if (!phoneNumber.current) {
+      popTo(EFluidOnboardingStack.EnterPhoneNumber);
+
+      return;
+    }
+
+    try {
+      await resendOtp({
+        phoneNumber: phoneNumber.current,
+      });
+    } catch (error) {
+      log.error('Error resending OTP', error);
+    }
+  }, [phoneNumber, popTo, resendOtp]);
 
   useEffect(() => {
     if (code.length >= CODE_LENGTH) {
@@ -47,6 +84,7 @@ export const useVerifyPhoneNumberScreen = () => {
     onPress: onNextPress,
     onBackPress: goBack,
     disabled: code.length !== CODE_LENGTH,
+    loading,
   });
 
   return {
