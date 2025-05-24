@@ -49,6 +49,10 @@ export const theme = {
     medium: 'OpenRunde-Medium',
 
     variant: {
+      tiny: {
+        fontSize: 13,
+        fontFamily: 'OpenRunde-Regular',
+      },
       small: {
         fontSize: 14,
         letterSpacing: -0.1,

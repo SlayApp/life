@@ -8,7 +8,7 @@ import {
   SEND_MESSAGE_BUTTON_SIZE,
 } from '../../Chat.constants';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   blurView: {
     flex: 1,
     paddingTop: KEYBOARD_OPEN_INPUT_VERTICAL_PADDING,
@@ -40,13 +40,12 @@ export const styles = StyleSheet.create({
   },
   input: {
     paddingVertical: INPUT_VERTICAL_PADDING,
-    fontSize: 16,
+    ...theme.fonts.variant.body,
     flex: 1,
-    fontFamily: 'SF-Pro-Rounded-Medium',
     lineHeight: LINE_HEIGHT,
   },
   sendButtonContainer: {
     right: (HEIGHT_ONE_LINE - SEND_MESSAGE_BUTTON_SIZE) / 2,
     bottom: (HEIGHT_ONE_LINE - SEND_MESSAGE_BUTTON_SIZE) / 2,
   },
-});
+}));

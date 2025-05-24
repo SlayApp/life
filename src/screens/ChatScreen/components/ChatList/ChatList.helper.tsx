@@ -27,7 +27,8 @@ export const AnimatedFlatList = Animated.createAnimatedComponent(
   FlatList<MessageResponseDto>,
 );
 
-export const keyExtractor = (item: MessageResponseDto) => item.id.toString();
+export const keyExtractor = (item: MessageResponseDto) =>
+  item.deduplicationId.toString();
 
 export const ListFooterComponent: React.FC = () => {
   const {currentInputHeight} = useChatScreenContainer();

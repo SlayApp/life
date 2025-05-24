@@ -4,7 +4,7 @@ export const styles = StyleSheet.create(theme => ({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: theme.spacing['12'],
   },
   avatar: {
     width: 48,
@@ -16,8 +16,13 @@ export const styles = StyleSheet.create(theme => ({
     overflow: 'hidden',
   },
   content: {
+    gap: theme.spacing['2'],
     flex: 1,
-    marginLeft: 12,
+  },
+  nameDateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
   },
   lastMessage: {
     // height: theme.fonts.variant.body.lineHeight * 2,

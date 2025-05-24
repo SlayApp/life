@@ -1,17 +1,22 @@
 import {FlashList} from '@shopify/flash-list';
 import {MessageResponseDto} from 'api-client/api';
+import {randomUUID} from 'expo-crypto';
 import {useCallback, useMemo, useRef} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
+import {ESocketPubEvents} from '~/enums/ESubscriptionEvents';
 import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
+import {Socket} from '~/service/socket/Socket.class';
+import {optimisticUpdateGetAllUserChats} from '~/utils/optimisticUpdateGetAllUserChats';
+import {optimisticUpdateGetConversation} from '~/utils/optimisticUpdateGetConversation';
 
 import {LIMIT} from './Chat.constants';
 import {IChatInputRef} from './components';
-import {useGetChatPartner, useOptimisticPrepend} from './hooks';
+import {useGetChatPartner} from './hooks';
 
 export const useChat = () => {
   const {
@@ -22,13 +27,13 @@ export const useChat = () => {
   const insets = useSafeAreaInsets();
   const chatPartner = useGetChatPartner(characterId);
   const listRef = useRef<FlashList<MessageResponseDto>>(null);
-  const optimisticPrepend = useOptimisticPrepend(characterId);
 
   const {data, fetchNextPage, isFetching} = useInfiniteAPIRequest(
     messagesApi.getConversation,
     {
       initialPageParam: 0,
       getNextPageParam: (_, pages) => pages.flatMap(page => page.data).length,
+      staleTime: Infinity,
     },
     characterId,
     user.id,
@@ -43,24 +48,43 @@ export const useChat = () => {
 
   const handleSend = useCallback(
     (message: string) => {
+      if (!chatPartner) return;
+
       const date = new Date();
-      const id = date.getTime();
+      const deduplicationId = randomUUID();
       const createdAt = date.toISOString();
 
-      optimisticPrepend({
-        // @ts-expect-error backend is typed wrong
-        createdAt,
+      const newMessage: Omit<MessageResponseDto, 'id'> = {
         content: message,
+        createdAt,
+        deduplicationId,
         isFromUser: true,
-        id,
+      };
+
+      optimisticUpdateGetAllUserChats({
+        character: chatPartner,
+        userId: user.id,
+        lastMessage: {
+          ...newMessage,
+          id: 0,
+        },
       });
-      // Socket.emit(ESubscriptionEvents.CHARACTER_MESSAGE, {
-      //   characterId,
-      //   message,
-      //   userId: user.id,
-      // });
+      optimisticUpdateGetConversation({
+        character: chatPartner,
+        userId: user.id,
+        message: {
+          ...newMessage,
+          id: 0,
+        },
+      });
+
+      Socket.emit(ESocketPubEvents.CHARACTER_MESSAGE, {
+        characterId,
+        message,
+        deduplicationId,
+      });
     },
-    [optimisticPrepend],
+    [characterId, chatPartner, user.id],
   );
 
   const onEndReached = useCallback(() => {

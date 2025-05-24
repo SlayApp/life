@@ -6,5 +6,5 @@ export enum ESocketSubEvents {
 
 export enum ESocketPubEvents {
   CHARACTER_MESSAGE = 'character-message',
-  INITIALIZE_INTEREST_BASED_CONVERSATION = 'initialize-interest-based-conversation',
+  INITIALIZE_INTEREST_BASED_CONVERSATION = 'initilize-interest-based-conversation',
 }

@@ -23,7 +23,7 @@ export const ResendCode: React.FC<IProps> = memo(({loading, onPress}) => {
           align="center"
           variant="body"
           weight="medium"
-          color="secondary"
+          color="tertiary"
           style={animatedTextStyles}>
           Resend{secondsLeft > 0 ? ` in ${secondsLeft}s` : ' code'}
         </AnimatedText>

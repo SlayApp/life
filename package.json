@@ -12,7 +12,7 @@
     "test": "jest",
     "postinstall": "npx patch-package",
     "generate:apis": "openapi-generator-cli generate -i backend/openapi.yaml -g typescript-axios -o api-client --skip-validate-spec && yarn upgrade api-client@portal:./api-client",
-    "generate:asyncapi": "openapi-typescript backend/asyncapi.yaml -o ./src/types/asyncapi.d.ts && prettier --write ./src/types/asyncapi.d.ts"
+    "generate:asyncapi": "openapi-typescript backend/asyncapi.yaml -o ./src/types/asyncapi.d.ts --root-types --root-types-no-schema-prefix --export-type --enum --make-paths-enum && prettier --write ./src/types/asyncapi.d.ts"
   },
   "codegenConfig": {
     "name": "NativeTextInputHelpers",

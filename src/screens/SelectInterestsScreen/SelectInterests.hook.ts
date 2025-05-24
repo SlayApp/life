@@ -4,6 +4,7 @@ import {useUnistyles} from 'react-native-unistyles';
 
 import {interestApi} from '~/api/api';
 import {IInput} from '~/components/Input';
+import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useAPIMutation} from '~/hooks/useAPIMutation';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
@@ -45,12 +46,18 @@ export const useSelectInterestsScreen = () => {
       return;
     }
 
+    const interestsNames = interests.map(interest => interest.name);
     try {
       setLoading(true);
-      await addInterest(user.id, {
-        interests: interests.map(interest => interest.name),
+      addInterest(user.id, {
+        interests: interestsNames,
+      }).catch(() => {
+        popTo(EFluidOnboardingStack.SelectInterests);
       });
-      resetToAuthorizedStack();
+
+      resetToAuthorizedStack(EAuthorizedStack.Loading, {
+        interests: interestsNames,
+      });
     } catch (error) {
       log.error('Error in SelectInterestsScreen', error);
     } finally {

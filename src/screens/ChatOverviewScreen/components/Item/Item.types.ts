@@ -1,8 +1,8 @@
+import {MessageResponseDto} from 'api-client/api';
+
 export interface IItemProps {
   name: string;
-  lastMessage: string;
-  lastMessageCreatedAt: string;
-  isLastMessageFromUser: boolean;
+  message: MessageResponseDto;
   profilePictureUri?: string;
   id: number;
   onPress: (id: number) => void;

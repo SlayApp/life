@@ -9,17 +9,11 @@ export const useOptimisticPrepend = (characterId: number) => {
   const user = useUser();
 
   return useCallback(
-    (message: MessageResponseDto) => {
+    (message: Omit<MessageResponseDto, 'id'>) => {
       optimisticUpdateGetAllUserChats({
         characterId,
         userId: user.id,
-        message: {
-          content: message.content,
-          // @ts-expect-error backend badly typed
-          createdAt: message.createdAt,
-          id: message.id,
-          isFromUser: message.isFromUser,
-        },
+        lastMessage: message,
       });
       optimisticUpdateGetConversation({
         characterId,

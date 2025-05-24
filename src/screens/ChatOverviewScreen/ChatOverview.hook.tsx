@@ -37,10 +37,8 @@ export const useChatOverview = () => {
         id={item.character.id}
         onPress={onPressHandler}
         name={item.character.name}
-        lastMessage={item.lastMessage.content}
-        lastMessageCreatedAt={item.lastMessage.createdAt}
+        message={item.lastMessage}
         profilePictureUri={item.character.profilePicture}
-        isLastMessageFromUser={item.lastMessage.isFromUser}
       />
     ),
     [onPressHandler],

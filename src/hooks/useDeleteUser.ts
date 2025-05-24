@@ -19,6 +19,7 @@ export const useDeleteUser = () => {
       LifetimeStorage.delete('authToken');
       axios.defaults.headers.common.Authorization = undefined;
       queryClient.removeQueries({queryKey: userQueryKey, exact: true});
+      queryClient.clear();
       resetToUnuthorizedStack();
     },
   });

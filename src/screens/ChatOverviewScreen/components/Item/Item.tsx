@@ -9,7 +9,7 @@ import {styles} from './Item.styles';
 import {IItemProps} from './Item.types';
 
 export const Item: React.FC<IItemProps> = props => {
-  const {name, lastMessage, profilePictureUri} = props;
+  const {name, message, profilePictureUri} = props;
   const {onPressHandler, formattedDate} = useItem(props);
 
   return (
@@ -24,23 +24,16 @@ export const Item: React.FC<IItemProps> = props => {
           ) : null}
         </View>
         <View style={styles.content}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-            }}>
-            <Text numberOfLines={1} variant="label">
+          <View style={styles.nameDateContainer}>
+            <Text numberOfLines={1} variant="body" weight="semibold">
               {name}
             </Text>
-            <View style={{}}>
-              <Text color="tertiary" variant="small" weight="medium">
-                {formattedDate}
-              </Text>
-            </View>
+            <Text color="primary" variant="tiny">
+              {formattedDate}
+            </Text>
           </View>
-          <Text numberOfLines={1} variant="body" color="tertiary">
-            {lastMessage}
+          <Text numberOfLines={1} variant="body" color="secondary">
+            {message.content}
           </Text>
         </View>
       </View>

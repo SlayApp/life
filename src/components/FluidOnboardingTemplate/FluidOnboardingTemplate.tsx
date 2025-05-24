@@ -22,7 +22,7 @@ export const FluidOnboardingTemplate: TFCWithChildren<IProps> = ({
           <Text align="center" variant="h2" weight="bold">
             {title}
           </Text>
-          <Text align="center" variant="body" weight="medium" color="secondary">
+          <Text align="center" variant="body" weight="medium" color="tertiary">
             {subtitle}
           </Text>
         </View>

@@ -1,19 +1,14 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {Pressable, View} from 'react-native';
 
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';
 import {Text} from '~/components/Text';
-import {useDeleteUser} from '~/hooks/useDeleteUser';
-import {useUser} from '~/hooks/useUser';
 
+import {useHeader} from './Header.hooks';
 import {styles} from './Header.styles';
 
 export const Header: React.FC = () => {
-  const user = useUser();
-  const logOut = useDeleteUser();
-  const onPress = useCallback(() => {
-    logOut();
-  }, [logOut]);
+  const {user, onPress} = useHeader();
 
   return (
     <View style={styles.container}>

@@ -7,7 +7,7 @@ export type paths = Record<string, never>;
 
 export type webhooks = Record<string, never>;
 
-export interface components {
+export type components = {
   schemas: {
     TopicDto: {
       /**
@@ -39,77 +39,17 @@ export interface components {
        */
       characterId: number;
       /**
-       * @description The ID of the user
-       * @example 1
-       */
-      userId: number;
-      /**
        * @description The message content
        * @example Hello, how are you?
        */
       message: string;
-      /**
-       * @description Optional session ID for message tracking
-       * @example sess_123456
-       */
-      sessionId?: string;
     };
-    CharacterResponseDto: {
+    ErrorDto: {
       /**
-       * @description The ID of the character
-       * @example 1
+       * @description Error message
+       * @example Topic is required
        */
-      characterId: number;
-      /**
-       * @description The ID of the user
-       * @example 1
-       */
-      userId: string;
-      /**
-       * @description The response message from the character
-       * @example I am doing well, thank you for asking!
-       */
-      response: string;
-      /**
-       * @description Whether this is part of a multi-part response
-       * @example true
-       */
-      isMultiPart?: boolean;
-      /**
-       * @description Index of this message in a multi-part response
-       * @example 1
-       */
-      messageIndex?: number;
-      /**
-       * @description Total number of messages in a multi-part response
-       * @example 3
-       */
-      totalMessages?: number;
-      /**
-       * @description Session ID for message tracking
-       * @example sess_123456
-       */
-      sessionId?: string;
-      /**
-       * @description ID of a character that was introduced in this response
-       * @example 2
-       */
-      introducedCharacterId?: number;
-      /**
-       * @description Whether this is an introduction message
-       * @example true
-       */
-      isIntroductionMessage?: boolean;
-      /**
-       * @description Whether the character will message the user later
-       * @example true
-       */
-      willMessageUser?: boolean;
-      /**
-       * @description Delay before the next message in milliseconds
-       * @example 5000
-       */
-      messageDelay?: number;
+      message: string;
     };
     InitializeInterestBasedConversationDto: {
       /**
@@ -117,6 +57,58 @@ export interface components {
        * @example 1
        */
       userId: number;
+      /**
+       * @description Interests of the user
+       * @example [
+       *   "reading",
+       *   "traveling",
+       *   "cooking"
+       * ]
+       */
+      interests: string[];
+    };
+    MessageResponseDto: {
+      /** @description Deduplication ID */
+      deduplicationId: string;
+      /** @description Message ID */
+      id: number;
+      /** @description Message content */
+      content: string;
+      /** @description True if the message is from user, false if from character */
+      isFromUser: boolean;
+      /**
+       * Format: date-time
+       * @description Creation timestamp
+       */
+      createdAt: string;
+    };
+    CharacterRTO: {
+      /** Character ID */
+      id: number;
+      /** Character name */
+      name: string;
+      /** Profile picture URL */
+      profilePicture?: string;
+    };
+    CharacterResponseRTO: {
+      /** @description Message object */
+      message: components['schemas']['MessageResponseDto'];
+      /** @description Character object for the clientside */
+      character: components['schemas']['CharacterRTO'];
+      /** @description Is multi-part response */
+      isMultiPart?: boolean;
+      /** @description Message index */
+      messageIndex?: number;
+      /** @description Total messages */
+      totalMessages?: number;
+      /** @description Introduced character ID */
+      introducedCharacterId?: number;
+      /** @description Is introduction message */
+      isIntroductionMessage?: boolean;
+      /** @description Will message user */
+      willMessageUser?: boolean;
+      /** @description Message delay */
+      messageDelay?: number;
     };
   };
   responses: never;
@@ -124,7 +116,7 @@ export interface components {
   requestBodies: never;
   headers: never;
   pathItems: never;
-}
+};
 
 export type $defs = Record<string, never>;
 

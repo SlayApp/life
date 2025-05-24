@@ -1,38 +1,41 @@
-import {LastMessageDto, UserChatResponseDto} from 'api-client/api';
+import {CharacterDto, UserChatResponseDto} from 'api-client/api';
 
 import {messagesApi} from '~/api/api';
+import {components} from '~/types/asyncapi';
 
 import {getCacheOf, setCacheOf} from './cache/accessCacheOf';
 
 type TArgs = {
-  characterId: number;
+  character: Pick<components['schemas']['CharacterRTO'], 'id'> &
+    Partial<Omit<components['schemas']['CharacterRTO'], 'id'>>;
   userId: number;
-  message: LastMessageDto;
+  lastMessage: components['schemas']['MessageResponseDto'];
 };
 
 export const optimisticUpdateGetAllUserChats = ({
   userId,
-  characterId,
-  message,
+  character,
+  lastMessage,
 }: TArgs) => {
   const prevChats = getCacheOf(messagesApi.getAllUserChats)(userId);
 
-  if (!prevChats) return;
-  if (!prevChats.length) return;
+  const filtered =
+    prevChats?.filter(chat => chat.character.id !== character.id) ?? [];
+  const found = prevChats?.find(chat => chat.character.id === character.id);
 
-  const filtered = prevChats.filter(chat => chat.character.id !== characterId);
-  const found = prevChats.find(chat => chat.character.id === characterId);
-  if (!found) return;
+  const newCharacter: CharacterDto = {
+    id: character.id,
+    name: found?.character.name ?? character.name ?? '',
+    profilePicture: found?.character.profilePicture ?? character.profilePicture,
+  };
 
   const optimisticChat: UserChatResponseDto = {
     ...found,
-    lastMessage: message,
-    isLastMessageFromUser: true,
+    character: newCharacter,
+    lastMessage,
   };
 
-  const newChats = [...filtered, optimisticChat].sort((a, b) =>
-    b.lastMessage.createdAt.localeCompare(a.lastMessage.createdAt),
-  );
+  const newChats = [...filtered, optimisticChat];
 
   setCacheOf(messagesApi.getAllUserChats)(newChats, userId);
 };

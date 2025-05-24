@@ -7,5 +7,4 @@ import {TFluidOnboardingStackParamList} from '../FluidOnboardingStack/FluidOnboa
 export type TUnauthorizedStackParamList = {
   [EUnauthorizedStack.Landing]: undefined;
   [EUnauthorizedStack.FluidOnboarding]: NavigatorScreenParams<TFluidOnboardingStackParamList>;
-  [EUnauthorizedStack.Loading]: undefined;
 };

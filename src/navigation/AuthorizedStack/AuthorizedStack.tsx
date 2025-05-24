@@ -1,4 +1,7 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import React, {memo} from 'react';
 
 import {InitSocket} from '~/components/InitSocket/InitSocket';
@@ -15,11 +18,15 @@ import {TAuthorizedStackParamList} from './AuthorizedStack.types';
 
 export const Stack = createNativeStackNavigator<TAuthorizedStackParamList>();
 
+const screenOptions: NativeStackNavigationOptions = {
+  headerShown: false,
+};
+
 const AuthorizedStackInner: React.FC = memo(() => {
   return (
     <Stack.Navigator
       initialRouteName={EAuthorizedStack.ChatOverview}
-      screenOptions={{headerShown: false}}>
+      screenOptions={screenOptions}>
       <Stack.Screen name={EAuthorizedStack.Chat} component={ChatScreen} />
       <Stack.Screen
         name={EAuthorizedStack.ChatOverview}
@@ -38,11 +45,11 @@ export const AuthorizedStack: React.FC = () => {
   const {params} = useRoute<ERootStack.Authorized>();
 
   return (
-    <SocketConnectionProvider>
-      <UserProvider value={{user: params.user}}>
+    <UserProvider value={{user: params.user}}>
+      <SocketConnectionProvider>
         <InitSocket />
         <AuthorizedStackInner />
-      </UserProvider>
-    </SocketConnectionProvider>
+      </SocketConnectionProvider>
+    </UserProvider>
   );
 };

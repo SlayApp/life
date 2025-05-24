@@ -5,7 +5,7 @@ export type TSocketSubEvents = {
   [ESocketSubEvents.CONNECT]: () => void;
   [ESocketSubEvents.DISCONNECT]: () => void;
   [ESocketSubEvents.CHARACTER_RESPONSE]: (
-    data: components['schemas']['CharacterResponseDto'],
+    data: components['schemas']['CharacterResponseRTO'],
   ) => void;
 };
 
