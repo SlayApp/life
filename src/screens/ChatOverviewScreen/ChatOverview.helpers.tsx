@@ -11,3 +11,8 @@ export const keyExtractor = (item: UserChatResponseDto) =>
 export const ListRenderItemSeparator = () => <View style={styles.separator} />;
 
 export const ListHeaderComponent = () => <SafeAreaWrapper edges="top" />;
+
+export const sortChats = (chats: UserChatResponseDto[] | undefined) =>
+  chats?.sort((a, b) =>
+    b.lastMessage.createdAt.localeCompare(a.lastMessage.createdAt),
+  ) ?? [];

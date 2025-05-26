@@ -1,26 +1,29 @@
 import {useNavigation} from '@react-navigation/native';
 import {ListRenderItem} from '@shopify/flash-list';
 import {UserChatResponseDto} from 'api-client/api';
-import {useCallback, useMemo} from 'react';
+import {useCallback} from 'react';
 import {useWindowDimensions} from 'react-native';
 
 import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
-import {useAPIRequest} from '~/hooks/useAPIRequest';
+import {useAPIRequestWithOptions} from '~/hooks/useAPIRequestWithOptions';
 import {useUser} from '~/hooks/useUser';
 
+import {sortChats} from './ChatOverview.helpers';
 import {Item} from './components';
 
 export const useChatOverview = () => {
   const window = useWindowDimensions();
   const user = useUser();
-  const {data} = useAPIRequest(messagesApi.getAllUserChats, user.id);
-  const chats = useMemo(
-    () =>
-      data?.sort((a, b) =>
-        b.lastMessage.createdAt.localeCompare(a.lastMessage.createdAt),
-      ) ?? [],
-    [data],
+  const {data: chats} = useAPIRequestWithOptions(
+    messagesApi.getAllUserChats,
+    {
+      staleTime: Infinity,
+      refetchOnWindowFocus: 'always',
+      refetchOnMount: 'always',
+      select: sortChats,
+    },
+    user.id,
   );
   const {navigate} = useNavigation();
 

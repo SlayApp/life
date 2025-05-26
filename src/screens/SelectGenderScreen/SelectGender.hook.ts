@@ -7,11 +7,13 @@ import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation
 import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {useUpdateUser} from '~/hooks/useUpdateUser';
+import {useFluidOnboardingStack} from '~/navigation/FluidOnboardingStack';
 
 export const useSelectGender = () => {
   const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
   const user = useGetCachedUser();
   const updateUser = useUpdateUser();
+  const {focusTextInput} = useFluidOnboardingStack();
   const [selectedGender, setSelectedGender] =
     useState<UpdateUserDtoGenderEnum | null>(null);
 
@@ -29,8 +31,10 @@ export const useSelectGender = () => {
     updateUser(user.id, {gender: selectedGender}).catch(() => {
       popTo(EFluidOnboardingStack.SelectGender);
     });
+
+    focusTextInput('text');
     navigate(EFluidOnboardingStack.SelectInterests);
-  }, [navigate, popTo, selectedGender, updateUser, user?.id]);
+  }, [focusTextInput, navigate, popTo, selectedGender, updateUser, user?.id]);
 
   useAfterFirstRenderEffect(
     useCallback(() => {

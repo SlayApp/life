@@ -5,6 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IInput} from '~/components/Input';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useFocusTransitionEndEffect} from '~/hooks/useFocusTransitionEndEffect';
 import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {useUpdateUser} from '~/hooks/useUpdateUser';
@@ -19,6 +20,12 @@ export const useEnterNameScreen = () => {
   const keyboardVerticalOffset = -insets.bottom + 16;
   const [name, setName] = useState(user?.firstName ?? '');
   const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
+
+  useFocusTransitionEndEffect(
+    useCallback(() => {
+      ref.current?.focus();
+    }, []),
+  );
 
   const onPress = useCallback(async () => {
     if (!user?.id) {

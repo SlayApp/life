@@ -32,6 +32,7 @@ export const SelectInterestsScreen: React.FC = () => {
             textAlign="center"
             onChangeText={setInterest}
             placeholderTextColor={theme.colors.subdued80}
+            inputMode="text"
           />
           {validInterest ? (
             <View style={styles.buttonContainer}>

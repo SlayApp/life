@@ -5,9 +5,8 @@ import {createContainer} from 'unstated-next';
 import {ESocketSubEvents} from '~/enums/ESubscriptionEvents';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
+import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
 import {log} from '~/utils/log.util';
-import {optimisticUpdateGetAllUserChats} from '~/utils/optimisticUpdateGetAllUserChats';
-import {optimisticUpdateGetConversation} from '~/utils/optimisticUpdateGetConversation';
 
 import {TSocketEventsForced} from './Socket.subscriptions';
 
@@ -38,16 +37,11 @@ const useContainer = () => {
       },
       [ESocketSubEvents.CHARACTER_RESPONSE]: data => {
         log.info('[Socket] onCharacterResponse', data);
-        optimisticUpdateGetAllUserChats({
-          character: {...data.character},
-          userId: listenerRef.current.userId,
-          lastMessage: data.message,
-        });
-        optimisticUpdateGetConversation({
-          character: {...data.character},
-          userId: listenerRef.current.userId,
-          message: data.message,
-        });
+        optimisticAddMessage(
+          data.message,
+          data.character,
+          listenerRef.current.userId,
+        );
       },
     }),
     [],

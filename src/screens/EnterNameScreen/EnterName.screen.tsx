@@ -16,11 +16,12 @@ export const EnterNameScreen: React.FC = () => {
         subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr">
         <OnboardingTextInput
           ref={ref}
-          autoFocus
           initialValue={name}
           onChangeText={setName}
           placeholder="Name"
           textAlign="center"
+          autoComplete="name"
+          inputMode="text"
         />
       </FluidOnboardingTemplate>
     </FluidOnboardingWrapper>

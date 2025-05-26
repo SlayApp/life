@@ -11,8 +11,7 @@ import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
-import {optimisticUpdateGetAllUserChats} from '~/utils/optimisticUpdateGetAllUserChats';
-import {optimisticUpdateGetConversation} from '~/utils/optimisticUpdateGetConversation';
+import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
 
 import {LIMIT} from './Chat.constants';
 import {IChatInputRef} from './components';
@@ -34,6 +33,8 @@ export const useChat = () => {
       initialPageParam: 0,
       getNextPageParam: (_, pages) => pages.flatMap(page => page.data).length,
       staleTime: Infinity,
+      refetchOnWindowFocus: 'always',
+      refetchOnMount: 'always',
     },
     characterId,
     user.id,
@@ -53,7 +54,6 @@ export const useChat = () => {
       const date = new Date();
       const deduplicationId = randomUUID();
       const createdAt = date.toISOString();
-
       const newMessage: Omit<MessageResponseDto, 'id'> = {
         content: message,
         createdAt,
@@ -61,22 +61,7 @@ export const useChat = () => {
         isFromUser: true,
       };
 
-      optimisticUpdateGetAllUserChats({
-        character: chatPartner,
-        userId: user.id,
-        lastMessage: {
-          ...newMessage,
-          id: 0,
-        },
-      });
-      optimisticUpdateGetConversation({
-        character: chatPartner,
-        userId: user.id,
-        message: {
-          ...newMessage,
-          id: 0,
-        },
-      });
+      optimisticAddMessage(newMessage, chatPartner, user.id);
 
       Socket.emit(ESocketPubEvents.CHARACTER_MESSAGE, {
         characterId,

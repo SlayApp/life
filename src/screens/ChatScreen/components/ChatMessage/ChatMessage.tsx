@@ -15,8 +15,8 @@ interface IProps {
 }
 
 export const ChatMessage: React.FC<IProps> = ({message, index, messages}) => {
-  const nextMessage: MessageResponseDto | undefined = messages[index - 1];
-  const previousMessage: MessageResponseDto | undefined = messages[index + 1];
+  const nextMessage = messages[index - 1];
+  const previousMessage = messages[index + 1];
 
   const nextBorderTopRightRadius = useMemo(() => {
     if (areMessagesGrouped(message, previousMessage)) {
@@ -34,20 +34,46 @@ export const ChatMessage: React.FC<IProps> = ({message, index, messages}) => {
     return 16;
   }, [message, nextMessage]);
 
+  const containerStyle = useMemo(() => {
+    const isPreviousSameUser =
+      previousMessage?.isFromUser === message.isFromUser;
+    const isNextSameUser = nextMessage?.isFromUser === message.isFromUser;
+
+    let marginBottom = isNextSameUser ? 1 : 8;
+    let marginTop = isPreviousSameUser ? 1 : 8;
+
+    // If the message is the first in the list, we don't want to have a margin top
+    if (!previousMessage) {
+      marginTop = 0;
+    }
+    // If the message is the last in the list, we don't want to have a margin bottom
+    if (!nextMessage) {
+      marginBottom = 0;
+    }
+
+    return {
+      marginTop,
+      marginBottom,
+    };
+  }, [message, previousMessage, nextMessage]);
+
+  const innerStyle = useMemo(() => {
+    return [
+      styles.container(message.isFromUser),
+      {
+        borderTopRightRadius: nextBorderTopRightRadius,
+        borderBottomRightRadius: nextBorderBottomRightRadius,
+      },
+    ];
+  }, [
+    nextBorderTopRightRadius,
+    nextBorderBottomRightRadius,
+    message.isFromUser,
+  ]);
+
   return (
-    <View
-      style={{
-        marginTop: previousMessage && previousMessage?.isFromUser ? 1 : 8,
-        marginBottom: nextMessage && nextMessage?.isFromUser ? 1 : 8,
-      }}>
-      <Animated.View
-        style={[
-          styles.container(message.isFromUser),
-          {
-            borderTopRightRadius: nextBorderTopRightRadius,
-            borderBottomRightRadius: nextBorderBottomRightRadius,
-          },
-        ]}>
+    <View style={containerStyle}>
+      <Animated.View style={innerStyle}>
         <Text
           variant="body"
           color={message.isFromUser ? 'inverted' : 'primary'}>

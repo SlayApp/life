@@ -8,6 +8,7 @@ import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useAPIMutation} from '~/hooks/useAPIMutation';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useFocusTransitionEndEffect} from '~/hooks/useFocusTransitionEndEffect';
 import {useGetCachedUser} from '~/hooks/useGetCachedUser';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {log} from '~/utils/log.util';
@@ -26,6 +27,12 @@ export const useSelectInterestsScreen = () => {
   const [addInterest] = useAPIMutation(interestApi.addUserInterest);
 
   const validInterest = !!interest.trim();
+
+  useFocusTransitionEndEffect(
+    useCallback(() => {
+      ref.current?.focus();
+    }, []),
+  );
 
   const onAddInterestPress = useCallback(async () => {
     const text = await ref.current?.clearText();

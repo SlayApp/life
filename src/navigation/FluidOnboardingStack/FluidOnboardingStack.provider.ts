@@ -24,7 +24,7 @@ const useFluidOnboarding = () => {
   const focusTextInput = useCallback(
     (
       nextInputMode: TextInputProps['inputMode'],
-      nextAutoComplete: TextInputProps['autoComplete'],
+      nextAutoComplete?: TextInputProps['autoComplete'],
     ) => {
       setInputMode(nextInputMode);
       setAutoComplete(nextAutoComplete);

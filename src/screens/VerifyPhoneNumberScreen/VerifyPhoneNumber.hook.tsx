@@ -6,7 +6,9 @@ import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
 import {useAPIMutation} from '~/hooks/useAPIMutation';
 import {useCreateUser} from '~/hooks/useCreateUser';
 import {useFluidOnboardingNavigation} from '~/hooks/useFluidOnboardingNavigation';
+import {useFocusTransitionEndEffect} from '~/hooks/useFocusTransitionEndEffect';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
+import {useFluidOnboardingStack} from '~/navigation/FluidOnboardingStack';
 import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
 import {log} from '~/utils/log.util';
 
@@ -21,6 +23,13 @@ export const useVerifyPhoneNumberScreen = () => {
   const createUser = useCreateUser();
   const [resendOtp] = useAPIMutation(authApi.sendOtp);
   const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
+  const {focusTextInput} = useFluidOnboardingStack();
+
+  useFocusTransitionEndEffect(
+    useCallback(() => {
+      ref.current?.focus();
+    }, []),
+  );
 
   const onCodeInputPress = useCallback(() => {
     ref.current?.focus();
@@ -50,13 +59,15 @@ export const useVerifyPhoneNumberScreen = () => {
         phoneNumber: phoneNumber.current,
         otp: code,
       });
+
+      focusTextInput('text', 'name');
       navigate(EFluidOnboardingStack.EnterName);
     } catch (error) {
       log.error('Error verifying OTP', error);
     } finally {
       setLoading(false);
     }
-  }, [code, createUser, navigate, phoneNumber, popTo]);
+  }, [code, createUser, focusTextInput, navigate, phoneNumber, popTo]);
 
   const onResendCodePress = useCallback(async () => {
     if (!phoneNumber.current) {

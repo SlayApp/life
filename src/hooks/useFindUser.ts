@@ -20,6 +20,7 @@ export const useFindUser = () => {
 
       return await findUser(userId);
     },
+    staleTime: Infinity,
   });
 
   return {user, isLoading};

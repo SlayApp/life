@@ -30,7 +30,6 @@ export const VerifyPhoneNumberScreen: React.FC = () => {
           </Pressable>
           <View style={styles.hiddenInput}>
             <TextInput
-              autoFocus
               ref={ref}
               value={code}
               onChangeText={onChangeText}
