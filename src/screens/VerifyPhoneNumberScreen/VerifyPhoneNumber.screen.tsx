@@ -33,7 +33,8 @@ export const VerifyPhoneNumberScreen: React.FC = () => {
               ref={ref}
               value={code}
               onChangeText={onChangeText}
-              keyboardType="phone-pad"
+              inputMode="numeric"
+              autoComplete="one-time-code"
             />
           </View>
         </View>

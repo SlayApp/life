@@ -34,7 +34,6 @@ export const EnterPhoneNumberScreen: React.FC = () => {
               ref={ref}
               onChangeText={setPhoneNumber}
               placeholder="123 456 789"
-              keyboardType="phone-pad"
               inputMode="tel"
               autoComplete="tel"
             />

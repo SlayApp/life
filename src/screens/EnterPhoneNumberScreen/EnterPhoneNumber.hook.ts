@@ -39,6 +39,8 @@ export const useEnterPhoneNumberScreen = () => {
         throw new Error('Invalid phone number');
       }
 
+      focusTextInput('numeric');
+
       sendOtp({
         phoneNumber: e164,
       }).catch(e => {
@@ -48,7 +50,6 @@ export const useEnterPhoneNumberScreen = () => {
       });
 
       setUnauthorizedStackPhoneNumber(e164);
-      focusTextInput('numeric', 'one-time-code');
       navigate(EFluidOnboardingStack.VerifyPhoneNumber);
     } catch (error) {
       log.error('Error in EnterPhoneNumber', error);

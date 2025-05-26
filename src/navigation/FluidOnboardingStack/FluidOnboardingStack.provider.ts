@@ -7,7 +7,7 @@ import {createContainer} from 'unstated-next';
 import {IScreenHeader} from '~/components/ScreenHeader/ScreenHeader.types';
 import {noop} from '~/utils/noop';
 
-const useFluidOnboarding = () => {
+const useContainer = () => {
   const insets = useSafeAreaInsets();
   const onPress = useRef<() => void>(noop);
   const onBackPress = useRef<() => void>(noop);
@@ -17,20 +17,17 @@ const useFluidOnboarding = () => {
   const keyboardVerticalOffset = -insets.bottom + 16;
 
   const hiddenTextInputRef = useRef<TextInput>(null);
-  const [inputMode, setInputMode] = useState<TextInputProps['inputMode']>();
-  const [autoComplete, setAutoComplete] =
-    useState<TextInputProps['autoComplete']>();
+  const [inputMode, setInputMode] =
+    useState<TextInputProps['inputMode']>('numeric');
+
+  useState<TextInputProps['autoComplete']>('tel');
 
   const focusTextInput = useCallback(
-    (
-      nextInputMode: TextInputProps['inputMode'],
-      nextAutoComplete?: TextInputProps['autoComplete'],
-    ) => {
+    (nextInputMode: TextInputProps['inputMode']) => {
       setInputMode(nextInputMode);
-      setAutoComplete(nextAutoComplete);
       hiddenTextInputRef.current?.focus();
     },
-    [],
+    [hiddenTextInputRef],
   );
 
   const onPressHandler = useCallback(() => {
@@ -73,6 +70,7 @@ const useFluidOnboarding = () => {
     header,
     inputMode,
     autoComplete,
+    hiddenTextInputRef,
     onPressHandler,
     onBackPressHandler,
     buttonLabel,
@@ -83,6 +81,6 @@ const useFluidOnboarding = () => {
   ]);
 };
 
-const Container = createContainer(useFluidOnboarding);
+const Container = createContainer(useContainer);
 export const FluidOnboardingStackProvider = Container.Provider;
 export const useFluidOnboardingStack = Container.useContainer;

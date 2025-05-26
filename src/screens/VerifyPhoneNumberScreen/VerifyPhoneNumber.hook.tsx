@@ -60,7 +60,7 @@ export const useVerifyPhoneNumberScreen = () => {
         otp: code,
       });
 
-      focusTextInput('text', 'name');
+      focusTextInput('text');
       navigate(EFluidOnboardingStack.EnterName);
     } catch (error) {
       log.error('Error verifying OTP', error);

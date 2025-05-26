@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
         <Pressable onPress={onPress}>
           <View style={styles.nameContainer}>
             <Text color="inverted" variant="small" weight="bold">
-              {user.firstName.slice(0, 1)}
+              {user.firstName?.slice(0, 1)}
             </Text>
           </View>
         </Pressable>

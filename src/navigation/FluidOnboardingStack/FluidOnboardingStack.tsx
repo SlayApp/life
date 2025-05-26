@@ -21,10 +21,9 @@ const FluidOnboardingStackInner: TFCWithChildren = ({children}) => {
     onPressHandler,
     disabled,
     hiddenTextInputRef,
-    autoComplete,
-    inputMode,
     keyboardVerticalOffset,
     header,
+    inputMode,
   } = useFluidOnboardingStack();
 
   return (
@@ -41,7 +40,7 @@ const FluidOnboardingStackInner: TFCWithChildren = ({children}) => {
           ref={hiddenTextInputRef}
           style={styles.full}
           inputMode={inputMode}
-          autoComplete={autoComplete}
+          autoComplete="off"
         />
       </View>
       {children}
