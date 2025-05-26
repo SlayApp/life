@@ -15,11 +15,10 @@ export const styles = StyleSheet.create(theme => ({
   },
   textInputContainer: {
     position: 'absolute',
-    top: 100,
-    left: 100,
+    top: -100,
+    left: -100,
     width: 50,
     height: 50,
-    backgroundColor: 'red',
   },
   full: {
     width: '100%',
