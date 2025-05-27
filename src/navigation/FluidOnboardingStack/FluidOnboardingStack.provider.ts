@@ -1,11 +1,11 @@
-import {useCallback, useMemo, useRef, useState} from 'react';
-import {TextInput, TextInputProps} from 'react-native';
-import {useSharedValue} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {createContainer} from 'unstated-next';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createContainer } from 'unstated-next';
 
-import {IScreenHeader} from '~/components/ScreenHeader/ScreenHeader.types';
-import {noop} from '~/utils/noop';
+import { IScreenHeader } from '~/components/ScreenHeader/ScreenHeader.types';
+import { noop } from '~/utils/noop';
 
 const useContainer = () => {
   const insets = useSafeAreaInsets();
@@ -52,7 +52,6 @@ const useContainer = () => {
     return {
       header,
       inputMode,
-      autoComplete,
       hiddenTextInputRef,
       setDisabled,
       setLoading,
@@ -69,7 +68,6 @@ const useContainer = () => {
   }, [
     header,
     inputMode,
-    autoComplete,
     hiddenTextInputRef,
     onPressHandler,
     onBackPressHandler,

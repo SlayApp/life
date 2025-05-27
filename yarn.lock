@@ -5704,7 +5704,7 @@ internal-slot@^1.1.0:
     hasown "^2.0.2"
     side-channel "^1.1.0"
 
-invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -8048,6 +8048,13 @@ react-native-nitro-modules@^0.25.2:
   version "0.25.2"
   resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.25.2.tgz#3d03869934854d7509c2f0dbaf4dca83d6969faf"
   integrity sha512-rL+X0LzB8BXvpdrUE/+oZ5v4qS/1nZIq0M8Uctbvqq2q53sVCHX4995ffT8+lGIJe/f0QcBvvrEeXtBPl86iwQ==
+
+react-native-onesignal@^5.2.11:
+  version "5.2.11"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-5.2.11.tgz#91967240c483468c56a721be2b5e7c30b2412bdf"
+  integrity sha512-Xf/5tUGwt0MtjKawtKC+BIftihXPHFqiu0SnhsC+qjlawdHCUPo9fzKKyDYv5Hshgw6L3ZrbCyC24VPd+j22oA==
+  dependencies:
+    invariant "^2.2.2"
 
 react-native-reanimated@^3.17.5:
   version "3.17.5"
