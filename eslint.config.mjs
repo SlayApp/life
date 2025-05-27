@@ -1,4 +1,3 @@
-// @ts-check
 import {fixupPluginRules} from '@eslint/compat';
 import eslint from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';

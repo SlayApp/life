@@ -6,7 +6,6 @@ import React from 'react';
 
 import {EUnauthorizedStack} from '~/enums/EUnauthorizedStack';
 import {LandingScreen} from '~/screens/LandingScreen/Landing.screen';
-import {LoadingScreen} from '~/screens/LoadingScreen';
 
 import {FluidOnboardingStack} from '../FluidOnboardingStack/FluidOnboardingStack';
 import {UnauthorizedStackProvider} from './UnauthorizedStack.provider';
@@ -34,10 +33,6 @@ export const UnauthorizedStack: React.FC = () => {
           name={EUnauthorizedStack.FluidOnboarding}
           options={{gestureEnabled: false}}
           component={FluidOnboardingStack}
-        />
-        <Stack.Screen
-          name={EUnauthorizedStack.Loading}
-          component={LoadingScreen}
         />
       </Stack.Navigator>
     </UnauthorizedStackProvider>

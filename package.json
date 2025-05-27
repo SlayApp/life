@@ -6,6 +6,8 @@
     "android": "react-native run-android",
     "ios": "npx react-native run-ios",
     "lint": "yarn lint:js && yarn lint:ts && yarn prettier:check",
+    "prettier": "prettier --write '**/*.{ts,tsx}'",
+    "prettier:check": "prettier --check '**/*.{ts,tsx}'",
     "lint:js": "eslint '**/*.{ts,tsx}' --ignore-pattern='backend/'",
     "lint:ts": "tsc -p ./tsconfig.json --noEmit",
     "start": "npx react-native start",
@@ -108,7 +110,7 @@
     "openapi-typescript": "^6.7.5",
     "prettier": "2.8.8",
     "react-test-renderer": "19.0.0",
-    "typescript": "5.0.4",
+    "typescript": "5.7.2",
     "typescript-eslint": "^8.32.0"
   },
   "engines": {

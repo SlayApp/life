@@ -1,5 +1,5 @@
 export const filterNil = <T>(arr: (T | null | undefined)[]): T[] => {
-	'worklet'
+  'worklet';
 
-	return arr.filter((x): x is T => x !== null && x !== undefined)
-}
+  return arr.filter((x): x is T => x !== null && x !== undefined);
+};

@@ -1,5 +1,4 @@
-import {MessageResponseDto} from 'api-client/api';
-import {CharacterRTO} from 'backend/src/characters/rto/character.rto';
+import {CharacterDto, MessageResponseDto} from 'api-client/api';
 
 import {messagesApi} from '~/api/api';
 import {LIMIT} from '~/screens/ChatScreen/Chat.constants';
@@ -8,7 +7,7 @@ import {getInfiniteCacheOf, setInfiniteCacheOf} from './cache/accessCacheOf';
 
 type TArgs = {
   userId: number;
-  character: CharacterRTO;
+  character: CharacterDto;
   message: MessageResponseDto;
 };
 
@@ -23,15 +22,6 @@ export const optimisticUpdateGetConversation = ({
     undefined,
     LIMIT,
   );
-
-  // const previousMessages = prevMessages?.pages[0]?.data ?? [];
-  // const newMessages = [message, ...previousMessages];
-  // const newMeta = {
-  //   total: (prevMessages?.pages[0]?.meta?.total ?? 0) + 1,
-  //   page: prevMessages?.pages[0]?.meta?.page ?? 1,
-  //   limit: LIMIT,
-  //   totalPages: prevMessages?.pages[0]?.meta?.totalPages ?? 1,
-  // };
 
   if (!prevMessages || !prevMessages.pages.length) {
     const data = {
@@ -55,7 +45,7 @@ export const optimisticUpdateGetConversation = ({
     return;
   }
 
-  const added = [message, ...prevMessages.pages[0].data];
+  const added = [message, ...(prevMessages.pages[0]?.data ?? [])];
   const data = {
     ...prevMessages,
     pages: prevMessages.pages.map((page, i) =>

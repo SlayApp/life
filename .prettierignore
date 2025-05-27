@@ -1,0 +1,9 @@
+.bundle/
+.parcel-cache/
+android/
+api_client/
+backend/
+ios/
+node_modules/
+patches/
+react-native-godot/

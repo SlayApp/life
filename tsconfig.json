@@ -2,12 +2,38 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "sourceRoot": "/",
     "noUncheckedIndexedAccess": true,
     "strict": true,
+    "jsx": "react-jsx",
+    "module": "ES2022",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "inlineSources": true,
     "paths": {
       "~/*": ["src/*"],
       "specs/*": ["specs/*"],
       "api-client/*": ["api-client/*"]
-    }
-  }
+    },
+    "strictPropertyInitialization": false,
+    "moduleSuffixes": [".ios", ".android", ".native", ""]
+  },
+  "include": [
+    "./App.tsx",
+    "./src/**/*",
+    "metro.config.js",
+    "babel.config.js",
+    "react-native.config.js",
+    "eslint.config.mjs"
+  ],
+  "exclude": [
+    "backend",
+    "backend/**/*",
+    "api-client",
+    "api-client/**/*",
+    "**/node_module",
+    "src/api/api.ts"
+  ]
 }

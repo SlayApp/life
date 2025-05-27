@@ -1,15 +1,18 @@
-import { useIsFocused } from '@react-navigation/native'
-import { DependencyList, useLayoutEffect } from 'react'
+import {useIsFocused} from '@react-navigation/native';
+import {DependencyList, useLayoutEffect} from 'react';
 
-export const useLayoutFocusEffect = (effectInner: () => void, deps: DependencyList) => {
-	const isFocused = useIsFocused()
+export const useLayoutFocusEffect = (
+  effectInner: () => void,
+  deps: DependencyList,
+) => {
+  const isFocused = useIsFocused();
 
-	useLayoutEffect(() => {
-		if (!isFocused) {
-			return
-		}
+  useLayoutEffect(() => {
+    if (!isFocused) {
+      return;
+    }
 
-		effectInner()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [...deps, isFocused])
-}
+    effectInner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...deps, isFocused]);
+};

@@ -1470,9 +1470,10 @@ const US_COUNTRY_CODE = countryCodes.find(element => element.code === 'US') ?? {
 };
 
 export const getCountryCode = () => {
-  const {regionCode} = getLocales()[0];
+  const locales = getLocales()[0];
 
   return (
-    countryCodes.find(element => element.code === regionCode) ?? US_COUNTRY_CODE
+    countryCodes.find(element => element.code === locales!.regionCode) ??
+    US_COUNTRY_CODE
   );
 };
