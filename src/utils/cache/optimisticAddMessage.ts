@@ -8,7 +8,7 @@ import {optimisticUpdateGetConversation} from '../optimisticUpdateGetConversatio
 export const optimisticAddMessage = (
   message: TPartialBy<MessageResponseDto, 'id'>,
   chatPartner: CharacterDto,
-  userId: number,
+  userId: string,
 ) => {
   optimisticUpdateGetAllUserChats({
     character: chatPartner,

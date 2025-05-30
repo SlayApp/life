@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: (isMe: boolean) => ({
     alignSelf: isMe ? 'flex-end' : 'flex-start',
     backgroundColor: isMe ? '#00B3FF' : '#F0EFF4',
@@ -22,4 +22,7 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#00B3FF',
   },
-});
+  inner: {
+    minHeight: theme.fonts.variant.body.lineHeight,
+  },
+}));

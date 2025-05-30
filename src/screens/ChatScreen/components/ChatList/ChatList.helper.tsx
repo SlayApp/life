@@ -1,7 +1,6 @@
 import {CellContainer, FlashList} from '@shopify/flash-list';
-import {MessageResponseDto} from 'api-client/api';
 import {Component, forwardRef, Ref} from 'react';
-import {FlatList, View} from 'react-native';
+import {View} from 'react-native';
 import {useReanimatedKeyboardAnimation} from 'react-native-keyboard-controller';
 import Animated, {
   EntryAnimationsValues,
@@ -13,29 +12,25 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {spring} from '~/motion/spring';
 import {
   CHAT_HEADER_HEIGHT,
-  LIST_INPUT_VERTICAL_PADDING,
+  LIST_VERTICAL_PADDING,
 } from '~/screens/ChatScreen/Chat.constants';
 import {useChatScreenContainer} from '~/screens/ChatScreen/Chat.provider';
 
+import {TMessage} from '../../Chat.types';
 import {styles} from './ChatList.styles';
 
 export const AnimatedFlashList = Animated.createAnimatedComponent(
-  FlashList<MessageResponseDto>,
+  FlashList<TMessage>,
 );
 
-export const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<MessageResponseDto>,
-);
-
-export const keyExtractor = (item: MessageResponseDto) =>
-  item.deduplicationId.toString();
+export const keyExtractor = (item: TMessage) => item.deduplicationId;
 
 export const ListFooterComponent: React.FC = () => {
   const {currentInputHeight} = useChatScreenContainer();
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: currentInputHeight.value + LIST_INPUT_VERTICAL_PADDING,
+      height: currentInputHeight.value + LIST_VERTICAL_PADDING,
     };
   }, [currentInputHeight]);
 

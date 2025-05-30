@@ -6,7 +6,7 @@ import {LIMIT} from '~/screens/ChatScreen/Chat.constants';
 import {getInfiniteCacheOf, setInfiniteCacheOf} from './cache/accessCacheOf';
 
 type TArgs = {
-  userId: number;
+  userId: string;
   character: CharacterDto;
   message: MessageResponseDto;
 };

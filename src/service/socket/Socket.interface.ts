@@ -7,6 +7,9 @@ export type TSocketSubEvents = {
   [ESocketSubEvents.CHARACTER_RESPONSE]: (
     data: components['schemas']['CharacterResponseRTO'],
   ) => void;
+  [ESocketSubEvents.CHARACTER_TYPING]: (
+    data: components['schemas']['CharacterTypingDto'],
+  ) => void;
 };
 
 export type TSocketPubEvents = {

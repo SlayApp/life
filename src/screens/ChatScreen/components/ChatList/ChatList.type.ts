@@ -1,6 +1,7 @@
-import {MessageResponseDto} from 'api-client/api';
+import {TMessage} from '../../Chat.types';
 
 export interface IChatListProps {
-  data: MessageResponseDto[];
+  data: TMessage[];
+  isChatPartnerTyping: boolean;
   onEndReached: () => void;
 }

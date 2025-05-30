@@ -4,7 +4,7 @@ import {messagesApi} from '~/api/api';
 import {useAPIRequest} from '~/hooks/useAPIRequest';
 import {useUser} from '~/hooks/useUser';
 
-export const useGetChatPartner = (characterId: number) => {
+export const useGetChatPartner = (characterId: string) => {
   const user = useUser();
   const {data: chats} = useAPIRequest(messagesApi.getAllUserChats, user.id);
 

@@ -8,7 +8,7 @@ import {getCacheOf, setCacheOf} from './cache/accessCacheOf';
 type TArgs = {
   character: Pick<components['schemas']['CharacterRTO'], 'id'> &
     Partial<Omit<components['schemas']['CharacterRTO'], 'id'>>;
-  userId: number;
+  userId: string;
   lastMessage: components['schemas']['MessageResponseDto'];
 };
 

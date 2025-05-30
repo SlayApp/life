@@ -17,6 +17,7 @@ export const ChatScreen: React.FC = () => {
     handleSend,
     chatPartner,
     onEndReached,
+    isChatPartnerTyping,
   } = useChat();
 
   return (
@@ -26,7 +27,12 @@ export const ChatScreen: React.FC = () => {
           name={chatPartner?.name}
           profilePictureUri={chatPartner?.profilePicture}
         />
-        <ChatList ref={listRef} data={messages} onEndReached={onEndReached} />
+        <ChatList
+          ref={listRef}
+          data={messages}
+          onEndReached={onEndReached}
+          isChatPartnerTyping={isChatPartnerTyping}
+        />
         <KeyboardStickyView
           offset={{
             opened: insets.bottom - KEYBOARD_OPEN_INPUT_VERTICAL_PADDING,

@@ -28,7 +28,7 @@ export const useChatOverview = () => {
   const {navigate} = useNavigation();
 
   const onPressHandler = useCallback(
-    (id: number) => {
+    (id: string) => {
       navigate(EAuthorizedStack.Chat, {id});
     },
     [navigate],

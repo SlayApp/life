@@ -6,7 +6,9 @@ import {ESocketSubEvents} from '~/enums/ESubscriptionEvents';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
 import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
+import {debouncedUnsetTypingState} from '~/utils/debouncedUnsetTypingState';
 import {log} from '~/utils/log.util';
+import {setIsCharacterTyping} from '~/utils/setIsCharacterTyping';
 
 import {TSocketEventsForced} from './Socket.subscriptions';
 
@@ -37,11 +39,23 @@ const useContainer = () => {
       },
       [ESocketSubEvents.CHARACTER_RESPONSE]: data => {
         log.info('[Socket] onCharacterResponse', data);
-        optimisticAddMessage(
-          data.message,
-          data.character,
-          listenerRef.current.userId,
-        );
+        if (data.messageDelay) {
+          setIsCharacterTyping(data.character.id, true);
+        }
+
+        setTimeout(() => {
+          setIsCharacterTyping(data.character.id, false);
+          optimisticAddMessage(
+            data.message,
+            data.character,
+            listenerRef.current.userId,
+          );
+        }, data.messageDelay ?? 0);
+      },
+      [ESocketSubEvents.CHARACTER_TYPING]: data => {
+        log.info('[Socket] onCharacterTyping', data);
+        setIsCharacterTyping(data.characterId, true);
+        debouncedUnsetTypingState(data.characterId);
       },
     }),
     [],

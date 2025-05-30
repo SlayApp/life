@@ -34,10 +34,10 @@ export type components = {
       /** @description Message Deduplication ID, coming from the clientside */
       deduplicationId: string;
       /**
-       * @description The ID of the character
-       * @example 1
+       * @description Character ID
+       * @example 123e4567-e89b-12d3-a456-426614174000
        */
-      characterId: number;
+      characterId: string;
       /**
        * @description The message content
        * @example Hello, how are you?
@@ -53,10 +53,11 @@ export type components = {
     };
     InitializeInterestBasedConversationDto: {
       /**
-       * @description The ID of the user
-       * @example 1
+       * @deprecated
+       * @description dont send. User ID is extracted from the socket
+       * @example 123e4567-e89b-12d3-a456-426614174000
        */
-      userId: number;
+      userId: string;
       /**
        * @description Interests of the user
        * @example [
@@ -84,11 +85,13 @@ export type components = {
     };
     CharacterRTO: {
       /** Character ID */
-      id: number;
+      id: string;
       /** Character name */
       name: string;
       /** Profile picture URL */
       profilePicture?: string;
+      /** Character description */
+      description?: string;
     };
     CharacterResponseRTO: {
       /** @description Message object */
@@ -109,6 +112,18 @@ export type components = {
       willMessageUser?: boolean;
       /** @description Message delay */
       messageDelay?: number;
+    };
+    CharacterTypingDto: {
+      /**
+       * @description Character ID
+       * @example 123e4567-e89b-12d3-a456-426614174000
+       */
+      characterId: string;
+      /**
+       * @description User ID
+       * @example 123e4567-e89b-12d3-a456-426614174000
+       */
+      userId: string;
     };
   };
   responses: never;

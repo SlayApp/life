@@ -4,7 +4,7 @@ export type TAuthorizedStackParamList = {
   [EAuthorizedStack.Home]: undefined;
   [EAuthorizedStack.ChatOverview]: undefined;
   [EAuthorizedStack.Chat]: {
-    id: number;
+    id: string;
   };
   [EAuthorizedStack.Loading]: {interests: string[]};
 };

@@ -11,7 +11,7 @@ export const useFindUser = () => {
   const {data: user, isLoading} = useQuery({
     queryKey: userQueryKey,
     queryFn: async () => {
-      const userId = LifetimeStorage.getNumber('userId');
+      const userId = LifetimeStorage.getString('userId');
       const token = LifetimeStorage.getString('authToken');
 
       if (!userId || !token) {

@@ -4,6 +4,6 @@ export interface IItemProps {
   name: string;
   message: MessageResponseDto;
   profilePictureUri?: string;
-  id: number;
-  onPress: (id: number) => void;
+  id: string;
+  onPress: (id: string) => void;
 }

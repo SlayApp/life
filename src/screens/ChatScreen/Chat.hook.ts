@@ -1,19 +1,19 @@
 import {FlashList} from '@shopify/flash-list';
 import {MessageResponseDto} from 'api-client/api';
 import {randomUUID} from 'expo-crypto';
-import {useCallback, useMemo, useRef} from 'react';
+import {useCallback, useRef} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {ESocketPubEvents} from '~/enums/ESubscriptionEvents';
-import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
+import {useIsCharacterTyping} from '~/hooks/useIsCharacterTyping';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
 import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
 
-import {LIMIT} from './Chat.constants';
+import {useChatApi} from './Chat.api';
+import {TMessage} from './Chat.types';
 import {IChatInputRef} from './components';
 import {useGetChatPartner} from './hooks';
 
@@ -25,27 +25,9 @@ export const useChat = () => {
   const chatInputRef = useRef<IChatInputRef>(null);
   const insets = useSafeAreaInsets();
   const chatPartner = useGetChatPartner(characterId);
-  const listRef = useRef<FlashList<MessageResponseDto>>(null);
-
-  const {data, fetchNextPage, isFetching} = useInfiniteAPIRequest(
-    messagesApi.getConversation,
-    {
-      initialPageParam: 0,
-      getNextPageParam: (_, pages) => pages.flatMap(page => page.data).length,
-      staleTime: Infinity,
-      refetchOnWindowFocus: 'always',
-      refetchOnMount: 'always',
-    },
-    characterId,
-    user.id,
-    undefined,
-    LIMIT,
-  );
-  const total = data?.pages[0]?.meta.total ?? 0;
-  const messages = useMemo(
-    () => data?.pages.flatMap(page => page.data) ?? [],
-    [data],
-  );
+  const listRef = useRef<FlashList<TMessage>>(null);
+  const isChatPartnerTyping = useIsCharacterTyping(characterId);
+  const {messages, onEndReached} = useChatApi(characterId, user.id);
 
   const handleSend = useCallback(
     (message: string) => {
@@ -72,12 +54,6 @@ export const useChat = () => {
     [characterId, chatPartner, user.id],
   );
 
-  const onEndReached = useCallback(() => {
-    if (isFetching || total <= messages.length) return;
-
-    fetchNextPage();
-  }, [isFetching, fetchNextPage, total, messages.length]);
-
   return {
     chatInputRef,
     insets,
@@ -86,5 +62,6 @@ export const useChat = () => {
     handleSend,
     chatPartner,
     onEndReached,
+    isChatPartnerTyping,
   };
 };
