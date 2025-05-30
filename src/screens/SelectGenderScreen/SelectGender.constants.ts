@@ -1,4 +1,4 @@
-import {UpdateUserDtoGenderEnum} from 'api-client/api';
+import {UpdateUserDtoGenderEnum} from 'api-client';
 
 export const GENDER_ITEMS = [
   UpdateUserDtoGenderEnum.Male,

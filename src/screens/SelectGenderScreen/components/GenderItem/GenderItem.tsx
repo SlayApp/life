@@ -1,4 +1,4 @@
-import {UpdateUserDtoGenderEnum} from 'api-client/api';
+import {UpdateUserDtoGenderEnum} from 'api-client';
 import {SymbolView} from 'expo-symbols';
 import Animated from 'react-native-reanimated';
 

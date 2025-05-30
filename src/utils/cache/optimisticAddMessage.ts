@@ -1,4 +1,4 @@
-import {CharacterDto, MessageResponseDto} from 'api-client/api';
+import {CharacterDto, MessageResponseDto} from 'api-client';
 
 import {TPartialBy} from '~/types/TPartialBy';
 

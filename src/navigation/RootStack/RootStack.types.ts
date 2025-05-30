@@ -1,5 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 
 import {ERootStack} from '~/enums/ERootStack';
 import {TAuthorizedStackParamList} from '~/navigation/AuthorizedStack/AuthorizedStack.types';

@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import {useMemo} from 'react';
 
 import {queryClient} from '~/utils/cache/queryClient';

@@ -1,4 +1,4 @@
-import {CharacterDto, MessageResponseDto} from 'api-client/api';
+import {CharacterDto, MessageResponseDto} from 'api-client';
 
 import {messagesApi} from '~/api/api';
 import {LIMIT} from '~/screens/ChatScreen/Chat.constants';

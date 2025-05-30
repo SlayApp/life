@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {ListRenderItem} from '@shopify/flash-list';
-import {UserChatResponseDto} from 'api-client/api';
+import {UserChatResponseDto} from 'api-client';
 import {useCallback} from 'react';
 import {useWindowDimensions} from 'react-native';
 

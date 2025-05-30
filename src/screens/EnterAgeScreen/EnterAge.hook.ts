@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import {differenceInYears, isBefore, startOfToday} from 'date-fns';
 import {useCallback, useMemo, useState} from 'react';
 

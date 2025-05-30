@@ -1,4 +1,4 @@
-import {MessageResponseDto} from 'api-client/api';
+import {MessageResponseDto} from 'api-client';
 
 import {Text} from '~/components/Text';
 

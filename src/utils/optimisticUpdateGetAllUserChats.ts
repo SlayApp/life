@@ -1,4 +1,4 @@
-import {CharacterDto, UserChatResponseDto} from 'api-client/api';
+import {CharacterDto, UserChatResponseDto} from 'api-client';
 
 import {messagesApi} from '~/api/api';
 import {components} from '~/types/asyncapi';

@@ -1,4 +1,4 @@
-import {UpdateUserDtoGenderEnum} from 'api-client/api';
+import {UpdateUserDtoGenderEnum} from 'api-client';
 import {useCallback, useState} from 'react';
 
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';

@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import {subYears} from 'date-fns';
 
 export const getBirthday = (user: UserResponseDto | undefined) => {

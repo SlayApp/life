@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 
 import {queryClient} from './cache/queryClient';
 import {userQueryKey} from './userQueryKey';

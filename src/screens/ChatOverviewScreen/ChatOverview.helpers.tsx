@@ -1,4 +1,4 @@
-import {UserChatResponseDto} from 'api-client/api';
+import {UserChatResponseDto} from 'api-client';
 import {View} from 'react-native';
 
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';

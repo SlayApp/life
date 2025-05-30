@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import {useCallback, useRef, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 

@@ -1,5 +1,5 @@
 import {FlashList} from '@shopify/flash-list';
-import {MessageResponseDto} from 'api-client/api';
+import {MessageResponseDto} from 'api-client';
 import {randomUUID} from 'expo-crypto';
 import {useCallback, useRef} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

@@ -1,4 +1,4 @@
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import {createContext, useContext} from 'react';
 
 interface IUserContext {

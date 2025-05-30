@@ -3,7 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import {UserResponseDto} from 'api-client/api';
+import {UserResponseDto} from 'api-client';
 import React from 'react';
 
 import {Insets} from '~/components/Insets/Insets';

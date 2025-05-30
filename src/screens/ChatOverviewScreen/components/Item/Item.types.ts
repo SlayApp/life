@@ -1,4 +1,4 @@
-import {MessageResponseDto} from 'api-client/api';
+import {MessageResponseDto} from 'api-client';
 
 export interface IItemProps {
   name: string;
