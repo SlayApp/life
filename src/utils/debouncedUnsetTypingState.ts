@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import {setIsCharacterTyping} from './setIsCharacterTyping';
+import {setIsCharacterTyping} from '~/stores/useIsTyping';
 
 const SECONDS_TO_UNSET_TYPING_STATE = 60;
 

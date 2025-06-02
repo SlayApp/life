@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native-unistyles';
 export const styles = StyleSheet.create(theme => ({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'stretch',
     gap: theme.spacing['12'],
     flex: 1,
   },
@@ -19,12 +19,12 @@ export const styles = StyleSheet.create(theme => ({
   content: {
     gap: theme.spacing['2'],
     flex: 1,
+    justifyContent: 'flex-start',
   },
   nameDateContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    flex: 1,
   },
   avatarImage: {
     width: '100%',

@@ -4,7 +4,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-import {ANIMATION_DELAY} from '../ChatTypingIndicator/ChatTypingIndicator.constants';
+import {ANIMATION_DELAY} from '../../TypingIndicatorDots.constants';
 import {ITypingIndicatorDotProps} from './TypingIndicatorDot.types';
 
 export const useTypingIndicatorDot = ({

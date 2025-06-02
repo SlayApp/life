@@ -6,10 +6,10 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {ESocketPubEvents} from '~/enums/ESubscriptionEvents';
-import {useIsCharacterTyping} from '~/hooks/useIsCharacterTyping';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
+import {useIsTypingStore} from '~/stores/useIsTyping';
 import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
 
 import {useChatApi} from './Chat.api';
@@ -26,7 +26,7 @@ export const useChat = () => {
   const insets = useSafeAreaInsets();
   const chatPartner = useGetChatPartner(characterId);
   const listRef = useRef<FlashList<TMessage>>(null);
-  const isChatPartnerTyping = useIsCharacterTyping(characterId);
+  const isChatPartnerTyping = useIsTypingStore(s => s.getIsTyping(characterId));
   const {messages, onEndReached} = useChatApi(characterId, user.id);
 
   const handleSend = useCallback(

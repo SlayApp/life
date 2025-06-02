@@ -10,9 +10,9 @@ import {
 
 import {spring} from '~/motion/spring';
 
-import {ANIMATION_DELAY} from './ChatTypingIndicator.constants';
+import {ANIMATION_DELAY} from './TypingIndicatorDots.constants';
 
-export const useChatTypingIndicator = () => {
+export const useTypingIndicatorDots = () => {
   const selected = useSharedValue(0);
   const scaleAnimation = useSharedValue(1);
 

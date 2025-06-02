@@ -5,10 +5,10 @@ import {createContainer} from 'unstated-next';
 import {ESocketSubEvents} from '~/enums/ESubscriptionEvents';
 import {useUser} from '~/hooks/useUser';
 import {Socket} from '~/service/socket/Socket.class';
+import {setIsCharacterTyping} from '~/stores/useIsTyping';
 import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
 import {debouncedUnsetTypingState} from '~/utils/debouncedUnsetTypingState';
 import {log} from '~/utils/log.util';
-import {setIsCharacterTyping} from '~/utils/setIsCharacterTyping';
 
 import {TSocketEventsForced} from './Socket.subscriptions';
 

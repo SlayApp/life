@@ -4,13 +4,14 @@ import {View} from 'react-native';
 import {PressableScale} from '~/components/PressableScale/PressableScale';
 import {Text} from '~/components/Text';
 
+import {TypingIndicator} from '../TypingIndicator';
 import {useItem} from './Item.hook';
 import {styles} from './Item.styles';
 import {IItemProps} from './Item.types';
 
 export const Item: React.FC<IItemProps> = props => {
   const {name, message, profilePictureUri, hasUnreadMessages} = props;
-  const {onPressHandler, formattedDate} = useItem(props);
+  const {onPressHandler, formattedDate, isTyping} = useItem(props);
 
   return (
     <PressableScale activeScale={0.99} onPress={onPressHandler}>
@@ -36,9 +37,13 @@ export const Item: React.FC<IItemProps> = props => {
                 {formattedDate}
               </Text>
             </View>
-            <Text numberOfLines={1} variant="body" color="secondary">
-              {message.content}
-            </Text>
+            {isTyping ? (
+              <TypingIndicator />
+            ) : (
+              <Text numberOfLines={1} variant="body" color="secondary">
+                {message.content}
+              </Text>
+            )}
           </View>
         </View>
       </View>
