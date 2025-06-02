@@ -5,5 +5,6 @@ export interface IItemProps {
   message: MessageResponseDto;
   profilePictureUri?: string;
   id: string;
+  hasUnreadMessages: boolean;
   onPress: (id: string) => void;
 }

@@ -20,7 +20,7 @@ export const EnterNameScreen: React.FC = () => {
           onChangeText={setName}
           placeholder="Name"
           textAlign="center"
-          autoComplete="name"
+          autoComplete="given-name"
           inputMode="text"
         />
       </FluidOnboardingTemplate>

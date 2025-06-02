@@ -41,6 +41,7 @@ export const useChatOverview = () => {
         onPress={onPressHandler}
         name={item.character.name}
         message={item.lastMessage}
+        hasUnreadMessages={false}
         profilePictureUri={item.character.profilePicture}
       />
     ),

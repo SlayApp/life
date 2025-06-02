@@ -34,7 +34,7 @@ const AuthorizedStackInner: React.FC = memo(() => {
       />
       <Stack.Screen
         name={EAuthorizedStack.Loading}
-        options={{gestureEnabled: false}}
+        options={{gestureEnabled: false, animation: 'slide_and_push'}}
         component={LoadingScreen}
       />
     </Stack.Navigator>

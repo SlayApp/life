@@ -5,6 +5,7 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing['12'],
+    flex: 1,
   },
   avatar: {
     width: 48,
@@ -23,12 +24,21 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-  },
-  lastMessage: {
-    // height: theme.fonts.variant.body.lineHeight * 2,
+    flex: 1,
   },
   avatarImage: {
     width: '100%',
     height: '100%',
+  },
+  unreadMessagesContainer: {
+    right: 8,
+    width: 10,
+    height: 10,
+    borderRadius: 6,
+    backgroundColor: '#007AFF',
+  },
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 }));
