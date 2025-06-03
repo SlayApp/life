@@ -14,6 +14,7 @@ import {
 import {useChatList} from './ChatList.hook';
 import {styles} from './ChatList.styles';
 import {IChatListProps} from './ChatList.type';
+import {getItemType} from './ChatList.utils';
 
 export const ChatList = forwardRef<FlashList<TMessage>, IChatListProps>(
   (props, ref) => {
@@ -36,11 +37,15 @@ export const ChatList = forwardRef<FlashList<TMessage>, IChatListProps>(
             renderItem={renderItem}
             contentContainerStyle={styles.contentContainerStyle}
             onScroll={scrollHandler}
+            getItemType={getItemType}
             onEndReached={props.onEndReached}
+            // onEndReachedThreshold={0}
             ListHeaderComponent={<ListFooterComponent />}
             ListFooterComponent={<ListHeaderComponent />}
             keyboardDismissMode="interactive"
             keyboardShouldPersistTaps="always"
+            estimatedItemSize={200}
+            estimatedListSize={windowDimensions}
           />
         </View>
       </KeyboardAvoidingView>

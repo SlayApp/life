@@ -41,9 +41,9 @@ export const useInfiniteAPIRequest = <
 
         try {
           const limit = rest.pop();
-          const offset = pageParam;
+          const page = pageParam;
 
-          return (await method(...[...rest, limit, offset]))?.data;
+          return (await method(...[...rest, limit, page]))?.data;
         } catch (error) {
           onApiError(error, 'InfiniteQuery', method.getKeyName());
           throw error;

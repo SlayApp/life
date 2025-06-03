@@ -4,6 +4,7 @@ import {messagesApi} from '~/api/api';
 import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
 
 import {LIMIT} from './Chat.constants';
+import {buildTimeline} from './Chat.utils';
 
 export const useChatApi = (characterId: string, userId: string) => {
   const {data, fetchNextPage, isFetching} = useInfiniteAPIRequest(
@@ -20,17 +21,21 @@ export const useChatApi = (characterId: string, userId: string) => {
     undefined,
     LIMIT,
   );
-  const total = data?.pages[0]?.meta.total ?? 0;
-  const messages = useMemo(
-    () => data?.pages.flatMap(page => page.data) ?? [],
-    [data],
-  );
+
+  const messages = useMemo(() => {
+    const items = data?.pages.flatMap(page => page.data) ?? [];
+
+    return buildTimeline(items);
+  }, [data]);
 
   const onEndReached = useCallback(() => {
-    if (isFetching || total <= messages.length) return;
+    const total = data?.pages[0]?.meta.total ?? 0;
+    const loaded = data?.pages.flatMap(p => p.data).length ?? 0;
+
+    if (isFetching || total > loaded) return;
 
     fetchNextPage();
-  }, [isFetching, fetchNextPage, total, messages.length]);
+  }, [data?.pages, isFetching, fetchNextPage]);
 
   return {messages, onEndReached};
 };

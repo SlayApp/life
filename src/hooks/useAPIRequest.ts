@@ -45,6 +45,5 @@ export const useAPIRequest = <
     meta: config?.data,
     queryKey,
     queryFn: fetcher,
-    staleTime: Infinity,
   });
 };

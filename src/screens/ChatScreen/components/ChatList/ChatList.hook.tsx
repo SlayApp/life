@@ -4,12 +4,15 @@ import {useWindowDimensions} from 'react-native';
 import {useAnimatedScrollHandler} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {KEYBOARD_OPEN_INPUT_VERTICAL_PADDING} from '../../Chat.constants';
+import {
+  KEYBOARD_OPEN_INPUT_VERTICAL_PADDING,
+  TYPING_INDICATOR_ITEM,
+} from '../../Chat.constants';
 import {useChatScreenContainer} from '../../Chat.provider';
-import {isTypingMessage, TMessage} from '../../Chat.types';
+import {isMessageDateHeader, isTypingMessage, TMessage} from '../../Chat.types';
+import {ChatDateHeaderMessage} from '../ChatDateHeaderMessage';
 import {ChatMessage} from '../ChatMessage';
 import {ChatTypingIndicator} from '../ChatTypingIndicator';
-import {TYPING_INDICATOR_ITEM} from './ChatList.constants';
 import {IChatListProps} from './ChatList.type';
 
 export const useChatList = ({
@@ -39,6 +42,10 @@ export const useChatList = ({
         return (
           <ChatTypingIndicator messages={items} message={item} index={index} />
         );
+      }
+
+      if (isMessageDateHeader(item)) {
+        return <ChatDateHeaderMessage date={item.date} />;
       }
 
       return <ChatMessage messages={items} message={item} index={index} />;
