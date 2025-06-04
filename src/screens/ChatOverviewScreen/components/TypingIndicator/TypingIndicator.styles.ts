@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native-unistyles';
 
-export const styles = StyleSheet.create(theme => ({
+export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flex: 1,
@@ -17,4 +17,4 @@ export const styles = StyleSheet.create(theme => ({
     borderBottomLeftRadius: 0,
     gap: 2,
   },
-}));
+});
