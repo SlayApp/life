@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native-unistyles';
 
 import {CHAT_HEADER_HEIGHT} from '../../Chat.constants';
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(theme => ({
   container: {
     position: 'absolute',
     top: 0,
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 1,
     borderBottomWidth: 1,
-    borderBottomColor: '#F2F2F2',
+    borderBottomColor: theme.colors.subdued96,
   },
   headerContent: {
     height: CHAT_HEADER_HEIGHT,
@@ -54,4 +54,4 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-});
+}));

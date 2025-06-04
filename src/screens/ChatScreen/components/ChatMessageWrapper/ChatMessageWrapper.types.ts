@@ -1,7 +1,12 @@
+import {MessageResponseDto} from 'api-client/api';
+import {ViewStyle} from 'react-native';
+import {AnimatedStyle} from 'react-native-reanimated';
+
 import {TMessage} from '../../Chat.types';
 
 export interface IChatMessageWrapperProps {
-  message: Pick<TMessage, 'isFromUser' | 'id'>;
+  message: Pick<MessageResponseDto, 'isFromUser' | 'id'>;
   index: number;
-  messages: Pick<TMessage, 'isFromUser' | 'id'>[];
+  messages: TMessage[];
+  animatedStyle?: AnimatedStyle<ViewStyle>;
 }

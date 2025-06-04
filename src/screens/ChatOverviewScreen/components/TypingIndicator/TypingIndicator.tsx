@@ -5,11 +5,15 @@ import {TypingIndicatorDots} from '~/components/TypingIndicatorDots/TypingIndica
 
 import {styles} from './TypingIndicator.styles';
 
-export const TypingIndicator: React.FC = () => {
+interface IProps {
+  size?: number;
+}
+
+export const TypingIndicator: React.FC<IProps> = ({size}) => {
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
-        <TypingIndicatorDots />
+        <TypingIndicatorDots size={size} />
       </View>
     </View>
   );

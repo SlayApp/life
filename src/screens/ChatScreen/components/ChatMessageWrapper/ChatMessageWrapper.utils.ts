@@ -1,8 +1,8 @@
-import {TMessage} from '../../Chat.types';
+import {MessageResponseDto} from 'api-client/api';
 
 export const areMessagesGrouped = (
-  current: Pick<TMessage, 'isFromUser'>,
-  next: Pick<TMessage, 'isFromUser'> | undefined,
+  current: Pick<MessageResponseDto, 'isFromUser'>,
+  next: Pick<MessageResponseDto, 'isFromUser'> | undefined,
 ) => {
   'worklet';
 

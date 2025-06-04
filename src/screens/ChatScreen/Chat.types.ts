@@ -34,3 +34,9 @@ export const isMessageDateHeader = (
 export const isMessage = (message: TMessage): message is MessageResponseDto => {
   return message.id !== TYPING_INDICATOR_ID;
 };
+
+export const isUserMessage = (
+  message: TMessage,
+): message is MessageResponseDto | TSyntheticTypingMessage => {
+  return message.id !== DATE_HEADER_ID;
+};

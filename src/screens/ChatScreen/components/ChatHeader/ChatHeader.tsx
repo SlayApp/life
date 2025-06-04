@@ -2,6 +2,7 @@ import {Image} from 'expo-image';
 import {SymbolView} from 'expo-symbols';
 import React from 'react';
 import {Pressable, View} from 'react-native';
+import {useUnistyles} from 'react-native-unistyles';
 
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';
 import {Text} from '~/components/Text';
@@ -15,6 +16,7 @@ interface IProps {
 }
 
 export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
+  const {theme} = useUnistyles();
   const {goBack} = useChatHeader();
 
   return (
@@ -41,7 +43,6 @@ export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
             <Text variant="title" color="primary">
               {name}
             </Text>
-            {/* <Text style={styles.subtitle}>Online</Text> */}
           </View>
         </View>
         <View pointerEvents="none" style={styles.placeholderButton}>

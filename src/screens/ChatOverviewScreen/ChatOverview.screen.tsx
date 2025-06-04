@@ -1,8 +1,8 @@
-import {FlashList} from '@shopify/flash-list';
 import React from 'react';
 import {View} from 'react-native';
 
 import {
+  AnimatedFlashList,
   keyExtractor,
   ListHeaderComponent,
   ListRenderItemSeparator,
@@ -12,12 +12,12 @@ import {styles} from './ChatOverview.styles';
 import {Header} from './components';
 
 export const ChatOverviewScreen: React.FC = () => {
-  const {chats, window, renderItem} = useChatOverview();
+  const {chats, window, renderItem, onScroll, scrollOffset} = useChatOverview();
 
   return (
     <View style={styles.container}>
-      <Header />
-      <FlashList
+      <Header scrollOffset={scrollOffset} />
+      <AnimatedFlashList
         data={chats}
         contentContainerStyle={styles.contentContainerStyle}
         renderItem={renderItem}
@@ -26,6 +26,8 @@ export const ChatOverviewScreen: React.FC = () => {
         keyExtractor={keyExtractor}
         estimatedItemSize={100}
         estimatedListSize={window}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       />
     </View>
   );

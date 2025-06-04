@@ -22,6 +22,7 @@ export const useChatApi = (characterId: string, userId: string) => {
     LIMIT,
   );
 
+  const total = data?.pages[0]?.meta.total ?? 0;
   const messages = useMemo(() => {
     const items = data?.pages.flatMap(page => page.data) ?? [];
 
@@ -29,13 +30,10 @@ export const useChatApi = (characterId: string, userId: string) => {
   }, [data]);
 
   const onEndReached = useCallback(() => {
-    const total = data?.pages[0]?.meta.total ?? 0;
-    const loaded = data?.pages.flatMap(p => p.data).length ?? 0;
-
-    if (isFetching || total > loaded) return;
+    if (isFetching || total <= messages.length) return;
 
     fetchNextPage();
-  }, [data?.pages, isFetching, fetchNextPage]);
+  }, [isFetching, total, messages.length, fetchNextPage]);
 
   return {messages, onEndReached};
 };

@@ -3,6 +3,10 @@ import {ListRenderItem} from '@shopify/flash-list';
 import {UserChatResponseDto} from 'api-client';
 import {useCallback} from 'react';
 import {useWindowDimensions} from 'react-native';
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import {messagesApi} from '~/api/api';
 import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
@@ -26,6 +30,11 @@ export const useChatOverview = () => {
     user.id,
   );
   const {navigate} = useNavigation();
+  const scrollOffset = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler(event => {
+    scrollOffset.value = event.contentOffset.y;
+  });
 
   const onPressHandler = useCallback(
     (id: string) => {
@@ -35,18 +44,26 @@ export const useChatOverview = () => {
   );
 
   const renderItem: ListRenderItem<UserChatResponseDto> = useCallback(
-    ({item}) => (
-      <Item
-        id={item.character.id}
-        onPress={onPressHandler}
-        name={item.character.name}
-        message={item.lastMessage}
-        hasUnreadMessages={false}
-        profilePictureUri={item.character.profilePicture}
-      />
-    ),
+    ({item}) => {
+      return (
+        <Item
+          id={item.character.id}
+          onPress={onPressHandler}
+          name={item.character.name}
+          message={item.lastMessage}
+          hasUnreadMessages={false}
+          profilePictureUri={item.character.profilePicture}
+        />
+      );
+    },
     [onPressHandler],
   );
 
-  return {chats, window, renderItem};
+  return {
+    chats,
+    window,
+    renderItem,
+    onScroll,
+    scrollOffset,
+  };
 };

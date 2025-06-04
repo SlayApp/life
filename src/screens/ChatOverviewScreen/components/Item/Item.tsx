@@ -33,14 +33,18 @@ export const Item: React.FC<IItemProps> = props => {
               <Text numberOfLines={1} variant="body" weight="semibold">
                 {name}
               </Text>
-              <Text color="primary" variant="tiny">
+              <Text color="secondary" variant="tiny">
                 {formattedDate}
               </Text>
             </View>
             {isTyping ? (
-              <TypingIndicator />
+              <TypingIndicator size={6} />
             ) : (
-              <Text numberOfLines={1} variant="body" color="secondary">
+              <Text
+                weight={hasUnreadMessages ? 'medium' : 'regular'}
+                numberOfLines={1}
+                variant="body"
+                color={hasUnreadMessages ? 'primary' : 'secondary'}>
                 {message.content}
               </Text>
             )}

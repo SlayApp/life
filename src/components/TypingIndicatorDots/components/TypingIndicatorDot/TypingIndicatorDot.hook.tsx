@@ -10,7 +10,7 @@ import {ITypingIndicatorDotProps} from './TypingIndicatorDot.types';
 export const useTypingIndicatorDot = ({
   index,
   selected,
-}: ITypingIndicatorDotProps) => {
+}: Pick<ITypingIndicatorDotProps, 'index' | 'selected'>) => {
   const transition = useDerivedValue(() =>
     withTiming(selected.value === index ? 0.5 : 0.2, {
       duration: ANIMATION_DELAY,

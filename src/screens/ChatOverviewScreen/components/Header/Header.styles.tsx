@@ -13,11 +13,11 @@ export const styles = StyleSheet.create(theme => ({
   },
   headerContent: {
     height: CHAT_HEADER_HEIGHT,
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: theme.layout.screenMarginHorizontal,
     justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    marginHorizontal: theme.layout.screenMarginHorizontal,
   },
   backButton: {
     height: theme.spacing[20],
@@ -30,6 +30,7 @@ export const styles = StyleSheet.create(theme => ({
     borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   placeholderButton: {
     opacity: 0,

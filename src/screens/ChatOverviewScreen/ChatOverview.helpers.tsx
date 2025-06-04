@@ -1,9 +1,15 @@
+import {FlashList} from '@shopify/flash-list';
 import {UserChatResponseDto} from 'api-client';
 import {View} from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';
 
 import {styles} from './ChatOverview.styles';
+
+export const AnimatedFlashList = Animated.createAnimatedComponent(
+  FlashList<UserChatResponseDto>,
+);
 
 export const keyExtractor = (item: UserChatResponseDto) =>
   item.character.id.toString();

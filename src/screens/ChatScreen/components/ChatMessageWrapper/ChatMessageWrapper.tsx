@@ -1,20 +1,13 @@
-import {StyleProp, View, ViewStyle} from 'react-native';
+import {View} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import {TFCWithChildren} from '~/types/TFCWithChildren';
 
-import {TMessage} from '../../Chat.types';
 import {useChatMessageWrapper} from './ChatMessageWrapper.hook';
 import {styles} from './ChatMessageWrapper.styles';
+import {IChatMessageWrapperProps} from './ChatMessageWrapper.types';
 
-interface IProps {
-  message: TMessage;
-  index: number;
-  messages: TMessage[];
-  animatedStyle?: StyleProp<ViewStyle>;
-}
-
-export const ChatMessageWrapper: TFCWithChildren<IProps> = ({
+export const ChatMessageWrapper: TFCWithChildren<IChatMessageWrapperProps> = ({
   children,
   animatedStyle,
   ...props

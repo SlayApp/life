@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native-unistyles';
 
 export const styles = StyleSheet.create({
-  container: {
-    height: 8,
-    width: 8,
+  container: (size: number) => ({
+    height: size,
+    width: size,
     borderRadius: 4,
     backgroundColor: 'black',
-  },
+  }),
 });
