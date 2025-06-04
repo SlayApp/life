@@ -15,13 +15,13 @@ interface IProps {
 }
 
 export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
-  const {goBack} = useChatHeader();
+  const {onBackPress} = useChatHeader();
 
   return (
     <View style={styles.container}>
       <SafeAreaWrapper edges="top" />
       <View style={styles.headerContent}>
-        <Pressable onPress={goBack}>
+        <Pressable onPress={onBackPress}>
           <SymbolView
             name="chevron.left"
             style={styles.backButton}

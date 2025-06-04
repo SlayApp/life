@@ -78,7 +78,7 @@ export const getInfiniteCacheOf =
     ...params: TArgs
   ): InfiniteData<Value> | undefined => {
     return queryClient.getQueryData<InfiniteData<Value>>(
-      getQueryKey([apiMethod.getKeyName(), ...params]),
+      getQueryKey([apiMethod.getKeyName(), ...filterNil(params)]),
     );
   };
 
@@ -95,7 +95,7 @@ export const setInfiniteCacheOf =
     ...params: TArgs
   ): void => {
     queryClient.setQueryData<InfiniteData<Value>>(
-      getQueryKey([apiMethod.getKeyName(), ...params]),
+      getQueryKey([apiMethod.getKeyName(), ...filterNil(params)]),
       value,
     );
   };

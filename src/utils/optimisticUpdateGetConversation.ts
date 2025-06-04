@@ -25,10 +25,10 @@ export const optimisticUpdateGetConversation = ({
 
   if (!prevMessages || !prevMessages.pages.length) {
     const data = {
-      pageParams: [0],
+      pageParams: [1],
       pages: [
         {
-          data: [message],
+          data: [{...message}],
           meta: {total: 1, page: 1, limit: LIMIT, totalPages: 1},
         },
       ],
@@ -45,7 +45,7 @@ export const optimisticUpdateGetConversation = ({
     return;
   }
 
-  const added = [message, ...(prevMessages.pages[0]?.data ?? [])];
+  const added = [{...message}, ...(prevMessages.pages[0]?.data ?? [])];
   const data = {
     ...prevMessages,
     pages: prevMessages.pages.map((page, i) =>

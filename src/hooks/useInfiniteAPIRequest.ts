@@ -9,6 +9,7 @@ import {AxiosError} from 'axios';
 import {useCallback, useMemo} from 'react';
 
 import {TExtendedMethod} from '~/types/TExtendedMethod';
+import {filterNil} from '~/utils/filterNil';
 import {getQueryKey} from '~/utils/getQueryKey';
 import {log} from '~/utils/log.util';
 
@@ -28,7 +29,7 @@ export const useInfiniteAPIRequest = <
   ...args: Parameters<T>
 ) => {
   const queryKey = useMemo(
-    () => getQueryKey([method.getKeyName(), ...args]),
+    () => getQueryKey([method.getKeyName(), ...filterNil(args)]),
     [args, method],
   );
 
@@ -37,13 +38,13 @@ export const useInfiniteAPIRequest = <
       async context => {
         const {pageParam, queryKey} = context;
         const [name, ...rest] = queryKey;
-        log.info(`[api] - Ran infinite: ${name}`, context.queryKey);
+        log.info(`[api] - Ran infinite: ${name}`, [...queryKey, pageParam]);
 
         try {
           const limit = rest.pop();
           const page = pageParam;
 
-          return (await method(...[...rest, limit, page]))?.data;
+          return (await method(...[...rest, page, limit]))?.data;
         } catch (error) {
           onApiError(error, 'InfiniteQuery', method.getKeyName());
           throw error;
@@ -53,7 +54,6 @@ export const useInfiniteAPIRequest = <
     );
 
   return useInfiniteQuery({
-    ...{initialPageParam: 0},
     ...options,
     queryKey,
     queryFn: fetcher,

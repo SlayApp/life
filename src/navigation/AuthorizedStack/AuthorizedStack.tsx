@@ -29,7 +29,10 @@ const AuthorizedStackInner: React.FC = memo(() => {
       screenOptions={screenOptions}>
       <Stack.Screen name={EAuthorizedStack.Chat} component={ChatScreen} />
       <Stack.Screen
-        options={{gestureEnabled: false, animation: 'slide_and_push'}}
+        options={{
+          gestureEnabled: false,
+          animation: 'slide_and_push',
+        }}
         name={EAuthorizedStack.ChatOverview}
         component={ChatOverviewScreen}
       />

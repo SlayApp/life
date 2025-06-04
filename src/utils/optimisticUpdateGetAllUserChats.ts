@@ -32,7 +32,7 @@ export const optimisticUpdateGetAllUserChats = ({
   const optimisticChat: UserChatResponseDto = {
     ...found,
     character: newCharacter,
-    lastMessage,
+    lastMessage: {...lastMessage},
   };
 
   const newChats = [...filtered, optimisticChat];

@@ -29,6 +29,7 @@ export const useChatOverview = () => {
     },
     user.id,
   );
+
   const {navigate} = useNavigation();
   const scrollOffset = useSharedValue(0);
 
