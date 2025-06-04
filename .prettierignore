@@ -1,7 +1,7 @@
 .bundle/
 .parcel-cache/
 android/
-api_client/
+api-client/
 backend/
 ios/
 node_modules/
