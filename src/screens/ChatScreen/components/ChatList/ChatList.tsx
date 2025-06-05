@@ -38,6 +38,7 @@ export const ChatList = forwardRef<FlashList<TMessage>, IChatListProps>(
             contentContainerStyle={styles.contentContainerStyle}
             onScroll={scrollHandler}
             getItemType={getItemType}
+            onEndReachedThreshold={2}
             onEndReached={props.onEndReached}
             ListHeaderComponent={<ListFooterComponent />}
             ListFooterComponent={<ListHeaderComponent />}

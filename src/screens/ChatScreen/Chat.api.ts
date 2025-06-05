@@ -11,26 +11,27 @@ import {LIMIT} from './Chat.constants';
 import {buildTimeline} from './Chat.utils';
 
 export const useChatApi = (characterId: string, userId: string) => {
-  const {data, fetchNextPage, isFetching, refetch} = useInfiniteAPIRequest(
-    messagesApi.getConversation,
-    {
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) => {
-        const total = lastPage.meta.totalPages ?? 0;
-        const currentCount = allPages.length;
+  const {data, fetchNextPage, refetch, isFetchingNextPage} =
+    useInfiniteAPIRequest(
+      messagesApi.getConversation,
+      {
+        initialPageParam: 1,
+        getNextPageParam: (lastPage, allPages) => {
+          const total = lastPage.meta.totalPages ?? 0;
+          const currentCount = allPages.length;
 
-        if (currentCount >= total) {
-          return undefined;
-        }
+          if (currentCount >= total) {
+            return undefined;
+          }
 
-        return allPages.length + 1;
+          return allPages.length + 1;
+        },
+        staleTime: Infinity,
       },
-      staleTime: Infinity,
-    },
-    characterId,
-    userId,
-    LIMIT,
-  );
+      characterId,
+      userId,
+      LIMIT,
+    );
 
   useFocusEffect(
     useCallback(() => {
@@ -68,10 +69,10 @@ export const useChatApi = (characterId: string, userId: string) => {
     const total = data?.pages[0]?.meta.totalPages ?? 0;
     const items = data?.pages ?? [];
 
-    if (isFetching || total <= items.length) return;
+    if (isFetchingNextPage || total <= items.length) return;
 
     fetchNextPage();
-  }, [data?.pages, isFetching, fetchNextPage]);
+  }, [data?.pages, isFetchingNextPage, fetchNextPage]);
 
   return {messages, onEndReached};
 };
