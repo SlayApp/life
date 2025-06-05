@@ -50,7 +50,7 @@ export const useChatApi = (characterId: string, userId: string) => {
             | undefined,
         ) => {
           return {
-            pages: prev?.pages.slice(0, 1) ?? [],
+            pages: [],
             pageParams: prev?.pageParams.slice(0, 1) ?? [],
           };
         },
