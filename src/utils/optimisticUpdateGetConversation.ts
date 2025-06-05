@@ -1,42 +1,36 @@
-import {CharacterDto, MessageResponseDto} from 'api-client';
+import {MessageResponseDto, PaginatedMessagesResponseDto} from 'api-client';
 
 import {messagesApi} from '~/api/api';
 import {LIMIT} from '~/screens/ChatScreen/Chat.constants';
 
 import {getInfiniteCacheOf, setInfiniteCacheOf} from './cache/accessCacheOf';
 
-type TArgs = {
+type Args = {
   userId: string;
-  character: CharacterDto;
+  characterId: string;
   message: MessageResponseDto;
 };
 
 export const optimisticUpdateGetConversation = ({
-  character,
   userId,
+  characterId,
   message,
-}: TArgs) => {
-  const prevMessages = getInfiniteCacheOf(messagesApi.getConversation)(
-    character.id,
+}: Args) => {
+  /** ── 1. read existing infinite cache ─────────────────────────────── */
+  const cache = getInfiniteCacheOf(messagesApi.getConversation)(
+    characterId,
     userId,
-    undefined,
+    undefined, // first-page cursor is always undefined
     LIMIT,
   );
 
-  if (!prevMessages || !prevMessages.pages.length) {
-    const data = {
-      pageParams: [1],
-      pages: [
-        {
-          data: [{...message}],
-          meta: {total: 1, page: 1, limit: LIMIT, totalPages: 1},
-        },
-      ],
-    };
-
+  if (!cache || cache.pages.length === 0) {
     setInfiniteCacheOf(messagesApi.getConversation)(
-      data,
-      character.id,
+      {
+        pageParams: [undefined],
+        pages: [{data: [message], meta: {hasMore: true}}],
+      },
+      characterId,
       userId,
       undefined,
       LIMIT,
@@ -45,26 +39,26 @@ export const optimisticUpdateGetConversation = ({
     return;
   }
 
-  const added = [{...message}, ...(prevMessages.pages[0]?.data ?? [])];
-  const data = {
-    ...prevMessages,
-    pages: prevMessages.pages.map((page, i) =>
-      i === 0
-        ? {
-            ...page,
-            data: added,
-            meta: {
-              ...page.meta,
-              total: (page.meta.total ?? 0) + 1,
-            },
-          }
-        : page,
-    ),
-  };
+  const firstPage = cache.pages[0]!;
+  const restPages = cache.pages.slice(1);
+  const firstItems = firstPage.data;
+
+  let newPages: PaginatedMessagesResponseDto[];
+  let newPageParams;
+
+  if (firstItems.length < LIMIT) {
+    newPages = [{...firstPage, data: [message, ...firstItems]}, ...restPages];
+    newPageParams = cache.pageParams;
+  } else {
+    const newFirstPage = {data: [message], meta: {hasMore: true}};
+
+    newPages = [newFirstPage, ...cache.pages];
+    newPageParams = [undefined, ...cache.pageParams];
+  }
 
   setInfiniteCacheOf(messagesApi.getConversation)(
-    data,
-    character.id,
+    {...cache, pages: newPages, pageParams: newPageParams},
+    characterId,
     userId,
     undefined,
     LIMIT,

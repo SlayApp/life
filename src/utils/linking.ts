@@ -10,11 +10,6 @@ const authorizedLinking: LinkingOptions<TAuthorizedStackParamList>['config'] = {
   screens: {
     [EAuthorizedStack.Chat]: {
       path: '/chat/:id',
-      parse: {
-        id: (id: string) => {
-          return Number(id);
-        },
-      },
     },
   },
 };

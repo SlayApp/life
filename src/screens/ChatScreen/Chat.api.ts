@@ -1,11 +1,10 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {InfiniteData} from '@tanstack/react-query';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 
 import {messagesApi} from '~/api/api';
 import {useInfiniteAPIRequest} from '~/hooks/useInfiniteAPIRequest';
-import {queryClient} from '~/utils/cache/queryClient';
-import {getQueryKey} from '~/utils/getQueryKey';
+import {useOnAppOpen} from '~/hooks/useOnAppOpen';
+import {optimisticUpdateGetAllUserChats} from '~/utils/optimisticUpdateGetAllUserChats';
 
 import {LIMIT} from './Chat.constants';
 import {buildTimeline} from './Chat.utils';
@@ -15,49 +14,34 @@ export const useChatApi = (characterId: string, userId: string) => {
     useInfiniteAPIRequest(
       messagesApi.getConversation,
       {
-        initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages) => {
-          const total = lastPage.meta.totalPages ?? 0;
-          const currentCount = allPages.length;
-
-          if (currentCount >= total) {
-            return undefined;
-          }
-
-          return allPages.length + 1;
-        },
+        initialPageParam: undefined,
+        getNextPageParam: lastPage => lastPage.data.at(-1)?.createdAt,
         staleTime: Infinity,
       },
       characterId,
       userId,
+      undefined,
       LIMIT,
     );
 
+  useEffect(() => {
+    const lastMessage = data?.pages.at(0)?.data.at(0);
+
+    if (!lastMessage) return;
+
+    optimisticUpdateGetAllUserChats({
+      userId,
+      character: {id: characterId},
+      lastMessage,
+    });
+  }, [characterId, data, userId]);
+
   useFocusEffect(
     useCallback(() => {
-      queryClient.setQueryData(
-        getQueryKey([
-          messagesApi.getConversation.getKeyName(),
-          characterId,
-          userId,
-          LIMIT,
-        ]),
-        (
-          prev:
-            | InfiniteData<
-                Awaited<ReturnType<typeof messagesApi.getConversation>>
-              >
-            | undefined,
-        ) => {
-          return {
-            pages: [],
-            pageParams: prev?.pageParams.slice(0, 1) ?? [],
-          };
-        },
-      );
       refetch();
-    }, [characterId, refetch, userId]),
+    }, [refetch]),
   );
+  useOnAppOpen(refetch);
 
   const messages = useMemo(() => {
     const items = data?.pages.flatMap(page => page.data) ?? [];
@@ -66,10 +50,9 @@ export const useChatApi = (characterId: string, userId: string) => {
   }, [data]);
 
   const onEndReached = useCallback(() => {
-    const total = data?.pages[0]?.meta.totalPages ?? 0;
-    const items = data?.pages ?? [];
+    const hasMore = data?.pages.at(-1)?.meta.hasMore ?? false;
 
-    if (isFetchingNextPage || total <= items.length) return;
+    if (isFetchingNextPage || !hasMore) return;
 
     fetchNextPage();
   }, [data?.pages, isFetchingNextPage, fetchNextPage]);

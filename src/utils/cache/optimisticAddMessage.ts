@@ -19,7 +19,7 @@ export const optimisticAddMessage = (
     },
   });
   optimisticUpdateGetConversation({
-    character: chatPartner,
+    characterId: chatPartner.id,
     userId,
     message: {
       ...message,

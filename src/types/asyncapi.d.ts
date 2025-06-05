@@ -90,8 +90,6 @@ export type components = {
       name: string;
       /** Profile picture URL */
       profilePicture?: string;
-      /** Character description */
-      description?: string;
     };
     CharacterResponseRTO: {
       /** @description Message object */

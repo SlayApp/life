@@ -16,7 +16,14 @@ import {log} from '~/utils/log.util';
 import {onApiError} from './useOnApiError';
 
 type TOptions<T> = Omit<
-  UseInfiniteQueryOptions<T, AxiosError, InfiniteData<T>, T, QueryKey, number>,
+  UseInfiniteQueryOptions<
+    T,
+    AxiosError,
+    InfiniteData<T>,
+    T,
+    QueryKey,
+    string | undefined
+  >,
   'queryKey' | 'queryFn'
 >;
 
@@ -33,25 +40,28 @@ export const useInfiniteAPIRequest = <
     [args, method],
   );
 
-  const fetcher: QueryFunction<Awaited<Response>['data'], QueryKey, number> =
-    useCallback(
-      async context => {
-        const {pageParam, queryKey} = context;
-        const [name, ...rest] = queryKey;
-        log.info(`[api] - Ran infinite: ${name}`, [...queryKey, pageParam]);
+  const fetcher: QueryFunction<
+    Awaited<Response>['data'],
+    QueryKey,
+    string | undefined
+  > = useCallback(
+    async context => {
+      const {pageParam, queryKey} = context;
+      const [name, ...rest] = queryKey;
+      log.info(`[api] - Ran infinite: ${name}`, [...queryKey, pageParam]);
 
-        try {
-          const limit = rest.pop();
-          const page = pageParam;
+      try {
+        const limit = rest.pop();
+        const cursor = pageParam;
 
-          return (await method(...[...rest, page, limit]))?.data;
-        } catch (error) {
-          onApiError(error, 'InfiniteQuery', method.getKeyName());
-          throw error;
-        }
-      },
-      [method],
-    );
+        return (await method(...[...rest, cursor, limit]))?.data;
+      } catch (error) {
+        onApiError(error, 'InfiniteQuery', method.getKeyName());
+        throw error;
+      }
+    },
+    [method],
+  );
 
   return useInfiniteQuery({
     ...options,
