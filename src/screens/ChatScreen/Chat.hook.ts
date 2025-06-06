@@ -8,6 +8,7 @@ import {EAuthorizedStack} from '~/enums/EAuthorizedStack';
 import {ESocketPubEvents} from '~/enums/ESubscriptionEvents';
 import {useRoute} from '~/hooks/useRoute';
 import {useUser} from '~/hooks/useUser';
+import {AnalyticsManager} from '~/service/AnalyticsManager';
 import {Socket} from '~/service/socket/Socket.class';
 import {useIsTypingStore} from '~/stores/useIsTyping';
 import {optimisticAddMessage} from '~/utils/cache/optimisticAddMessage';
@@ -49,6 +50,11 @@ export const useChat = () => {
         characterId,
         message,
         deduplicationId,
+      });
+
+      AnalyticsManager.trackEvent('message_sent', {
+        ...newMessage,
+        characterId,
       });
     },
     [characterId, chatPartner, user.id],

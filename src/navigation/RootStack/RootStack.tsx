@@ -58,10 +58,15 @@ const RootStackInner: React.FC<IProps> = ({
 };
 
 export const RootStack: React.FC = () => {
-  const {user, loading, initialRouteName} = useRootStack();
+  const {user, loading, initialRouteName, onReady, onStateChange} =
+    useRootStack();
 
   return (
-    <NavigationContainer linking={linking} ref={navigationRef}>
+    <NavigationContainer
+      onReady={onReady}
+      onStateChange={onStateChange}
+      linking={linking}
+      ref={navigationRef}>
       <Insets />
       <RootStackInner
         user={user}

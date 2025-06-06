@@ -3,6 +3,8 @@ export interface IEnvironment {
   APPSFLYER_IOS_DEV_KEY: string;
   APPSFLYER_IOS_APP_ID: string;
   ONE_SIGNAL_APP_ID: string;
+  MIXPANEL_PROJECT_TOKEN: string;
+  SENTRY_DSN: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports

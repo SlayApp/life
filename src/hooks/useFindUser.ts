@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
-import {OneSignal} from 'react-native-onesignal';
 
 import {usersApi} from '~/api/api';
+import {AnalyticsManager} from '~/service/AnalyticsManager';
 import {LifetimeStorage} from '~/service/LifetimeStorage';
 import {userQueryKey} from '~/utils/userQueryKey';
 
@@ -19,9 +19,10 @@ export const useFindUser = () => {
         return null;
       }
 
-      OneSignal.login(userId);
+      const user = await findUser(userId);
+      AnalyticsManager.identify(user);
 
-      return await findUser(userId);
+      return user;
     },
   });
 

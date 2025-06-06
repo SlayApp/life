@@ -1,6 +1,7 @@
 import 'react-native-url-polyfill/auto';
 import '~/theme/theme';
 
+import * as Sentry from '@sentry/react-native';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -11,12 +12,12 @@ import {enableFreeze} from 'react-native-screens';
 import {FocusManager} from '~/components/FocusManager';
 import {RessourceLoader} from '~/components/RessourceLoader';
 import {RootStack} from '~/navigation/RootStack';
+import {AnalyticsManager} from '~/service/AnalyticsManager';
 import {queryClient} from '~/utils/cache/queryClient';
-import {initOneSignal} from '~/utils/initOneSignal';
 import {clientPersister} from '~/utils/persist';
 
 enableFreeze(true);
-initOneSignal();
+AnalyticsManager.setup();
 
 function App(): React.JSX.Element {
   return (
@@ -37,4 +38,4 @@ function App(): React.JSX.Element {
   );
 }
 
-export default App;
+export default Sentry.wrap(App);

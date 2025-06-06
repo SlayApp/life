@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {TextInput} from 'react-native';
-import {OneSignal} from 'react-native-onesignal';
 
 import {authApi} from '~/api/api';
 import {EFluidOnboardingStack} from '~/enums/EFluidOnboardingStack.enum';
@@ -11,6 +10,7 @@ import {useFocusTransitionEndEffect} from '~/hooks/useFocusTransitionEndEffect';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {useFluidOnboardingStack} from '~/navigation/FluidOnboardingStack';
 import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
+import {AnalyticsManager} from '~/service/AnalyticsManager';
 import {log} from '~/utils/log.util';
 
 import {CODE_LENGTH} from './VerifyPhoneNumber.constants';
@@ -56,13 +56,11 @@ export const useVerifyPhoneNumberScreen = () => {
 
     setLoading(true);
     try {
-      const {
-        user: {id},
-      } = await createUser({
+      const {user} = await createUser({
         phoneNumber: phoneNumber.current,
         otp: code,
       });
-      OneSignal.login(id);
+      AnalyticsManager.identify(user);
 
       focusTextInput('text');
       navigate(EFluidOnboardingStack.EnterName);
