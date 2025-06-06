@@ -1,5 +1,5 @@
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {StyleSheet} from 'react-native-unistyles';
+import {StyleSheet, UnistylesRuntime} from 'react-native-unistyles';
 
 import {getHeight, getWidth} from './theme.utils';
 
@@ -148,3 +148,4 @@ export const theme = {
 } as const;
 
 StyleSheet.configure({themes: {main: theme}});
+UnistylesRuntime.setRootViewBackgroundColor(theme.colors.background);

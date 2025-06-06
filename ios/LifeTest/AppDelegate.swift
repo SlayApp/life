@@ -41,7 +41,7 @@ class AppDelegate: ExpoAppDelegate, UNUserNotificationCenterDelegate {
   override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
     return RCTLinkingManager.application(app, open: url, options: options)
   }
-  
+    
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     willPresent notification: UNNotification,
@@ -54,7 +54,6 @@ class AppDelegate: ExpoAppDelegate, UNUserNotificationCenterDelegate {
 
 class ReactNativeDelegate: ExpoReactNativeFactoryDelegate {
   override func sourceURL(for bridge: RCTBridge) -> URL? {
-    // needed to return the correct URL for expo-dev-client.
     bridge.bundleURL ?? bundleURL()
   }
   

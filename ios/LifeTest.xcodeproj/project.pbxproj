@@ -11,7 +11,6 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		7D38AFBE2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7D38AFBD2DD1DD1500D34A96 /* RCTNativeTextInputHelpers.mm */; };
 		7D8FACD52DD4D31100D81250 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D8FACD42DD4D31100D81250 /* Colors.xcassets */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		91C0DED571ADB720D1A8BE51 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		957129202DF1C8FF00E6E5E1 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9571291F2DF1C8FF00E6E5E1 /* BootSplash.storyboard */; };
 		957891F22DE4B92700E9336F /* OneSignalNotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 957891EB2DE4B92700E9336F /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -60,7 +59,6 @@
 		7D8034FD5FB160DBA7F4EB84 /* Pods-LifeTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeTest.debug.xcconfig"; path = "Target Support Files/Pods-LifeTest/Pods-LifeTest.debug.xcconfig"; sourceTree = "<group>"; };
 		7D8FACD42DD4D31100D81250 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7F1303F64A35959A4AF023A6 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LifeTest/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9571291F2DF1C8FF00E6E5E1 /* BootSplash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BootSplash.storyboard; sourceTree = "<group>"; };
 		957891E62DE4B8B800E9336F /* LifeTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LifeTest.entitlements; path = LifeTest/LifeTest.entitlements; sourceTree = "<group>"; };
 		957891EB2DE4B92700E9336F /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +99,6 @@
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				9571291F2DF1C8FF00E6E5E1 /* BootSplash.storyboard */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
 			name = LifeTest;
@@ -284,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				957129202DF1C8FF00E6E5E1 /* BootSplash.storyboard in Resources */,
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				7D8FACD52DD4D31100D81250 /* Colors.xcassets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				91C0DED571ADB720D1A8BE51 /* PrivacyInfo.xcprivacy in Resources */,
@@ -347,9 +343,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LifeTest/Pods-LifeTest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LifeTest/Pods-LifeTest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -405,9 +405,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LifeTest/Pods-LifeTest-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LifeTest/Pods-LifeTest-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -587,10 +591,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -660,10 +661,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
