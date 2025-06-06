@@ -43,7 +43,7 @@ export const ChatList = forwardRef<FlashList<TMessage>, IChatListProps>(
             ListHeaderComponent={<ListFooterComponent />}
             ListFooterComponent={<ListHeaderComponent />}
             keyboardDismissMode="interactive"
-            keyboardShouldPersistTaps="always"
+            keyboardShouldPersistTaps="never"
             estimatedItemSize={200}
             estimatedListSize={windowDimensions}
           />

@@ -31,7 +31,7 @@ export const styles = StyleSheet.create(theme => ({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 8,
   },
   avatar: {
     width: 36,

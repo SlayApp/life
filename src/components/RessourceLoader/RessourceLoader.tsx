@@ -26,7 +26,6 @@ export function RessourceLoader({children}: Props) {
   });
 
   useEffect(() => {
-    BootSplash.isVisible().then(console.log);
     if (loaded || error) {
       BootSplash.hide({fade: true});
     }

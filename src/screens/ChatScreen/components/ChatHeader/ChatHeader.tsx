@@ -1,8 +1,9 @@
 import {Image} from 'expo-image';
 import {SymbolView} from 'expo-symbols';
 import React from 'react';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 
+import {PressableScale} from '~/components/PressableScale/PressableScale';
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';
 import {Text} from '~/components/Text';
 
@@ -21,7 +22,7 @@ export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
     <View style={styles.container}>
       <SafeAreaWrapper edges="top" />
       <View style={styles.headerContent}>
-        <Pressable onPress={onBackPress}>
+        <PressableScale onPress={onBackPress}>
           <SymbolView
             name="chevron.left"
             style={styles.backButton}
@@ -29,7 +30,7 @@ export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
             weight="bold"
             type="monochrome"
           />
-        </Pressable>
+        </PressableScale>
         <View style={styles.titleContainer}>
           <View style={styles.avatar}>
             <Image
@@ -38,7 +39,7 @@ export const ChatHeader: React.FC<IProps> = ({name, profilePictureUri}) => {
             />
           </View>
           <View style={styles.textContainer}>
-            <Text variant="title" color="primary">
+            <Text variant="title" color="primary" weight="semibold">
               {name}
             </Text>
           </View>
