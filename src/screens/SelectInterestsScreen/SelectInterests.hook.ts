@@ -14,6 +14,7 @@ import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStac
 import {log} from '~/utils/log.util';
 import {resetToAuthorizedStack} from '~/utils/resetToAuthorizedStack';
 
+import {MIN_INTERESTS_COUNT} from './SelectInterests.constants';
 import {TInterest} from './SelectInterests.types';
 
 export const useSelectInterestsScreen = () => {
@@ -78,7 +79,7 @@ export const useSelectInterestsScreen = () => {
 
   useSetFluidOnboardingStackProps({
     loading,
-    disabled: interests.length < 3 || loading,
+    disabled: interests.length < MIN_INTERESTS_COUNT || loading,
     onBackPress: goBack,
     onPress,
   });

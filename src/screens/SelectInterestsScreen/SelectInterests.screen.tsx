@@ -6,6 +6,7 @@ import {OnboardingTextInput} from '~/components/OnboardingTextInput';
 
 import {AddButton} from './components';
 import {InterestList} from './components/InterestList/InterestList';
+import {MIN_INTERESTS_COUNT} from './SelectInterests.constants';
 import {useSelectInterestsScreen} from './SelectInterests.hook';
 import {styles} from './SelectInterests.styles';
 
@@ -24,7 +25,7 @@ export const SelectInterestsScreen: React.FC = () => {
     <FluidOnboardingWrapper>
       <FluidOnboardingTemplate
         title="Add your interest"
-        subtitle="Enter at least 3 interests">
+        subtitle={`Enter at least ${MIN_INTERESTS_COUNT} interests`}>
         <View style={styles.innerContainer}>
           <OnboardingTextInput
             ref={ref}

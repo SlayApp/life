@@ -1,6 +1,7 @@
 import 'react-native-url-polyfill/auto';
 import '~/theme/theme';
 
+import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import * as Sentry from '@sentry/react-native';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import React from 'react';
@@ -26,13 +27,15 @@ function App(): React.JSX.Element {
         client={queryClient}
         persistOptions={{persister: clientPersister}}>
         <FocusManager />
-        <SafeAreaProvider>
-          <KeyboardProvider>
-            <RessourceLoader>
-              <RootStack />
-            </RessourceLoader>
-          </KeyboardProvider>
-        </SafeAreaProvider>
+        <ActionSheetProvider>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <RessourceLoader>
+                <RootStack />
+              </RessourceLoader>
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </ActionSheetProvider>
       </PersistQueryClientProvider>
     </GestureHandlerRootView>
   );

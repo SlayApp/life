@@ -1,7 +1,8 @@
 import React from 'react';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import {PressableScale} from '~/components/PressableScale/PressableScale';
 import {SafeAreaWrapper} from '~/components/SafeAreaWrapper';
 import {Text} from '~/components/Text';
 
@@ -16,13 +17,13 @@ export const Header: React.FC<IHeaderProps> = props => {
     <View style={styles.container}>
       <SafeAreaWrapper edges="top" />
       <Animated.View style={[styles.headerContent, animatedStyle]}>
-        <Pressable onPress={onPress}>
+        <PressableScale onPress={onPress}>
           <View style={styles.nameContainer}>
             <Text color="inverted" variant="small" weight="bold">
               {user.firstName?.slice(0, 1)}
             </Text>
           </View>
-        </Pressable>
+        </PressableScale>
         <Text variant="headline">Chats</Text>
         <View style={[styles.nameContainer, styles.placeholderButton]} />
       </Animated.View>

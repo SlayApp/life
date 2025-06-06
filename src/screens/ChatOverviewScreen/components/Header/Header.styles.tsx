@@ -26,7 +26,7 @@ export const styles = StyleSheet.create(theme => ({
   nameContainer: {
     width: 28,
     height: 28,
-    backgroundColor: '#000',
+    backgroundColor: theme.colors.primary,
     borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
