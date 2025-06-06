@@ -10,18 +10,21 @@ import {useFocusTransitionEndEffect} from '~/hooks/useFocusTransitionEndEffect';
 import {useSetFluidOnboardingStackProps} from '~/hooks/useSetFluidOnboardingStackProps';
 import {useFluidOnboardingStack} from '~/navigation/FluidOnboardingStack';
 import {useUnauthorizedStack} from '~/navigation/UnauthorizedStack/UnauthorizedStack.provider';
-import {getCountryCode} from '~/utils/countryCodes';
+import {countryCodes, getCountryCode} from '~/utils/countryCodes';
 import {log} from '~/utils/log.util';
+
+import {formatPhoneNumber} from './EnterPhoneNumber.utils';
 
 export const useEnterPhoneNumberScreen = () => {
   const ref = useRef<IInput>(null);
-  const [countryCode, _] = useState(getCountryCode());
+  const [countryCode, setCountryCode] = useState(getCountryCode());
   const [phoneNumber, setPhoneNumber] = useState('');
   const [sendOtp] = useAPIMutation(authApi.sendOtp);
   const {focusTextInput} = useFluidOnboardingStack();
   const {goBack, navigate, popTo} = useFluidOnboardingNavigation();
   const {setPhoneNumber: setUnauthorizedStackPhoneNumber} =
     useUnauthorizedStack();
+
   const parsedPhoneNumber = parsePhoneNumber(
     countryCode.dial_code + phoneNumber,
   );
@@ -31,6 +34,28 @@ export const useEnterPhoneNumberScreen = () => {
       ref.current?.focus();
     }, []),
   );
+
+  const onChangeText = useCallback((text: string) => {
+    const parsedNumber = parsePhoneNumber(text);
+    const country = countryCodes.find(
+      countryOption => countryOption.code === parsedNumber.regionCode,
+    );
+
+    if (country) {
+      setCountryCode(country);
+    }
+
+    if (
+      parsedNumber.possibility === 'invalid-country-code' ||
+      parsedNumber.possibility === 'invalid' ||
+      parsedNumber.possibility === 'too-short'
+    ) {
+      setPhoneNumber(text);
+    } else {
+      const formattedText = formatPhoneNumber(text);
+      setPhoneNumber(parsedNumber.number?.significant ?? formattedText);
+    }
+  }, []);
 
   const onPress = useCallback(async () => {
     try {
@@ -70,5 +95,5 @@ export const useEnterPhoneNumberScreen = () => {
     disabled: !parsedPhoneNumber.valid,
   });
 
-  return {onPress, setPhoneNumber, countryCode, ref};
+  return {onPress, onChangeText, countryCode, ref, phoneNumber};
 };

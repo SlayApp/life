@@ -11,7 +11,7 @@ import {useEnterPhoneNumberScreen} from './EnterPhoneNumber.hook';
 import {styles} from './EnterPhoneNumber.styles';
 
 export const EnterPhoneNumberScreen: React.FC = () => {
-  const {setPhoneNumber, countryCode, ref} = useEnterPhoneNumberScreen();
+  const {onChangeText, countryCode, ref} = useEnterPhoneNumberScreen();
 
   return (
     <FluidOnboardingWrapper>
@@ -32,7 +32,7 @@ export const EnterPhoneNumberScreen: React.FC = () => {
           <View style={styles.inputContainer}>
             <OnboardingTextInput
               ref={ref}
-              onChangeText={setPhoneNumber}
+              onChangeText={onChangeText}
               placeholder="123 456 789"
               inputMode="tel"
               autoComplete="tel"
